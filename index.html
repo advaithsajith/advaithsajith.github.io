@@ -224,7 +224,7 @@
   /* tape + disc */
   .tape { position: absolute; right: 6%; bottom: 7%; width: 17%; z-index: 4; filter: drop-shadow(0 10px 16px rgba(0,0,0,.6)); transform: rotate(-8deg); transition: transform .9s cubic-bezier(.7,0,.25,1), opacity .4s .7s; animation: bob 3.2s ease-in-out infinite; }
   @keyframes bob { 50% { translate: 0 -6px; } }
-  .reel { transform-box: fill-box; transform-origin: center; animation: spin 3s linear infinite; }
+  .treel { transform-box: fill-box; transform-origin: center; animation: spin 3s linear infinite; }
   .disc { position: absolute; left: 7%; bottom: 9%; width: 15%; aspect-ratio: 1; border-radius: 50%; z-index: 2;
     background: conic-gradient(from 0deg, #b9a3e3, #7d9be6, #8ec9b5, #f1ebe2, #ff7a45, #a77ca6, #b9a3e3); animation: spin 6s linear infinite;
     box-shadow: 0 0 0 1px rgba(255,255,255,.25), 0 14px 30px rgba(0,0,0,.55); -webkit-mask: radial-gradient(circle, transparent 13%, #000 14%); mask: radial-gradient(circle, transparent 13%, #000 14%); transition: opacity .6s, translate .9s; }
@@ -245,7 +245,7 @@
   .bc-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
   /* sequence */
   .bc-stage.s1 .tape { animation: none; transform: translate(var(--dx), var(--dy)) rotate(0) scale(.32); opacity: 0; }
-  .bc-stage.s1 .reel { animation-duration: .35s; }
+  .bc-stage.s1 .treel { animation-duration: .35s; }
   .bc-stage.s1 .disc { animation-duration: .6s; }
   .bc-stage.s2 .crt-screen canvas { opacity: .62; }
   .bc-stage.s3 .crt-screen { animation: crtoff .65s cubic-bezier(.7,0,.3,1) forwards; }
@@ -438,14 +438,75 @@
   /* ================= CONTRA-ZOOM BANDS (paper cutouts) ================= */
   .dz { height: 150vh; padding: 0; }
   .dz-frame { position: sticky; top: 0; height: 100vh; display: grid; place-items: center; overflow: hidden; }
-  .dz-win { position: absolute; inset: 0; clip-path: inset(var(--i, 16%) round var(--r, 18px)); will-change: clip-path; }
-  .dz-win img { width: 100%; height: 100%; object-fit: cover; transform: scale(var(--s, 1)); will-change: transform; }
+  .dz-win { position: absolute; left: 0; top: 0; width: 100%; height: 100%; clip-path: inset(8% round 18px); }
+  .dz-win img { width: 100%; height: 100%; object-fit: cover; }
+  .dz.dzlive .dz-win { clip-path: none; }
+  .dz.dzlive .dz-win img { opacity: 0; }
+  .dz-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .dz.dzlive .dz-win::after { display: none; }
   .dz-win::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,10,20,.25), rgba(13,10,20,.05) 40%, rgba(13,10,20,.55)); }
   .dz-cap { position: relative; z-index: 2; text-align: center; transform: scale(var(--c, 1)); opacity: var(--o, 1); padding: 0 16px; }
   .dz-cap .eyebrow { justify-content: center; color: var(--cream); }
   .dz-cap b { display: block; font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(40px, 8vw, 120px); line-height: .95; color: var(--cream); text-shadow: 0 6px 40px rgba(13,10,20,.7); }
   .dz-cap small { display: block; margin-top: 14px; font: 12px var(--mono); letter-spacing: .14em; color: var(--cream-dim); text-transform: uppercase; }
   @media (prefers-reduced-motion: reduce) { .dz { height: auto; } .dz-frame { position: relative; height: 70vh; } }
+
+
+  /* ================= CATALOGUE ================= */
+  .cat-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 26px; }
+  .cat-bar button { font: 500 13px var(--sans); color: var(--cream-dim); background: transparent; border: 1px solid var(--line); padding: 8px 15px; border-radius: 999px; cursor: pointer; }
+  .cat-bar button.on { background: var(--ember); color: var(--ink); border-color: var(--ember); }
+  .catalogue { columns: 4 240px; column-gap: 18px; }
+  .item { break-inside: avoid; margin: 0 0 18px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; cursor: pointer; transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .3s; display: block; width: 100%; text-align: left; color: inherit; padding: 0; font: inherit; }
+  .item:hover { transform: translateY(-4px) rotate(-.4deg); border-color: rgba(185,163,227,.55); }
+  .item img { width: 100%; display: block; filter: saturate(.9); }
+  .item .meta { padding: 12px 14px 14px; }
+  .item .meta small { font: 10px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--sage); }
+  .item .meta b { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; line-height: 1.1; margin: 4px 0 4px; }
+  .item .meta span { font-size: 13px; color: var(--cream-dim); }
+  .item.text { padding: 22px 16px; background: linear-gradient(160deg, var(--plum), var(--ink-2)); }
+  .item.hide { display: none; }
+  dialog.reader { width: min(1100px, 100% - 24px); max-height: 92vh; overflow: auto; border: 0; padding: 0; border-radius: 4px; background: #0b0812; color: var(--cream); box-shadow: 0 30px 80px rgba(0,0,0,.7); }
+  dialog.reader::backdrop { background: rgba(8,4,12,.85); backdrop-filter: blur(4px); }
+  .reader-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; padding: 20px 24px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #0b0812; z-index: 2; }
+  .reader-head .ref { font: 11px var(--mono); letter-spacing: .14em; color: var(--sage); }
+  .reader-head h3 { font-family: var(--display); font-style: italic; font-size: 32px; margin: 4px 0 0; }
+  .reader-head button { font: 600 12px var(--mono); background: var(--cream); color: var(--ink); border: 0; border-radius: 3px; padding: 7px 12px; cursor: pointer; }
+  .reader-pages { padding: 18px 24px 26px; display: grid; gap: 16px; }
+  .reader-pages img { width: 100%; border-radius: 2px; }
+  .reader-pages p { color: var(--cream-dim); margin: 0; }
+
+  /* ================= PHOTO TABLE ================= */
+  .table { position: relative; height: clamp(560px, 70vw, 760px); margin-top: 30px; border-radius: 6px; background: radial-gradient(ellipse at 50% 40%, rgba(45,33,66,.55), rgba(13,10,20,.2) 75%); border: 1px solid var(--line); overflow: hidden; touch-action: none; }
+  .snap { position: absolute; width: clamp(130px, 15vw, 200px); background: #f6f1e7; padding: 9px 9px 36px; box-shadow: 0 16px 30px rgba(0,0,0,.5); cursor: grab; user-select: none; transition: box-shadow .2s; margin: 0; }
+  .snap.drag { cursor: grabbing; box-shadow: 0 30px 50px rgba(0,0,0,.6); z-index: 50; }
+  .snap img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; pointer-events: none; display: block; }
+  .snap figcaption { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font-family: var(--hand); font-size: 20px; color: #2d2142; line-height: 1; }
+  .snap figcaption small { display: block; font: 9px var(--mono); color: #8a7357; letter-spacing: .1em; margin-top: 2px; }
+
+
+  /* ================= 3D BALLERINA UI ================= */
+  .stage .hud { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); font: 11px var(--mono); color: var(--sage); background: rgba(13,10,20,.65); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; white-space: nowrap; pointer-events: none; }
+  .stage canvas { touch-action: pan-y; cursor: ew-resize; }
+  .ballet-ctl { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; justify-content: center; }
+  .ctl-hint { text-align: center; font: 11px var(--mono); color: var(--muted); margin: 10px 0 0; }
+  .fabrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+  .fabrics button { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-2); color: var(--cream); font: 500 13px var(--sans); cursor: pointer; text-align: left; }
+  .fabrics button.on { border-color: var(--ember); box-shadow: 0 0 0 1px var(--ember) inset; }
+  .fabrics i { width: 26px; height: 26px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
+  .fabric-note { font-size: 14px; color: var(--cream-dim); margin: 12px 0 0; min-height: 3em; }
+  .fabric-note b { color: var(--cream); }
+  .physics { margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(142,201,181,.35); border-radius: 6px; background: rgba(142,201,181,.05); }
+  .physics > b { font-family: var(--display); font-size: 22px; display: block; margin-bottom: 6px; }
+  .physics p { font-size: 15px; color: var(--cream-dim); margin: 8px 0 0; }
+  .physics code { font: 13px var(--mono); color: var(--sage); background: rgba(13,10,20,.6); padding: 1px 6px; border-radius: 3px; }
+  .watch-h { font: 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ember); margin: 26px 0 10px; }
+  .films { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .films a { display: block; text-decoration: none; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: linear-gradient(160deg, rgba(45,33,66,.6), rgba(21,16,31,.6)); transition: border-color .3s, transform .3s; }
+  .films a:hover { border-color: var(--ember); transform: translateY(-2px); }
+  .films b { font-family: var(--display); font-size: 20px; display: block; } .films small { font: 10px var(--mono); color: var(--sage); letter-spacing: .1em; }
+  .films span { display: block; font-size: 13px; color: var(--cream-dim); margin-top: 6px; line-height: 1.4; }
+  @media (max-width: 600px) { .fabrics { grid-template-columns: 1fr 1fr; } .films { grid-template-columns: 1fr; } .stage .hud { font-size: 9px; } }
 
   /* ================= TIMELINE ================= */
   .timeline { position: relative; margin-top: 40px; }
@@ -657,8 +718,8 @@
           <rect x="16" y="12" width="168" height="14" rx="5" fill="#ff7a45"/>
           <text x="100" y="23" font-family="Space Mono" font-size="9" font-weight="700" text-anchor="middle" fill="#1e1830">NTV UAE · SIBF 2026</text>
           <rect x="44" y="34" width="112" height="32" rx="16" fill="#0d0a14"/>
-          <g class="reel" id="reelL"><circle cx="66" cy="50" r="12" fill="#3b2f55"/><circle cx="66" cy="50" r="5" fill="#f1ebe2"/><path d="M66 40v6M66 54v6M56 50h6M70 50h6" stroke="#f1ebe2" stroke-width="2"/></g>
-          <g class="reel" id="reelR"><circle cx="134" cy="50" r="12" fill="#3b2f55"/><circle cx="134" cy="50" r="5" fill="#f1ebe2"/><path d="M134 40v6M134 54v6M124 50h6M138 50h6" stroke="#f1ebe2" stroke-width="2"/></g>
+          <g class="treel" id="reelL"><circle cx="66" cy="50" r="12" fill="#3b2f55"/><circle cx="66" cy="50" r="5" fill="#f1ebe2"/><path d="M66 40v6M66 54v6M56 50h6M70 50h6" stroke="#f1ebe2" stroke-width="2"/></g>
+          <g class="treel" id="reelR"><circle cx="134" cy="50" r="12" fill="#3b2f55"/><circle cx="134" cy="50" r="5" fill="#f1ebe2"/><path d="M134 40v6M134 54v6M124 50h6M138 50h6" stroke="#f1ebe2" stroke-width="2"/></g>
           <path d="M60 124 L70 96 H130 L140 124" fill="#15101f" stroke="#b9a3e3" stroke-width="1.5"/>
           <text x="100" y="86" font-family="Press Start 2P" font-size="7" text-anchor="middle" fill="#8ec9b5">BIRCHDALE</text>
         </svg>
@@ -684,14 +745,9 @@
     <div class="wrap">
       <p class="eyebrow reveal">III · In print</p>
       <h2 class="reveal">Pages with my <em>name</em> on them.</h2>
-      <p class="lede reveal">Stories and essays published in Young Times since 2018, plus the NMS Gazette Hall of Fame and the school magazines I edit and helped found.</p>
-      <div class="pages-row reveal">
-        <figure class="page"><img src="assets/sisyphus.jpg" alt="Magazine spread: One Must Imagine Sisyphus Happy" loading="lazy"><figcaption class="cap"><b>"One Must Imagine Sisyphus Happy"</b><span>Young Times · 2025</span></figcaption></figure>
-        <figure class="page"><img src="assets/spread-story.jpg" alt="Magazine spread of a published story" loading="lazy"><figcaption class="cap"><b>A story in Young Times</b><span>Young Times · 2025</span></figcaption></figure>
-        <figure class="page"><img src="assets/spread-dolphin.jpg" alt="Magazine spread of a published article" loading="lazy"><figcaption class="cap"><b>An article in Young Times</b><span>Young Times · 2024</span></figcaption></figure>
-        <div class="page text"><b>"Ring Around the Roses"</b><span style="color:var(--cream-dim);margin-top:10px">NMS Gazette · Hall of Fame, best piece on its theme</span></div>
-        <div class="page text"><b>Syggrafeas</b><span style="color:var(--cream-dim);margin-top:10px">The writing club and magazine I co-founded. It still runs without me.</span></div>
-      </div>
+      <p class="lede reveal">The full catalogue: short stories, poems and articles in Khaleej Times&rsquo; <i>Young Times</i> and <i>The Youngest</i> since I was nine, plus the school magazines I edit and helped found. Open any piece to read the pages.</p>
+      <div class="cat-bar reveal" id="catBar"><button class="on" data-c="all">Everything</button><button data-c="Young Times">Young Times</button><button data-c="The Youngest">The Youngest</button><button data-c="School">At school</button></div>
+      <div class="catalogue reveal" id="catalogue"></div>
     </div>
   </section>
 
@@ -714,17 +770,39 @@
   <!-- ================= FILM & FASHION ================= -->
   <section id="reel">
     <div class="wrap reel">
-      <div class="stage reveal">
-        <canvas id="ballet" data-cursor="unravel" aria-label="Animated ballerina spinning as her dress unravels into threads"></canvas>
-        <div class="curtain l"></div><div class="curtain r"></div>
-        <div class="hint">click the dancer to unravel · click again to re-weave</div>
+      <div>
+        <div class="stage reveal" id="balletStage" data-cursor="spin">
+          <canvas id="ballet" aria-label="A 3D ballerina. Drag sideways to spin her; she slows to a stop on her own."></canvas>
+          <div class="curtain l"></div><div class="curtain r"></div>
+          <div class="hud" id="hud" aria-live="off">&omega; 0.00 rev/s &middot; I 1.50 kg&middot;m&sup2; &middot; L 0.00 &middot; skirt 0&deg;</div>
+        </div>
+        <div class="ballet-ctl">
+          <button class="btn-a" id="fouette">Fouett&eacute; (a kick of torque)</button>
+          <button class="btn-a ghost" id="armsBtn">Pull arms in</button>
+          <button class="btn-a ghost" id="unravelBtn">Unravel</button>
+        </div>
+        <p class="ctl-hint">Drag sideways to spin her. She slows down on her own, because the floor pushes back.</p>
+        <div class="fabrics" id="fabrics" role="radiogroup" aria-label="Choose the fabric of the skirt"></div>
+        <p class="fabric-note" id="fabricNote"></p>
       </div>
       <div class="reveal">
-        <p class="eyebrow">V · Film &amp; fashion</p>
+        <p class="eyebrow">V &middot; Film &amp; fashion</p>
         <h2>Every thread is a <span class="bl">line of code.</span></h2>
-        <p class="lede">I watch a lot of films, mostly horror and mysteries, and log every one on Letterboxd, rewinding to see where the director hid the twist. I am drawn to fashion and film for the same reason I love code: a dress and a program are both patterns, woven one thread at a time.</p>
-        <div class="loom">In 1804 the Jacquard loom wove patterns from punched cards, the idea that led to the first programmable machines. In FIRST LEGO League my team rebuilt a loom from LEGO. This dancer is drawn by about a hundred lines of JavaScript: watch her dress come apart into the threads it is made of.</div>
-        <div class="film-strip"><span data-l="HORROR"></span><span data-l="MYSTERY"></span><span data-l="NOIR"></span><span data-l="THRILLER"></span></div>
+        <p class="lede">Why is there a ballerina on a computer scientist&rsquo;s page? Because a dress, a dance and a program are all built the same way: small rules, repeated precisely, until something beautiful moves. The weave decides how a fabric falls; the physics decides how a dancer turns; the code decides both here.</p>
+        <div class="physics">
+          <b>The physics of a pirouette</b>
+          <p>A turn starts with <i>torque</i>: her foot pushes against the floor, and that twisting force gives her <i>angular momentum</i>, <code>L = I&omega;</code>. <code>I</code> is her moment of inertia (how far her mass sits from the spin axis) and <code>&omega;</code> is how fast she turns.</p>
+          <p>With no outside torque, <code>L</code> stays the same. So when she pulls her arms in, <code>I</code> falls and <code>&omega;</code> rises: try the button and watch the numbers. The floor and the air add a small opposite torque, so <code>L</code> leaks away and she stops. A fouett&eacute;, the whipping leg in <i>Swan Lake</i>, is a dancer adding a kick of torque on every turn.</p>
+          <p>Her skirt flares because each bit of fabric wants to fly outward: <code>tan&thinsp;&theta; = &omega;&sup2;r / g</code>. Light, soft fabrics lift at once; heavy or stiff ones barely move. Change the fabric and spin her again.</p>
+        </div>
+        <div class="loom">In 1804 the Jacquard loom wove patterns from punched cards, the idea that led to the first programmable machines. In FIRST LEGO League my team rebuilt a loom from LEGO.</div>
+        <p class="watch-h">Watch next, if you like this</p>
+        <div class="films">
+          <a href="https://letterboxd.com/film/black-swan/" target="_blank" rel="noopener"><b>Black Swan</b><small>2010 &middot; Aronofsky</small><span>A dancer cast as both swans in <i>Swan Lake</i>, and the perfectionism that splits her in two. Psychological horror at its sharpest.</span></a>
+          <a href="https://letterboxd.com/film/the-red-shoes/" target="_blank" rel="noopener"><b>The Red Shoes</b><small>1948 &middot; Powell &amp; Pressburger</small><span>The original film about a ballerina who cannot stop dancing. The Technicolor still looks unreal.</span></a>
+          <a href="https://letterboxd.com/film/suspiria/" target="_blank" rel="noopener"><b>Suspiria</b><small>1977 &middot; Argento</small><span>A dance academy in Freiburg hides a coven. Horror, mystery and colour as a weapon.</span></a>
+          <a href="https://letterboxd.com/film/phantom-thread/" target="_blank" rel="noopener"><b>Phantom Thread</b><small>2017 &middot; P. T. Anderson</small><span>A couturier, his fabrics and the woman who will not be pinned in place. A thriller sewn in silk.</span></a>
+        </div>
         <div class="links"><a class="btn-a ghost" href="https://letterboxd.com/advxth/" target="_blank" rel="noopener">My Letterboxd ↗</a><button class="btn-a ghost" id="noirBtn">Watch in noir</button></div>
       </div>
     </div>
@@ -750,6 +828,16 @@
   <section class="dz" aria-label="Paper-cut hills with rows of solar panels facing a low sun">
     <div class="dz-frame"><div class="dz-win"><img src="assets/pc-desert.jpg" alt="Paper-cut hills with rows of solar panels facing a low sun" loading="lazy" decoding="async"></div>
       <div class="dz-cap"><p class="eyebrow">The sun &middot; SunSmart</p><b>Chasing the sun.</b><small>research &middot; the full record</small></div></div>
+  </section>
+
+  <!-- ================= OLD PHOTOGRAPHS ================= -->
+  <section id="album">
+    <div class="wrap">
+      <p class="eyebrow reveal">Exhibit B &middot; The old photographs</p>
+      <h2 class="reveal">Evidence from <em>the archive.</em></h2>
+      <p class="lede reveal">Fifteen years of costumes, trophies and books. Drag the photos around the table.</p>
+      <div class="table reveal" id="photoTable"></div>
+    </div>
   </section>
 
   <!-- ================= FULL RECORD ================= -->
@@ -848,6 +936,7 @@
   <div class="file-body" id="fBody"></div>
 </dialog>
 <div class="toast" id="toast"></div>
+<dialog class="reader" id="reader"><div class="reader-head"><div><div class="ref" id="rRef"></div><h3 id="rTitle"></h3></div><button id="rClose">CLOSE ✕</button></div><div class="reader-pages" id="rPages"></div></dialog>
 <button class="evi-btn" id="eviBtn" title="Open the evidence board"><span class="dots" id="eviDots"></span><span id="eviCount">0 / 8 clues</span><span class="sr">· evidence board</span></button>
 <dialog class="board" id="board"><div class="board-head"><h3>The evidence board</h3><button id="boardClose">CLOSE ✕</button></div>
   <div class="board-sub" id="boardSub"></div><div class="notes" id="notes"></div></dialog>
@@ -870,7 +959,7 @@ function toast(msg, ms = 3200) { const t = $("#toast"); t.textContent = msg; t.c
     "LOADING novel: WHAT_LIES_BURIED.EPUB ......... <ok>OK</ok>",
     "COMPILING swan --kind-errors .................. <ok>OK</ok>",
     "SEEDING QNODE ENTROPY FROM LIGHT ............. <ok>OK</ok>",
-    "WEAVING ballerina.thread[128] ................ <ok>OK</ok>",
+    "RIGGING ballerina.glb · torque, I, L ......... <ok>OK</ok>",
     "HIDING CLUES IN THE DARK ..................... <ok>DONE</ok>",
   ];
   const box = $("#bootLines"), pct = $("#pct"), bar = $("#bootBar"), el = $("#boot");
@@ -977,63 +1066,6 @@ function showTerm(mode) {
 }
 document.querySelectorAll(".toggle button").forEach(b => b.onclick = () => { document.querySelectorAll(".toggle button").forEach(x => x.classList.toggle("on", x === b)); showTerm(b.dataset.mode); });
 
-/* ================= BALLERINA (canvas) ================= */
-(function () {
-  const cv = $("#ballet"), ctx = cv.getContext("2d");
-  let W, H, dpr = Math.min(devicePixelRatio || 1, 1.5);
-  function size() { const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
-  W = 560; H = 588; requestAnimationFrame(size); addEventListener("resize", size);
-  const N = 128; // threads in the skirt
-  const threads = Array.from({ length: N }, (_, i) => ({ a: i / N * Math.PI * 2, len: .9 + Math.random() * .25, off: Math.random() * 6, loose: 0, drift: (Math.random() - .5) * 2, hue: Math.random() }));
-  let t = 0, spin = 0, speed = .03, unravel = 0, target = 0, visible = true;
-  cv.addEventListener("click", () => { target = target ? 0 : 1; if (target) found(3, "She's unravelling. Every thread was code all along."); });
-  new IntersectionObserver(es => es.forEach(e => visible = e.isIntersecting)).observe(cv);
-  const COLS = ["#b9a3e3", "#a77ca6", "#7d9be6", "#8ec9b5", "#f1ebe2", "#ff7a45"];
-  function frame() {
-    requestAnimationFrame(frame); if (!visible) return;
-    t += 1; spin += reduce ? 0 : speed; unravel += (target - unravel) * .03;
-    ctx.clearRect(0, 0, W, H);
-    const cx = W / 2, waist = H * .47, s = Math.min(W, H) / 560;
-    // spotlight
-    const g = ctx.createRadialGradient(cx, H * .55, 10, cx, H * .55, H * .55); g.addColorStop(0, "rgba(185,163,227,.2)"); g.addColorStop(1, "rgba(0,0,0,0)"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    // floor ellipse
-    ctx.fillStyle = "rgba(125,155,230,.14)"; ctx.beginPath(); ctx.ellipse(cx, H * .9, 150 * s, 26 * s, 0, 0, Math.PI * 2); ctx.fill();
-    // threads (skirt): behind half first, then body, then front half
-    const drawThreads = front => {
-      for (const th of threads) {
-        const ang = th.a + spin, z = Math.sin(ang);
-        if ((z > 0) !== front) continue;
-        const flare = 120 * s * (1 + .15 * Math.sin(t * .05 + th.off));
-        const x0 = cx + Math.cos(ang) * 22 * s, y0 = waist;
-        let x1 = cx + Math.cos(ang) * flare, y1 = waist + 70 * s * th.len + z * 10 * s;
-        // unravel: threads lengthen, drift outward and fall with gravity
-        const u = unravel * (0.4 + th.len * .6);
-        const tx = x1 + Math.cos(ang) * 260 * s * u + th.drift * 60 * s * u, ty = y1 + 220 * s * u * th.len;
-        const mx = (x0 + tx) / 2 + Math.sin(t * .04 + th.off) * 30 * s * (.3 + u), my = (y0 + ty) / 2 - 10 * s;
-        ctx.strokeStyle = COLS[Math.floor(th.hue * COLS.length)]; ctx.globalAlpha = (front ? .9 : .45) * (1 - u * .35);
-        ctx.lineWidth = (front ? 1.6 : 1.1) * s;
-        ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(mx, my, tx, ty); ctx.stroke();
-      }
-      ctx.globalAlpha = 1;
-    };
-    drawThreads(false);
-    // body silhouette
-    ctx.fillStyle = "#f2e8d5"; ctx.strokeStyle = "#f2e8d5"; ctx.lineCap = "round";
-    const sway = Math.sin(t * .05) * 4 * s;
-    ctx.beginPath(); ctx.arc(cx + sway * .3, H * .2, 17 * s, 0, Math.PI * 2); ctx.fill();               // head
-    ctx.beginPath(); ctx.arc(cx + sway * .3 + 9 * s, H * .2 - 14 * s, 8 * s, 0, Math.PI * 2); ctx.fill(); // bun
-    ctx.lineWidth = 7 * s; ctx.beginPath(); ctx.moveTo(cx, H * .23); ctx.lineTo(cx, waist); ctx.stroke(); // torso
-    const armA = spin * 1, r = 70 * s; // arms in a raised fifth position, rotating with the spin
-    ctx.lineWidth = 4 * s; ctx.beginPath(); ctx.moveTo(cx, H * .27);
-    ctx.quadraticCurveTo(cx + Math.cos(armA) * r, H * .2, cx + Math.cos(armA) * 26 * s, H * .1);
-    ctx.moveTo(cx, H * .27); ctx.quadraticCurveTo(cx - Math.cos(armA) * r, H * .2, cx - Math.cos(armA) * 26 * s, H * .1); ctx.stroke();
-    // legs: one en pointe, one in passé
-    ctx.lineWidth = 5 * s; ctx.beginPath(); ctx.moveTo(cx, waist); ctx.lineTo(cx, H * .88);
-    ctx.moveTo(cx, waist + 10 * s); ctx.lineTo(cx + Math.cos(spin) * 40 * s, H * .66); ctx.lineTo(cx, H * .74); ctx.stroke();
-    drawThreads(true);
-  }
-  frame();
-})();
 $("#noirBtn").onclick = () => { document.body.classList.toggle("noir"); if (document.body.classList.contains("noir")) found(4, "Film noir mode."); else toast("Back to colour."); };
 
 /* ================= TIMELINE ================= */
@@ -1067,7 +1099,11 @@ const RECORD = [
     "<b>IEEE Tech Fair</b>: Pitch Perfect Award for QNode",
     "<b>INNOFEST</b>: six-year participant · <b>FIRST LEGO League</b>: built a working LEGO loom",
     "<b>CBSE Aryabhatta Ganit Challenge</b>: Stage 2 (2025) · <b>SOF Cyber Olympiad</b>: Zonal Rank 12",
-    "<b>NMS Entrepreneurial Bootcamp</b>: 1st (2022) · <b>JYB Inter-School Quiz</b>: 4th (2020)"]],
+    "<b>NMS Entrepreneurial Bootcamp</b>: 1st (2022) · <b>JYB Inter-School Quiz</b>: 4th (2020)",
+    "<b>WSC Dubai Round 2023</b>: 12 medals and the 1st-place overall trophy",
+    "<b>Achieve3000</b>: UAE National Competition winners (class, 2022) · school topper",
+    "<b>GEMS Innovation Challenge</b> junior rounds: Aqua Buddy (2020), BioZyten (2022)",
+    "<b>NMS Spelling Bee</b>: 2nd runner-up (2022) · <b>Karate Kid Championship</b>: certificate (2022) · <b>WOW-101 Champion</b> (2023)"]],
   ["Leadership &amp; events", "2023–26", [
     "<b>Circuit Riot, ByteFest 2026</b>: Event Head, 67 participants from 16 schools",
     "<b>TerraFab, AstroNexus</b>: host; coded the scoring system",
@@ -1080,7 +1116,7 @@ const RECORD = [
     "<b>NMS Moot Court</b>: Best Witness · <b>English Week short film</b>: runner-up"]],
   ["Writing &amp; publishing", "2018–26", [
     "<b><i>What Lies Buried in Birchdale?</i></b>: debut novel (Expressions, DC Books Group), launched at the 45th Sharjah International Book Fair, featured on NTV UAE",
-    "<b>Young Times &amp; The Youngest</b>: stories and essays since 2018, including \"One Must Imagine Sisyphus Happy\" (2025)",
+    "<b>Young Times &amp; The Youngest</b>: stories, poems and articles since 2018, including \"One Must Imagine Sisyphus Happy\" (2025), \"Whistles and Spills\" (2024), \"An Echo of Time\", \"Eight Astronauts Remain\" and \"The One of Light\" (2023)",
     "<b>NMS Gazette</b>: three stories; \"Ring Around the Roses\" in the Hall of Fame",
     "<b>Syggrafeas</b>: co-founded the writing club and magazine",
     "<b>NMS Sigma Magazine</b>: editor · <b>STEM Council</b>: editor; \"Silent Architects\" in STEMPulse"]],
@@ -1406,25 +1442,123 @@ let stars = 0; $("#star").onclick = () => { if (++stars % 7 === 0) caseClosed();
 })();
 
 
-/* ================= CONTRA-ZOOM: the picture pushes in while the window opens and the caption pulls back ================= */
+/* ================= CONTRA-ZOOM: a WebGL dolly zoom with a depth estimate (far = top of the picture) ================= */
 (function () {
-  const bands = [...document.querySelectorAll(".dz")]; if (reduce || !bands.length) return;
-  let raf = 0;
+  const bands = [...document.querySelectorAll(".dz")]; if (!bands.length) return;
+  const cv = document.createElement("canvas"); cv.className = "dz-gl"; cv.setAttribute("aria-hidden", "true");
+  const gl = !reduce && cv.getContext("webgl", { alpha: true, premultipliedAlpha: false, antialias: false });
+  const caps = st => (p, e) => { st.setProperty("--c", (1.16 - .34 * e).toFixed(4)); st.setProperty("--o", (1 - Math.max(0, e - .72) / .28).toFixed(3)); };
+  if (!gl) return;   // reduced motion or no WebGL: the plain image stays
+  document.documentElement.classList.add("dz-on");
+  const sh = (t, src) => { const x = gl.createShader(t); gl.shaderSource(x, src); gl.compileShader(x); return x; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, "attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }"));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, `precision mediump float;
+    uniform sampler2D T; uniform vec2 R, I; uniform float e, ins, rad;
+    float rbox(vec2 q, vec2 b, float r) { vec2 d = abs(q) - b + r; return length(max(d, 0.)) + min(max(d.x, d.y), 0.) - r; }
+    void main() {
+      vec2 f = gl_FragCoord.xy, uv = f / R;
+      // object-fit: cover
+      float sc = max(R.x / I.x, R.y / I.y); vec2 sz = I * sc / R; vec2 iuv = (uv - .5) / sz + .5;
+      // depth: the ground (bottom) is near, the sky (top) is far
+      float d = smoothstep(.15, .95, iuv.y);
+      // dolly zoom: the camera pushes in while the lens widens, so the near ground holds still and the far plane rushes toward you
+      vec2 c = vec2(.5, .38);
+      float zoom = mix(1. + .06 * e, 1. + .9 * e, d);
+      vec2 w = c + (iuv - c) / zoom;
+      w.x += (w.x - .5) * d * e * .12;                          // a little lateral stretch at the horizon
+      vec3 col = texture2D(T, clamp(w, 0., 1.)).rgb;
+      col *= 1. - .35 * smoothstep(.45, .9, length(uv - .5));   // vignette
+      // the window opens from an inset rounded card to the full frame
+      vec2 hb = R * .5 - ins; float m = 1. - smoothstep(-1., 1., rbox(f - R * .5, hb, rad));
+      gl_FragColor = vec4(col, m);
+    }`));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const U = n => gl.getUniformLocation(prog, n), uR = U("R"), uI = U("I"), uE = U("e"), uIns = U("ins"), uRad = U("rad");
+  const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+  [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach(k => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE));
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  let cur = null, raf = 0;
+  bands.forEach(b => { const im = b.querySelector("img"); im.loading = "eager"; im.addEventListener("load", () => { if (!raf) raf = requestAnimationFrame(upd); }); });
   function upd() {
     raf = 0;
-    for (const b of bands) {
-      const r = b.getBoundingClientRect(); if (r.bottom < -50 || r.top > innerHeight + 50) continue;
-      const p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight))), e = p * p * (3 - 2 * p);
-      const st = b.style;
-      st.setProperty("--s", (1.0 + .55 * e).toFixed(4));
-      st.setProperty("--i", (16 * (1 - e)).toFixed(2) + "%");
-      st.setProperty("--r", (18 * (1 - e)).toFixed(1) + "px");
-      st.setProperty("--c", (1.18 - .38 * e).toFixed(4));
-      st.setProperty("--o", (1 - Math.max(0, e - .7) / .3).toFixed(3));
-    }
+    let best = null;
+    for (const b of bands) { const r = b.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) { best = { b, r }; break; } }
+    if (!best) return;
+    const { b, r } = best, im = b.querySelector("img");
+    const p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight))), e = p * p * (3 - 2 * p);
+    caps(b.style)(p, e);
+    if (!im.complete || !im.naturalWidth) return;
+    if (cur !== b) { if (cur) cur.classList.remove("dzlive"); b.classList.add("dzlive"); b.querySelector(".dz-win").appendChild(cv); gl.bindTexture(gl.TEXTURE_2D, tex); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im); cur = b; }
+    const dpr = Math.min(devicePixelRatio || 1, 1.5), W = cv.clientWidth * dpr | 0, H = cv.clientHeight * dpr | 0;
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    gl.viewport(0, 0, W, H); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+    const minSide = Math.min(W, H);
+    gl.uniform2f(uR, W, H); gl.uniform2f(uI, im.naturalWidth, im.naturalHeight); gl.uniform1f(uE, e);
+    gl.uniform1f(uIns, minSide * .16 * (1 - e)); gl.uniform1f(uRad, 18 * dpr * (1 - e));
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
   addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(upd); }, { passive: true });
-  addEventListener("resize", upd); upd();
+  addEventListener("resize", () => { if (!raf) raf = requestAnimationFrame(upd); }); upd();
+})();
+
+
+/* ================= CATALOGUE of published work (from the X archive) ================= */
+const PUBS = [
+  { d: "Sep 2025", t: "One Must Imagine Sisyphus Happy", w: "Young Times", k: "Story / essay", img: ["sisyphus.jpg", "spread-story.jpg"], note: "Camus, a boulder, and why the climb is the point." },
+  { d: "Aug 2024", t: "Whistles and Spills", w: "Young Times", k: "Short story", img: ["pub-whistles.jpg", "spread-dolphin.jpg"], note: "A pod of dolphins and an oil spill, told from the water." },
+  { d: "Jun 2023", t: "An Echo of Time", w: "Young Times", k: "Short story", img: ["pub-echo.jpg"], note: "A musical tale with Beethoven at its heart." },
+  { d: "May 2023", t: "Eight Astronauts Remain", w: "Young Times", k: "Short story", img: ["pub-astronauts.jpg"], note: "A space mystery in the spirit of And Then There Were None." },
+  { d: "Mar 2023", t: "The One of Light", w: "Young Times", k: "Short story", img: ["pub-light.jpg"], note: "A door of light, and what waits behind it." },
+  { d: "Nov 2022", t: "The Tragic Fate of the Slice of Bread", w: "Young Times", k: "Short story", img: [], note: "A comedy of breakfast, told by the toast." },
+  { d: "May 2022", t: "A Mountain of Gratitude", w: "Young Times", k: "Short story", img: ["pub-mountain.jpg"], note: "A climb, a fall and a thank-you." },
+  { d: "Apr 2022", t: "A Mountain of Gratitude (reprint)", w: "The Youngest", k: "Short story", img: ["pub-youngest.jpg"], note: "Reprinted in The Youngest's April issue." },
+  { d: "Jan 2022", t: "Thank You, Dear Teacher", w: "The Youngest", k: "Poem", img: ["pub-teacher.jpg"], note: "A poem for the teachers who kept school going online." },
+  { d: "May 2021", t: "The Lockdown Tranquility", w: "The Youngest", k: "Article", img: ["pub-lockdown.jpg"], note: "What a silent city sounds like." },
+  { d: "Apr 2021", t: "Our Home, Our Earth", w: "School", k: "Poem", img: ["pub-earth.jpg"], note: "An Earth Day poem, Grade 4." },
+  { d: "2024", t: "Ring Around the Roses", w: "School", k: "NMS Gazette · Hall of Fame", img: [], note: "Best piece on its theme; restricted to the school." },
+  { d: "2023–", t: "Syggrafeas", w: "School", k: "Club & magazine · co-founder", img: [], note: "The writing club and magazine I co-founded. It still runs without me." },
+];
+(function () {
+  const cat = $("#catalogue"), dlg = $("#reader");
+  cat.innerHTML = PUBS.map((p, i) => `<button class="item${p.img.length ? "" : " text"}" data-i="${i}" data-w="${p.w}">${p.img.length ? `<img src="assets/${p.img[0]}" alt="${p.t}, ${p.w}" loading="lazy" decoding="async">` : ""}<div class="meta"><small>${p.w} · ${p.d}</small><b>${p.t}</b><span>${p.k}</span></div></button>`).join("");
+  cat.addEventListener("click", e => {
+    const b = e.target.closest(".item"); if (!b) return; const p = PUBS[+b.dataset.i];
+    $("#rRef").textContent = `${p.w.toUpperCase()} · ${p.d.toUpperCase()} · ${p.k.toUpperCase()}`; $("#rTitle").textContent = p.t;
+    $("#rPages").innerHTML = `<p>${p.note}</p>` + p.img.map(f => `<img src="assets/${f}" alt="Page of ${p.t}">`).join("");
+    dlg.showModal();
+  });
+  $("#rClose").onclick = () => dlg.close(); dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+  document.querySelectorAll("#catBar button").forEach(b => b.onclick = () => {
+    document.querySelectorAll("#catBar button").forEach(x => x.classList.toggle("on", x === b));
+    cat.querySelectorAll(".item").forEach(it => it.classList.toggle("hide", b.dataset.c !== "all" && it.dataset.w !== b.dataset.c));
+  });
+})();
+
+/* ================= PHOTO TABLE: draggable snapshots ================= */
+(function () {
+  const SNAPS = [["me-2011.jpg", "then & now", "2011 / 2021"], ["me-oliver.jpg", "\"more, please\"", "Oliver Twist · 2020"], ["me-earth.jpg", "Earth Day", "2021"], ["me-itachi.jpg", "Itachi", "Book Character Day · 2021"],
+    ["me-arabic.jpg", "Mahrajan", "Arabic Culture Week · 2022"], ["me-reader.jpg", "strategic reader", "Achieve3000 · 2022"], ["me-reading.jpg", "Roald Dahl", "World Book Day · 2022"], ["me-george.jpg", "George's medicine", "Roald Dahl Day · 2023"],
+    ["me-attainment.jpg", "top of the grade", "Attainment Award · 2023"], ["me-wsc.jpg", "Dubai Round", "World Scholar's Cup · 2023"], ["me-medals.jpg", "12 medals", "WSC · 1st overall · 2023"]];
+  const T = $("#photoTable"); let z = 10;
+  T.innerHTML = SNAPS.map(([f, c, sm], i) => `<figure class="snap" data-i="${i}"><img src="assets/${f}" alt="${c}, ${sm}" loading="lazy" decoding="async"><figcaption>${c}<small>${sm}</small></figcaption></figure>`).join("");
+  const els = [...T.children];
+  function scatter() {
+    const W = T.clientWidth, H = T.clientHeight, w = els[0].offsetWidth || 170, h = els[0].offsetHeight || 250;
+    const cols = Math.max(2, Math.floor(W / (w * .8)));
+    els.forEach((el, i) => { const cx = (i % cols + .5) / cols, row = Math.floor(i / cols), rows = Math.ceil(els.length / cols);
+      el.dataset.x = Math.max(0, Math.min(W - w, cx * W - w / 2 + (Math.random() - .5) * 40)); el.dataset.y = Math.max(0, Math.min(H - h, (row + .5) / rows * H - h / 2 + (Math.random() - .5) * 40));
+      el.dataset.r = (Math.random() * 16 - 8).toFixed(1); place(el); });
+  }
+  const place = el => el.style.transform = `translate(${el.dataset.x}px, ${el.dataset.y}px) rotate(${el.dataset.r}deg)`;
+  let drag = null;
+  T.addEventListener("pointerdown", e => { const el = e.target.closest(".snap"); if (!el) return; drag = { el, x: e.clientX, y: e.clientY, ox: +el.dataset.x, oy: +el.dataset.y }; el.classList.add("drag"); el.style.zIndex = ++z; el.dataset.r = (el.dataset.r * .3).toFixed(1); el.setPointerCapture(e.pointerId); });
+  T.addEventListener("pointermove", e => { if (!drag) return; drag.el.dataset.x = drag.ox + e.clientX - drag.x; drag.el.dataset.y = drag.oy + e.clientY - drag.y; place(drag.el); });
+  const up = () => { if (!drag) return; drag.el.classList.remove("drag"); drag.el.dataset.r = (Math.random() * 10 - 5).toFixed(1); place(drag.el); drag = null; };
+  T.addEventListener("pointerup", up); T.addEventListener("pointercancel", up);
+  requestAnimationFrame(scatter); addEventListener("resize", scatter);
 })();
 
 /* ================= REVEAL ================= */
@@ -1638,6 +1772,163 @@ async function glyph() {
 }
 // Only fetch the 3D letter's extra code and font when its section is close to the screen.
 { const st = document.getElementById("glyphStage"), io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); glyph(); } }, { rootMargin: "600px" }); io.observe(st); }
+
+/* ---------- 3. Film & fashion: a 3D ballerina with real spin physics ---------- */
+function ballet3d() {
+  const canvas = document.getElementById("ballet"), stage = document.getElementById("balletStage");
+  const renderer = makeRenderer(canvas); if (!renderer) return;
+  renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+  const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(33, 1, .05, 30);
+  cam.position.set(0, 1.25, 4.6); cam.lookAt(0, .86, 0);
+  scene.add(new THREE.HemisphereLight(0xb9a3e3, 0x15101f, .9));
+  const key = new THREE.DirectionalLight(0xfff1e0, 2.2); key.position.set(1.6, 3.2, 2.2); scene.add(key);
+  const rimA = new THREE.DirectionalLight(0x7d9be6, 1.6); rimA.position.set(-2.5, 1.6, -1.8); scene.add(rimA);
+  const rimB = new THREE.DirectionalLight(0xff7a45, .5); rimB.position.set(2.2, .6, -2.4); scene.add(rimB);
+
+  // floor + soft contact shadow
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(1.7, 64), new THREE.MeshStandardMaterial({ color: 0x1e1830, roughness: .55, metalness: .1 }));
+  floor.rotation.x = -Math.PI / 2; scene.add(floor);
+  const sc = document.createElement("canvas"); sc.width = sc.height = 128; const sg = sc.getContext("2d"); const gr = sg.createRadialGradient(64, 64, 0, 64, 64, 64);
+  gr.addColorStop(0, "rgba(0,0,0,.65)"); gr.addColorStop(1, "rgba(0,0,0,0)"); sg.fillStyle = gr; sg.fillRect(0, 0, 128, 128);
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 1.1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+  shadow.rotation.x = -Math.PI / 2; shadow.position.y = .003; scene.add(shadow);
+  const spot = new THREE.Mesh(new THREE.CircleGeometry(1.25, 64), new THREE.MeshBasicMaterial({ color: 0xb9a3e3, transparent: true, opacity: .07, depthWrite: false }));
+  spot.rotation.x = -Math.PI / 2; spot.position.y = .002; scene.add(spot);
+
+  // ---- the dancer: a porcelain figure built from lathed and capsule shapes ----
+  const skin = new THREE.MeshPhysicalMaterial({ color: 0xf1e6dc, roughness: .38, clearcoat: .6, clearcoatRoughness: .3, sheen: .3, sheenColor: new THREE.Color(0xb9a3e3) });
+  const bodice = new THREE.MeshPhysicalMaterial({ color: 0xb9a3e3, roughness: .45, sheen: 1, sheenColor: new THREE.Color(0xffffff), sheenRoughness: .4 });
+  const shoe = new THREE.MeshPhysicalMaterial({ color: 0xf0c4c8, roughness: .25, sheen: 1, sheenColor: new THREE.Color(0xffffff) });
+  const body = new THREE.Group(); scene.add(body);
+  const lathe = (pts, mat, seg = 40) => new THREE.Mesh(new THREE.LatheGeometry(pts.map(([r, y]) => new THREE.Vector2(r, y)), seg), mat);
+  body.add(lathe([[0, .98], [.088, 1.0], [.1, 1.1], [.125, 1.26], [.135, 1.36], [.122, 1.43], [.07, 1.48], [0, 1.49]], bodice));
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(.032, .038, .1, 20), skin); neck.position.y = 1.52; body.add(neck);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(.088, 32, 24), skin); head.scale.set(1, 1.18, 1.05); head.position.set(0, 1.645, .005); body.add(head);
+  const bun = new THREE.Mesh(new THREE.SphereGeometry(.045, 24, 16), skin); bun.position.set(0, 1.72, -.06); body.add(bun);
+  const hips = lathe([[0, .9], [.07, .91], [.095, .95], [.09, 1.0], [0, 1.01]], bodice); body.add(hips);
+  const cap = (r, len, mat) => { const m = new THREE.Mesh(new THREE.CapsuleGeometry(r, len, 6, 16), mat); m.position.y = -len / 2 - r * .3; return m; };
+  function limb(r1, l1, r2, l2, mat, endMat) {
+    const root = new THREE.Group(), a = cap(r1, l1, mat), joint = new THREE.Group(); joint.position.y = -l1 - r1 * .6;
+    const b = cap(r2, l2, endMat || mat); joint.add(b); root.add(a, joint); return { root, joint, endLen: l2 + r2 };
+  }
+  // arms
+  const arms = [1, -1].map(side => { const L = limb(.026, .24, .021, .22, skin); L.root.position.set(.15 * side, 1.42, 0); body.add(L.root); L.side = side; return L; });
+  // legs: the supporting leg en pointe, the working leg in passé
+  const legS = limb(.042, .42, .033, .4, skin); legS.root.position.set(.045, .93, 0); body.add(legS.root);
+  const footS = cap(.022, .09, shoe); footS.position.y = -.25; legS.joint.children[0].add(footS);
+  const legW = limb(.042, .42, .033, .4, skin); legW.root.position.set(-.045, .93, 0); body.add(legW.root);
+  const footW = cap(.022, .09, shoe); footW.position.y = -.25; legW.joint.children[0].add(footW);
+  body.position.y = .08;
+
+  // ---- skirt: three parametric layers whose flare follows the physics ----
+  const SEG = 96, RINGS = 7;
+  function makeLayer() {
+    const g = new THREE.BufferGeometry(), pos = new Float32Array((SEG + 1) * (RINGS + 1) * 3), uv = new Float32Array((SEG + 1) * (RINGS + 1) * 2), idx = [];
+    for (let j = 0; j <= RINGS; j++) for (let i = 0; i <= SEG; i++) { const k = j * (SEG + 1) + i; uv[k * 2] = i / SEG * 6; uv[k * 2 + 1] = j / RINGS; if (i < SEG && j < RINGS) { const a = k, b = k + 1, c = k + SEG + 1, d = c + 1; idx.push(a, c, b, b, c, d); } }
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3)); g.setAttribute("uv", new THREE.BufferAttribute(uv, 2)); g.setIndex(idx); return g;
+  }
+  const skirtMat = new THREE.MeshPhysicalMaterial({ side: THREE.DoubleSide, transparent: true, roughness: .6, sheen: 1, sheenRoughness: .5, sheenColor: new THREE.Color(0xffffff), depthWrite: false });
+  const layers = [1, .88, .76].map(sz => { const m = new THREE.Mesh(makeLayer(), skirtMat); m.userData.sz = sz; body.add(m); return m; });
+
+  // jacquard + kasavu textures drawn on a canvas
+  function tex(draw) { const c = document.createElement("canvas"); c.width = 256; c.height = 64; const g = c.getContext("2d"); draw(g); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t; }
+  const jacq = tex(g => { g.fillStyle = "#2d2142"; g.fillRect(0, 0, 256, 64); for (let x = 0; x < 256; x += 16) for (let y = 0; y < 64; y += 16) { g.fillStyle = (x / 16 + y / 16) % 2 ? "#b9a3e3" : "#7d9be6"; g.beginPath(); g.moveTo(x + 8, y + 1); g.lineTo(x + 15, y + 8); g.lineTo(x + 8, y + 15); g.lineTo(x + 1, y + 8); g.fill(); } });
+  const kasavu = tex(g => { g.fillStyle = "#f3ead3"; g.fillRect(0, 0, 256, 64); g.fillStyle = "#c9a96a"; g.fillRect(0, 50, 256, 10); g.fillStyle = "#e7cf8a"; g.fillRect(0, 53, 256, 3); });
+
+  const FABRICS = [
+    { n: "Tulle", c: "#f3eef9", stiff: .92, w: .35, op: .55, rough: .7, ruff: .03, shape: "pancake", note: "<b>Tulle</b> is a fine hexagonal net of nylon or silk. Stacked in stiff layers it makes the classical pancake tutu, which hardly flares at all: that is the point, the legs stay visible." },
+    { n: "Silk", c: "#b9a3e3", stiff: .15, w: .5, op: .92, rough: .25, ruff: .012, shape: "bell", note: "<b>Silk</b> is woven from long, smooth protein fibres, so it is slippery and catches light like liquid. A romantic silk skirt hangs soft at rest and swings out wide when she turns." },
+    { n: "Chiffon", c: "#9fc0f0", stiff: .06, w: .14, op: .6, rough: .5, ruff: .02, shape: "bell", note: "<b>Chiffon</b> uses tightly twisted crepe yarns in an open plain weave. It is so light that the smallest turn lifts it: watch the skirt flare first and settle last." },
+    { n: "Velvet", c: "#4a2a5e", stiff: .3, w: 1.5, op: 1, rough: .95, ruff: .006, shape: "bell", note: "<b>Velvet</b> has a cut pile of upright fibres that swallows light. It is heavy, so gravity wins: she has to spin very fast before it lifts." },
+    { n: "Kasavu", c: "#f3ead3", stiff: .45, w: .6, op: 1, rough: .8, ruff: .01, shape: "bell", map: kasavu, note: "<b>Kasavu</b> is Kerala handloom cotton with a gold <i>zari</i> border, the fabric of the Onam sarees at home. Crisp cotton holds its shape, so it flares halfway." },
+    { n: "Jacquard", c: "#7d9be6", stiff: .55, w: .85, op: 1, rough: .6, ruff: .008, shape: "bell", map: jacq, note: "<b>Jacquard</b> is woven on a Jacquard loom, where punched cards lift each warp thread. The pattern on this skirt is, quite literally, a program." },
+  ];
+  let fab = FABRICS[0];
+  function setFabric(f) {
+    fab = f; skirtMat.color.set(f.map ? 0xffffff : f.c); skirtMat.map = f.map || null; skirtMat.opacity = f.op; skirtMat.roughness = f.rough; skirtMat.needsUpdate = true;
+    bodice.color.set(f.n === "Tulle" ? "#b9a3e3" : f.c);
+    document.getElementById("fabricNote").innerHTML = f.note;
+    document.querySelectorAll("#fabrics button").forEach(b => { const on = b.dataset.n === f.n; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); });
+    kick();
+  }
+  const fb = document.getElementById("fabrics");
+  fb.innerHTML = FABRICS.map(f => `<button role="radio" data-n="${f.n}"><i style="background:${f.map ? (f.n === "Kasavu" ? "linear-gradient(#f3ead3 60%,#c9a96a 60%,#c9a96a 75%,#f3ead3 75%)" : "repeating-conic-gradient(#b9a3e3 0 25%,#7d9be6 0 50%) 0 0/10px 10px") : f.c}"></i>${f.n}</button>`).join("");
+  fb.addEventListener("click", e => { const b = e.target.closest("button"); if (b) setFabric(FABRICS.find(f => f.n === b.dataset.n)); });
+
+  // ---- physics state ----
+  let L = 0, phi = 0, armT = 1, armsIn = false, kickT = 0, unravel = 0, unTarget = 0, flare = 0;
+  const I = () => .55 + .95 * armT;             // kg·m²: arms out ≈ 1.5, arms in ≈ 0.55
+  const hud = document.getElementById("hud");
+  function updSkirt(omega, t) {
+    const base = fab.shape === "pancake" ? 1.36 : .3;            // resting angle from vertical (rad)
+    const lift = 1 - Math.exp(-(omega * omega) * .42 / (9.8 * fab.w) * 3.2);   // tanθ = ω²r/g, softened by weight
+    const target = base + (1.45 - base) * lift * (1 - fab.stiff);
+    flare += (target - flare) * (fab.stiff > .8 ? .2 : .06);       // soft fabrics lag behind
+    for (const m of layers) {
+      const P = m.geometry.attributes.position.array, sz = m.userData.sz, len = (fab.shape === "pancake" ? .36 : .5) * sz;
+      for (let j = 0; j <= RINGS; j++) {
+        const t2 = j / RINGS, th = flare * (.55 + .45 * t2) + (fab.shape === "pancake" ? 0 : (1 - lift) * .05 * t2);
+        for (let i = 0; i <= SEG; i++) {
+          const a = i / SEG * Math.PI * 2 - t2 * omega * .06 * (1 - fab.stiff);   // the hem trails the waist
+          const ruffle = fab.ruff * Math.sin(a * 18 + t * 2 + j) * t2 * (1 + Math.abs(omega) * .2);
+          const r = .1 + t2 * len * Math.sin(th) + ruffle, y = .985 - (fab.shape === "pancake" ? .04 * sz : 0) - t2 * len * Math.cos(th) - (1 - sz) * .04;
+          const ur = 1 + unravel * t2 * (2.5 + Math.sin(i * 12.9898) * 1.2), uy = unravel * t2 * t2 * (.6 + .5 * Math.cos(i * 4.1));
+          const k = (j * (SEG + 1) + i) * 3; P[k] = Math.cos(a) * r * ur; P[k + 1] = Math.max(.02, y - uy); P[k + 2] = Math.sin(a) * r * ur;
+        }
+      }
+      m.geometry.attributes.position.needsUpdate = true; m.geometry.computeVertexNormals();
+    }
+    skirtMat.opacity = fab.op * (1 - unravel * .85);
+  }
+  function pose(t) {
+    const e = armT, side = s => s;
+    for (const A of arms) {
+      const s = A.side;
+      A.root.rotation.set(-.15 - (1 - e) * .75, 0, s * (.42 + e * 1.0));    // second position ⇄ first position
+      A.joint.rotation.set(-(1 - e) * .9 - .15, 0, s * (.12 + (1 - e) * .5));
+    }
+    const k = Math.max(0, Math.sin(kickT * Math.PI));                       // fouetté: whip the leg out to the side
+    legW.root.rotation.set(-1.25 + k * .9, 0, -(.75 + k * .75)); legW.joint.rotation.set(2.1 - k * 2.0, 0, 0);
+    legS.root.rotation.set(0, 0, 0); legS.joint.rotation.set(0, 0, 0);
+    head.rotation.y = Math.sin(t * .7) * .08;
+  }
+
+  function size() { const r = stage.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); cam.aspect = r.width / r.height; cam.updateProjectionMatrix(); }
+  size(); addEventListener("resize", size);
+
+  // ---- input: drag adds torque, the fouetté adds a kick, arms change I with L conserved ----
+  let dragging = false, lx = 0;
+  canvas.addEventListener("pointerdown", e => { dragging = true; lx = e.clientX; canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener("pointermove", e => { if (!dragging) return; const dx = e.clientX - lx; lx = e.clientX; L += dx * .02; L = Math.max(-14, Math.min(14, L)); kick(); });
+  const end = () => dragging = false; canvas.addEventListener("pointerup", end); canvas.addEventListener("pointercancel", end);
+  document.getElementById("fouette").onclick = () => { L = Math.min(14, (L >= 0 ? L : 0) + 3.2); kickT = .001; kick(); };
+  const armsBtn = document.getElementById("armsBtn");
+  armsBtn.onclick = () => { armsIn = !armsIn; armsBtn.textContent = armsIn ? "Open arms out" : "Pull arms in"; kick(); };
+  document.getElementById("unravelBtn").onclick = () => { unTarget = unTarget ? 0 : 1; document.getElementById("unravelBtn").textContent = unTarget ? "Re-weave" : "Unravel"; if (unTarget && window.found) found(3, "She unravelled. Every thread was code all along."); kick(); };
+
+  let running = false, last = performance.now(), t = 0, firstSpin = false;
+  const visible = watch(stage, () => { if (!firstSpin && !RM) { firstSpin = true; L = 4.5; } kick(); });
+  function kick() { if (running) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
+    // arms: change I, keep L (so ω jumps when the arms come in)
+    armT += ((armsIn ? 0 : 1) - armT) * Math.min(1, dt * 5);
+    // friction torque from the floor (constant) + air drag (∝ ω)
+    let omega = L / I();
+    if (L !== 0) { const tau = -(.32 * Math.sign(omega) + .09 * omega); const nL = L + tau * dt; L = Math.sign(nL) !== Math.sign(L) || Math.abs(nL) < .01 ? 0 : nL; }
+    omega = L / I(); phi += omega * dt; body.rotation.y = phi;
+    if (kickT > 0) { kickT += dt * 2.2; if (kickT >= 1) kickT = 0; }
+    unravel += (unTarget - unravel) * Math.min(1, dt * 2);
+    pose(t); updSkirt(omega, t);
+    hud.textContent = `ω ${(omega / (2 * Math.PI)).toFixed(2)} rev/s · I ${I().toFixed(2)} kg·m² · L ${L.toFixed(2)} · skirt ${Math.round(flare * 57.3)}°`;
+    renderer.render(scene, cam);
+    const busy = L !== 0 || dragging || kickT > 0 || Math.abs(unTarget - unravel) > .002 || Math.abs((armsIn ? 0 : 1) - armT) > .002 || Math.abs(flare - (fab.shape === "pancake" ? 1.36 : .3)) > .003;
+    if (visible() && busy) requestAnimationFrame(frame); else { running = false; renderer.render(scene, cam); }
+  }
+  setFabric(FABRICS[0]);
+}
+{ const st = document.getElementById("balletStage"), io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); ballet3d(); } }, { rootMargin: "500px" }); io.observe(st); }
+
 </script>
 
 </body>
