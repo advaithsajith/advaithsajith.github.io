@@ -5,7 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Advaith Sajith</title>
 <meta name="description" content="Advaith Sajith: novelist, programming-language designer and solar AI researcher in Dubai.">
+<meta name="theme-color" content="#0d0a14">
+<link rel="canonical" href="https://advaithsajith.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0a14'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-style='italic' font-size='36' text-anchor='middle' fill='%23b9a3e3'%3EAs%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Advaith Sajith · case file AS-11">
+<meta property="og:description" content="Novelist, programming-language designer and solar AI researcher in Dubai. Eight clues are hidden on the page.">
+<meta property="og:url" content="https://advaithsajith.github.io/">
+<meta property="og:image" content="https://advaithsajith.github.io/assets/cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@advaith_sajith">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Advaith Sajith","url":"https://advaithsajith.github.io/","image":"https://advaithsajith.github.io/assets/portrait.jpg","jobTitle":"Student, novelist and researcher","affiliation":{"@type":"EducationalOrganization","name":"GEMS New Millennium School, Al Khail"},"address":{"@type":"PostalAddress","addressLocality":"Dubai","addressCountry":"AE"},"sameAs":["https://github.com/advaithsajith","https://x.com/advaith_sajith","https://letterboxd.com/advxth/","https://doi.org/10.5281/zenodo.23863175"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Instrument+Serif:ital@0;1&family=Caveat:wght@500&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -300,7 +313,7 @@
   /* ================= MANIFESTO (words light up as you scroll) ================= */
   .manifesto { padding: clamp(70px, 10vw, 130px) 0; }
   .lit { font-family: var(--display); font-weight: 500; font-size: clamp(30px, 4.6vw, 62px); line-height: 1.12; letter-spacing: -.01em; margin: 0; max-width: 22ch; }
-  .lit .w { color: rgba(241,235,226,.14); transition: color .25s; }
+  .lit .w { color: rgba(241,235,226,.42); transition: color .25s; }
   .lit .w.on { color: var(--cream); } .lit em .w.on { color: var(--ember); }
 
   /* ================= CURSOR RING ================= */
@@ -405,6 +418,8 @@
   @keyframes fall { to { transform: translateY(110vh) rotate(540deg); opacity: .3; } }
   body.noir { filter: grayscale(1) contrast(1.15); }
 
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  :focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
   .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s, transform .9s cubic-bezier(.2,.8,.2,1); }
   .reveal.seen { opacity: 1; transform: none; }
 
@@ -438,7 +453,7 @@
 <div class="grain" aria-hidden="true"></div>
 
 <nav>
-  <a class="logo" href="#top" aria-label="Home">As</a>
+  <a class="logo" href="#top" title="Back to the top">As</a>
   <ul>
     <li><a class="n" href="#work">case files<sup>(11)</sup></a></li>
     <li><a class="n" href="#novel">the novel</a></li>
@@ -693,7 +708,7 @@
   <div class="file-body" id="fBody"></div>
 </dialog>
 <div class="toast" id="toast"></div>
-<button class="evi-btn" id="eviBtn" aria-label="Open the evidence board"><span class="dots" id="eviDots"></span><span id="eviCount">0 / 8 clues</span></button>
+<button class="evi-btn" id="eviBtn" title="Open the evidence board"><span class="dots" id="eviDots"></span><span id="eviCount">0 / 8 clues</span><span class="sr">· evidence board</span></button>
 <dialog class="board" id="board"><div class="board-head"><h3>The evidence board</h3><button id="boardClose">CLOSE ✕</button></div>
   <div class="board-sub" id="boardSub"></div><div class="notes" id="notes"></div></dialog>
 <dialog class="pal" id="pal"><input id="palIn" placeholder="Jump to… or type a secret word" autocomplete="off" spellcheck="false" aria-label="Command palette"><ul id="palList"></ul></dialog>
@@ -787,7 +802,7 @@ const CASES = [
   { id: "ARS-11", tags: "research leadership", kind: "Competition · Engineering", title: "ARSSDC: Bellevistat", stamp: "RUNNER-UP", blurb: "A space settlement design for the Asian Regional Space Settlement Design Competition.", meta: "2026–27 · Selected for the Asian Finals, Bangkok", body: ["Founding member of the school's first team.", "Proposal for Bellevistat, answering a full engineering Request for Proposal.", "Runner-up team in the 23rd competition."], redact: "Engineering for a place nobody has ever lived." },
 ];
 const casesEl = $("#cases");
-casesEl.innerHTML = CASES.map((c, i) => `<article class="case reveal" data-i="${i}" data-tags="${c.tags}" tabindex="0" role="button" aria-label="Open case file: ${c.title}"><div class="no">FILE № ${c.id}</div><div class="kind">${c.kind}</div><h3>${c.title}</h3><p>${c.blurb}</p><span class="open">Open file →</span><span class="stamp">${c.stamp}</span></article>`).join("");
+casesEl.innerHTML = CASES.map((c, i) => `<div class="case reveal" data-i="${i}" data-tags="${c.tags}" tabindex="0" role="button" aria-label="Open case file: ${c.title}"><div class="no">FILE № ${c.id}</div><div class="kind">${c.kind}</div><h3>${c.title}</h3><p>${c.blurb}</p><span class="open">Open file →</span><span class="stamp">${c.stamp}</span></div>`).join("");
 casesEl.addEventListener("pointermove", e => { const c = e.target.closest(".case"); if (!c || reduce) return; const r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; c.style.setProperty("--cx", x + "px"); c.style.setProperty("--cy", y + "px"); c.style.transform = `perspective(900px) rotateX(${(y / r.height - .5) * -6}deg) rotateY(${(x / r.width - .5) * 6}deg)`; });
 casesEl.addEventListener("pointerout", e => { const c = e.target.closest(".case"); if (c && !c.contains(e.relatedTarget)) c.style.transform = ""; });
 const dlg = $("#file");
@@ -827,7 +842,7 @@ document.querySelectorAll(".toggle button").forEach(b => b.onclick = () => { doc
   const cv = $("#ballet"), ctx = cv.getContext("2d");
   let W, H, dpr = Math.min(devicePixelRatio || 1, 1.5);
   function size() { const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
-  size(); addEventListener("resize", size);
+  W = 560; H = 588; requestAnimationFrame(size); addEventListener("resize", size);
   const N = 128; // threads in the skirt
   const threads = Array.from({ length: N }, (_, i) => ({ a: i / N * Math.PI * 2, len: .9 + Math.random() * .25, off: Math.random() * 6, loose: 0, drift: (Math.random() - .5) * 2, hue: Math.random() }));
   let t = 0, spin = 0, speed = .03, unravel = 0, target = 0, visible = true;
@@ -942,7 +957,7 @@ $("#recordGrid").innerHTML = RECORD.map(([t, sub, items], i) => `<details${i < 2
   const cv = $("#motes"), ctx = cv.getContext("2d"), hero = $("#top");
   const dpr = Math.min(devicePixelRatio || 1, 1.5); let W, H, visible = true;
   function size() { W = hero.clientWidth; H = hero.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
-  size(); addEventListener("resize", size);
+  W = innerWidth; H = innerHeight; requestAnimationFrame(size); addEventListener("resize", size);
   const C = ["185,163,227", "125,155,230", "142,201,181", "241,235,226", "255,122,69"];
   const motes = Array.from({ length: Math.min(90, Math.floor(innerWidth / 16)) }, () => ({ x: Math.random(), y: Math.random(), r: .6 + Math.random() * 2.2, v: .0002 + Math.random() * .0006, ph: Math.random() * 6.28, c: C[Math.random() < .08 ? 4 : Math.floor(Math.random() * 4)] }));
   let mx = .5, my = .5; addEventListener("pointermove", e => { mx = e.clientX / innerWidth; my = e.clientY / innerHeight; });
@@ -1293,9 +1308,6 @@ console.log("%cAdvaith Sajith · case file AS-11\n%cClues: the prime you need fo
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
 <script type="module">
 import * as THREE from "three";
-import { FontLoader } from "three/addons/loaders/FontLoader.js";
-import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const DPR = Math.min(devicePixelRatio || 1, 1.5);
@@ -1360,7 +1372,9 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
 })();
 
 /* ---------- 2. The type: a 3D letterform with its metric guides ---------- */
-(function glyph() {
+async function glyph() {
+  const [{ FontLoader }, { TextGeometry }, { RoomEnvironment }] = await Promise.all([
+    import("three/addons/loaders/FontLoader.js"), import("three/addons/geometries/TextGeometry.js"), import("three/addons/environments/RoomEnvironment.js")]);
   const canvas = document.getElementById("glyph3d"), stage = document.getElementById("glyphStage");
   const renderer = makeRenderer(canvas); if (!renderer) return;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -1412,7 +1426,9 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
     renderer.render(scene, cam);
     if (visible() && (!RM || dragging || Math.abs(vel) > .001)) requestAnimationFrame(frame); else running = false;
   }
-})();
+}
+// Only fetch the 3D letter's extra code and font when its section is close to the screen.
+{ const st = document.getElementById("glyphStage"), io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); glyph(); } }, { rootMargin: "600px" }); io.observe(st); }
 </script>
 
 </body>

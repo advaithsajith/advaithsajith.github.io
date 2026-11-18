@@ -1,0 +1,18 @@
+# Advaith Sajith
+
+> Portfolio of Advaith Sajith, a Grade 11 student at GEMS New Millennium School, Al Khail (Dubai): novelist, programming-language designer and solar AI researcher.
+
+The site is a single page with interactive sections and hidden easter eggs. Key facts:
+
+- Debut mystery novel: *What Lies Buried in Birchdale?* (Expressions, DC Books Group, ISBN 978-9370989887), launched at the 45th Sharjah International Book Fair, 2026.
+- Research: SunSmart AI (reinforcement learning for bifacial solar trackers, submitted to *Energies*) and *The Advaithian Operator* (preprint, https://doi.org/10.5281/zenodo.23863175).
+- Code: Swan, a beginner programming language with kind error messages (https://github.com/advaithsajith/swan), QNode (light-based random number generator), games and the ShutEye extension.
+- Leadership: Event Head of Circuit Riot at ByteFest 2026, host of TerraFab, co-founder of the Syggrafeas writing club, cryptography teacher at the VDV Summer Club.
+- Academics: 99.8% in CBSE Grade 10, School Rank 1.
+
+## Links
+
+- [Portfolio](https://advaithsajith.github.io/)
+- [GitHub](https://github.com/advaithsajith)
+- [X](https://x.com/advaith_sajith)
+- [Letterboxd](https://letterboxd.com/advxth/)
