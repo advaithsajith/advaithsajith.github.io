@@ -545,6 +545,39 @@
   #archWipe .aw-in { text-align: center; color: #fff; text-shadow: 0 4px 24px rgba(45,33,66,.5); }
   #archWipe b { display: block; font-family: var(--display); font-style: italic; font-size: clamp(30px, 5vw, 64px); }
 
+
+  /* ================= DOORWAY: arched double doors that get kicked open (after House of Dreamers) ================= */
+  #doorway { position: fixed; inset: 0; z-index: 99; pointer-events: none; visibility: hidden; --aw: min(36vmin, 300px); --ah: calc(var(--aw) * 1.5); --ay: 56vh; }
+  #doorway.on { visibility: visible; }
+  .dw-wall { position: absolute; inset: 0; will-change: transform, opacity, filter; transform-origin: 50% var(--ay);
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0) 0 calc(var(--aw) * .62), rgba(255,255,255,.35) calc(var(--aw) * .62) calc(var(--aw) * .64), rgba(45,33,66,.12) calc(var(--aw) * .64) calc(var(--aw) * .7), rgba(255,255,255,0) calc(var(--aw) * .7) calc(var(--aw) * 1.1)),
+      radial-gradient(ellipse at 50% 30%, #f7f0f8 0%, #e2d3ee 40%, #b9a3e3 80%, #8d74b8 100%);
+    -webkit-mask: linear-gradient(#000 0 0), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 150' preserveAspectRatio='none'%3E%3Cpath d='M0 150 V50 A50 50 0 0 1 100 50 V150 Z'/%3E%3C/svg%3E") 50% calc(var(--ay) - var(--ah) / 2) / var(--aw) var(--ah) no-repeat; -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) exclude, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 150' preserveAspectRatio='none'%3E%3Cpath d='M0 150 V50 A50 50 0 0 1 100 50 V150 Z'/%3E%3C/svg%3E") 50% calc(var(--ay) - var(--ah) / 2) / var(--aw) var(--ah) no-repeat; }
+  .dw-wall::after { content: ""; position: absolute; left: 50%; top: var(--ay); width: calc(var(--aw) + 34px); height: calc(var(--ah) + 34px); transform: translate(-50%, -50%);
+    border: 10px solid rgba(255,255,255,.75); border-bottom: 0; border-radius: calc(var(--aw) / 2 + 17px) calc(var(--aw) / 2 + 17px) 0 0; box-shadow: 0 0 0 6px rgba(141,116,184,.5), inset 0 0 30px rgba(45,33,66,.25); }
+  .dw-frieze { position: absolute; left: 0; right: 0; top: calc(var(--ay) - var(--ah) / 2 - 175px); text-align: center; color: #3d2a5c; }
+  .dw-frieze b { display: block; font-family: var(--display); font-weight: 600; font-size: clamp(26px, 4vw, 54px); letter-spacing: .08em; text-transform: uppercase; line-height: 1; }
+  .dw-frieze span { font: 11px var(--mono); letter-spacing: .32em; text-transform: uppercase; opacity: .75; }
+  .dw-mono { width: 46px; height: 46px; margin: 0 auto 10px; color: #3d2a5c; }
+  .dw-arch { position: absolute; left: 50%; top: var(--ay); width: var(--aw); height: var(--ah); transform: translate(-50%, -50%); perspective: 900px; }
+  .dw-doors { position: absolute; inset: 0; display: flex; transform-style: preserve-3d; }
+  .dw-doors i { position: relative; flex: 1; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.18), transparent 12%, transparent 88%, rgba(0,0,0,.18)),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 3px, rgba(0,0,0,.04) 3px 7px),
+      linear-gradient(180deg, #5a3f7a, #3a2752 60%, #2a1c3d);
+    box-shadow: inset 0 0 0 6px rgba(255,255,255,.08), inset 0 0 0 7px rgba(0,0,0,.25); }
+  .dw-doors .dl { transform-origin: 0 50%; border-top-left-radius: 100% calc(var(--aw) / 2); }
+  .dw-doors .dr { transform-origin: 100% 50%; border-top-right-radius: 100% calc(var(--aw) / 2); }
+  .dw-doors i::before { content: ""; position: absolute; left: 14%; right: 14%; top: 34%; height: 24%; border: 2px solid rgba(201,169,106,.55); border-radius: 3px; box-shadow: inset 0 0 12px rgba(0,0,0,.35); }
+  .dw-doors i::after { content: ""; position: absolute; left: 14%; right: 14%; top: 64%; height: 26%; border: 2px solid rgba(201,169,106,.55); border-radius: 3px; box-shadow: inset 0 0 12px rgba(0,0,0,.35); }
+  .dw-doors em { position: absolute; top: 56%; width: 16px; height: 16px; border-radius: 50%; border: 3px solid #c9a96a; box-shadow: 0 0 8px rgba(201,169,106,.6); }
+  .dw-doors .dl em { right: 10%; } .dw-doors .dr em { left: 10%; }
+  .dw-dust { position: absolute; left: 50%; top: calc(var(--ay) + var(--ah) / 2); width: 0; height: 0; }
+  .dw-dust b { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: rgba(246,240,251,.85); filter: blur(2px); }
+
   /* ================= TIMELINE ================= */
   .timeline { position: relative; margin-top: 40px; }
   .timeline::before { content: ""; position: absolute; left: 112px; top: 6px; bottom: 6px; width: 1px; background: linear-gradient(var(--gold), var(--crimson)); }
@@ -630,22 +663,11 @@
   <div class="bar" id="bootBar"></div>
 </div>
 
-<div id="portal" aria-hidden="true">
-  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <linearGradient id="pm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6eef7"/><stop offset=".45" stop-color="#d9c6e8"/><stop offset="1" stop-color="#a98fc9"/></linearGradient>
-      <linearGradient id="pw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9dcf1"/><stop offset="1" stop-color="#b79fd6"/></linearGradient>
-      <radialGradient id="pg" cx=".5" cy=".55" r=".6"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#2d2142" stop-opacity=".55"/></radialGradient>
-    </defs>
-    <path d="M0 0 H1600 V900 H0 Z M565.0 900 V385.0 A235.0 235.0 0 0 1 1035.0 385.0 V900 ZM150.0 900 V450.0 A150.0 150.0 0 0 1 450.0 450.0 V900 ZM1150.0 900 V450.0 A150.0 150.0 0 0 1 1450.0 450.0 V900 Z" fill="url(#pw)" fill-rule="evenodd"/>
-    <rect x="517" y="120" width="34" height="780" fill="url(#pm)" opacity=".9"/><rect x="507" y="104" width="54" height="22" fill="#efe4f2"/><rect x="1049" y="120" width="34" height="780" fill="url(#pm)" opacity=".9"/><rect x="1039" y="104" width="54" height="22" fill="#efe4f2"/><rect x="125" y="120" width="34" height="780" fill="url(#pm)" opacity=".9"/><rect x="115" y="104" width="54" height="22" fill="#efe4f2"/><rect x="1441" y="120" width="34" height="780" fill="url(#pm)" opacity=".9"/><rect x="1431" y="104" width="54" height="22" fill="#efe4f2"/>
-    <path d="M565.0 900 V385.0 A235.0 235.0 0 0 1 1035.0 385.0 V900 Z" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="6"/>
-    <path d="M540.0 900 V385.0 A260.0 260.0 0 0 1 1060.0 385.0 V900 Z" fill="none" stroke="#a98fc9" stroke-opacity=".6" stroke-width="3"/>
-    <rect width="1600" height="900" fill="url(#pg)"/>
-  </svg>
-  <div class="portal-title"><div class="pt-mono"></div><b>Advaith Sajith</b><span>Case file AS-11 &middot; enter</span></div>
+<div id="doorway" aria-hidden="true">
+  <div class="dw-wall"><div class="dw-frieze"><div class="dw-mono"></div><b id="dwTitle">Advaith Sajith</b><span id="dwSub">Case file AS-11</span></div></div>
+  <div class="dw-arch"><div class="dw-doors"><i class="dl"><em></em></i><i class="dr"><em></em></i></div></div>
+  <div class="dw-dust" id="dwDust"></div>
 </div>
-<div id="archWipe" aria-hidden="true"><div class="aw-in"><div class="aw-mono"></div><b id="awTitle"></b></div></div>
 <div class="clues" id="clues" aria-hidden="true"></div>
 <canvas id="silk" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
@@ -1617,34 +1639,58 @@ const PUBS = [
 })();
 
 
-/* ================= PORTAL + ARCH WIPES ================= */
+/* ================= DOORWAY: kick the doors open, then fly through ================= */
 (function () {
-  const mono = document.querySelector(".logo .mono").outerHTML;
-  document.querySelectorAll(".pt-mono, .aw-mono").forEach(d => d.innerHTML = mono);
-  const portal = $("#portal");
-  window.enterPortal = () => {
-    if (reduce || !portal) { portal && portal.remove(); return; }
-    setTimeout(() => { portal.classList.add("go"); document.body.classList.add("portal-in"); }, 700);
-    setTimeout(() => { portal.remove(); document.body.classList.remove("portal-in"); }, 2600);
-  };
-  const wipe = $("#archWipe"), title = $("#awTitle");
+  const dw = $("#doorway"), wall = dw.querySelector(".dw-wall"), arch = dw.querySelector(".dw-arch"), L = dw.querySelector(".dl"), R = dw.querySelector(".dr"), dust = $("#dwDust");
+  dw.querySelector(".dw-mono").innerHTML = document.querySelector(".logo .mono").outerHTML;
+  let busy = false;
+  const ease = { kick: "cubic-bezier(.16,1.45,.36,1)", fly: "cubic-bezier(.7,0,.25,1)", soft: "cubic-bezier(.4,0,.2,1)" };
+  function puff() {
+    dust.innerHTML = "";
+    for (let i = 0; i < 26; i++) {
+      const b = document.createElement("b"); dust.appendChild(b);
+      const ang = Math.PI + Math.random() * Math.PI, sp = 60 + Math.random() * 160;
+      b.animate([{ transform: "translate(0,0) scale(.6)", opacity: .9 }, { transform: `translate(${Math.cos(ang) * sp}px, ${Math.sin(ang) * sp * .45 - 10}px) scale(${2 + Math.random() * 2.5})`, opacity: 0 }], { duration: 700 + Math.random() * 500, easing: "cubic-bezier(.2,.8,.3,1)", fill: "forwards" });
+    }
+  }
+  function run(onOpen, { intro = false, title = "", sub = "" } = {}) {
+    if (busy) return; busy = true;
+    $("#dwTitle").textContent = title || "Advaith Sajith"; $("#dwSub").textContent = sub || "Case file AS-11";
+    const all = [];
+    const anim = (el, kf, o) => { const x = el.animate(kf, { fill: "forwards", ...o }); all.push(x); return x; };
+    dw.classList.add("on");
+    // 1. the wall settles in (or is already there for the intro)
+    anim(dw, [{ opacity: intro ? 1 : 0 }, { opacity: 1 }], { duration: intro ? 1 : 380, easing: ease.soft });
+    anim(wall, [{ transform: "scale(1.06)", filter: "blur(4px)" }, { transform: "scale(1)", filter: "blur(0)" }], { duration: intro ? 900 : 420, easing: ease.soft });
+    const t1 = intro ? 1100 : 480;
+    setTimeout(() => {
+      onOpen && onOpen();                                   // the destination is now behind the doors
+      // 2. the kick: a jolt through the whole wall, the doors slam open with overshoot, dust off the floor
+      anim(dw, [{ transform: "translate(0,0)" }, { transform: "translate(-7px,3px)" }, { transform: "translate(6px,-2px)" }, { transform: "translate(-3px,1px)" }, { transform: "translate(0,0)" }], { duration: 260, easing: "linear" });
+      anim(L, [{ transform: "rotateY(0deg)" }, { transform: "rotateY(-112deg)" }], { duration: 640, easing: ease.kick });
+      anim(R, [{ transform: "rotateY(0deg)" }, { transform: "rotateY(112deg)" }], { duration: 700, delay: 40, easing: ease.kick });
+      puff();
+      // 3. fly through the open doorway
+      setTimeout(() => {
+        const fly = anim(dw, [{ transform: "scale(1)", opacity: 1, filter: "blur(0)" }, { transform: "scale(5.5)", opacity: 0, filter: "blur(8px)" }], { duration: 950, easing: ease.fly });
+        dw.style.transformOrigin = "50% 56vh";
+        fly.onfinish = () => { dw.classList.remove("on"); all.forEach(x => x.cancel()); dw.style.transform = ""; busy = false; };
+      }, 520);
+    }, t1);
+  }
+  window.enterPortal = () => { if (reduce) return; run(null, { intro: true }); };
   window.archTo = (id) => {
     const el = document.querySelector(id); if (!el) return;
     if (reduce) { el.scrollIntoView(); return; }
-    const eb = el.querySelector(".eyebrow"); title.textContent = eb ? eb.textContent.replace(/^\s*/, "") : "";
-    wipe.style.visibility = "visible";
-    const grow = [{ WebkitMaskSize: "0vmax", maskSize: "0vmax" }, { WebkitMaskSize: "260vmax", maskSize: "260vmax" }];
-    const a = wipe.animate(grow, { duration: 750, easing: "cubic-bezier(.7,0,.3,1)", fill: "forwards" });
-    a.onfinish = () => {
+    const eb = el.querySelector(".eyebrow");
+    run(() => {
       document.documentElement.style.scrollBehavior = "auto"; el.scrollIntoView(); document.documentElement.style.scrollBehavior = "";
-      el.animate([{ transform: "scale(1.06)", filter: "blur(6px)" }, { transform: "none", filter: "none" }], { duration: 900, easing: "cubic-bezier(.2,.8,.2,1)" });
-      const b = wipe.animate([{ opacity: 1, filter: "blur(0)" }, { opacity: 0, filter: "blur(12px)" }], { duration: 650, delay: 120, easing: "ease", fill: "forwards" });
-      b.onfinish = () => { a.cancel(); b.cancel(); wipe.style.visibility = "hidden"; };
-    };
+      el.animate([{ transform: "scale(1.05)", filter: "blur(5px)" }, { transform: "none", filter: "none" }], { duration: 1300, easing: "cubic-bezier(.2,.8,.2,1)" });
+    }, { title: eb ? eb.textContent.trim() : "", sub: "enter" });
   };
   document.addEventListener("click", e => {
     const a = e.target.closest('a[href^="#"]'); if (!a || a.getAttribute("href") === "#" || e.metaKey || e.ctrlKey) return;
-    const id = a.getAttribute("href"); if (!document.querySelector(id) || id === "#top" && scrollY < 50) return;
+    const id = a.getAttribute("href"); if (!document.querySelector(id) || (id === "#top" && scrollY < 50)) return;
     e.preventDefault(); archTo(id); history.replaceState(null, "", id);
   });
 })();
@@ -1774,6 +1820,22 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
   });
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(10, 5.2, 160, 90), mat);
   mesh.rotation.set(-1.0, 0, .22); mesh.position.set(.4, -1.25, 0); scene.add(mesh);
+  // a dreamscape gallery: real museum scans (SMK, public domain) standing in the silk, like House of Dreamers' installations
+  const statues = [];
+  scene.add(new THREE.HemisphereLight(0xf3eef9, 0x2d2142, 1.1));
+  const sKey = new THREE.DirectionalLight(0xfff0e6, 1.6); sKey.position.set(2, 4, 5); scene.add(sKey);
+  const sRim = new THREE.DirectionalLight(0x7d9be6, 1.2); sRim.position.set(-4, 2, -3); scene.add(sRim);
+  setTimeout(async () => {
+    const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
+    const tl = new THREE.TextureLoader(), mt = tl.load("assets/fabric/marble.jpg"); mt.colorSpace = THREE.SRGBColorSpace; mt.wrapS = mt.wrapT = THREE.RepeatWrapping; mt.repeat.set(3, 3);
+    const stone = new THREE.MeshStandardMaterial({ color: 0xf6f0f8, map: mt, roughness: .55, metalness: 0, transparent: true });
+    const gl = new GLTFLoader();
+    [["apollo", -2.55, 1.2, .55], ["athena", 2.55, 1.2, -.5]].forEach(([n, x, z, ry]) => gl.load(`assets/statues/${n}.glb`, g => {
+      g.scene.traverse(o => { if (o.isMesh) o.material = stone; });
+      g.scene.scale.setScalar(2.7); g.scene.position.set(x, -1.95, z); g.scene.rotation.y = ry; scene.add(g.scene); statues.push(g.scene); loop();
+    }));
+    window.__statueMat = stone;
+  }, 1200);
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1));
   function size() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
   size(); addEventListener("resize", size);
@@ -1796,6 +1858,8 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
     mesh.rotation.set(-1.0 + .62 * tilt, 0, .22 + sp * 1.8); mesh.position.set(.4 - .4 * tilt, -1.25 + 1.2 * tilt, 0);
     cam.position.z = d; cam.fov = 2 * Math.atan(K / d) * 180 / Math.PI; cam.updateProjectionMatrix();
     U.uA.value = .78 - .3 * tilt;
+    if (window.__statueMat) window.__statueMat.opacity = Math.max(0, 1 - tilt * 1.4);
+    statues.forEach((st, i) => st.rotation.y += (((i ? -.5 : .55) + U.uM.value.x * .25) - st.rotation.y) * .05);
     renderer.render(scene, cam);
     if (visible() && (!RM || Math.abs(P - sp) > .001)) requestAnimationFrame(frame); else running = false;
   }
@@ -1897,7 +1961,11 @@ async function ballet3d() {
   await new Promise(res => new GLTFLoader().load("assets/ballerina.glb", g => {
     g.scene.traverse(o => { if (o.isMesh) { const n = (o.material && o.material.name) || ""; o.material = n.startsWith("Bodice") ? bodice : n.startsWith("Shoe") ? shoe : n.startsWith("Hair") ? hairM : n.startsWith("Marble") ? stone : skin; } });
     ["Body", "ArmL", "ArmR", "LegW"].forEach(n => { const o = g.scene.getObjectByName(n); if (o) { parts[n] = o; o.rotation.order = "YZX"; } });
-    body.add(g.scene); const pl = g.scene.getObjectByName("Plinth"); if (pl) { pl.removeFromParent(); scene.add(pl); } res();
+    body.add(g.scene); const pl = g.scene.getObjectByName("Plinth"); if (pl) { pl.removeFromParent(); scene.add(pl); }
+    [["hebe", -.78, -1.7, .35], ["discobolus", .82, -1.75, -.5]].forEach(([n, x, z, ry]) => new GLTFLoader().load(`assets/statues/${n}.glb`, h => {
+      h.scene.traverse(o => { if (o.isMesh) o.material = stone; }); h.scene.scale.setScalar(1.6); h.scene.position.set(x, -.4, z); h.scene.rotation.y = ry; scene.add(h.scene); try { kick(); } catch (e) {}
+    }));
+    res();
   }, undefined, () => res()));
 
   // ---- skirt: three parametric layers whose flare follows the physics ----
