@@ -1534,11 +1534,11 @@ $("#recordGrid").innerHTML = RECORD.map(([t, sub, items], i) => `<details${i < 2
   function render() {
     fs = parseFloat(getComputedStyle(wordEl).fontSize);
     const br = box.getBoundingClientRect(), wl = wordEl.getBoundingClientRect().left - br.left;
+    const ol = L.map(x => x.offsetLeft), base = wordEl.querySelector(".bl0").getBoundingClientRect().bottom - br.top;
     L.forEach((s, i) => s.style.transform = `translateX(${off[i]}em)`);
-    gaps.forEach((g, j) => { const i = j + 1, v = Math.round((off[i] - off[i - 1]) * 1000); g.textContent = (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v); g.style.left = (wl + L[i].offsetLeft + (off[i - 1] + off[i]) / 2 * fs) + "px"; g.style.top = "80%"; });
-    ghosts.forEach((g, i) => g.style.left = (wl + L[i].offsetLeft) + "px");
+    gaps.forEach((g, j) => { const i = j + 1, v = Math.round((off[i] - off[i - 1]) * 1000); g.textContent = (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v); g.style.left = (wl + ol[i] + (off[i - 1] + off[i]) / 2 * fs) + "px"; g.style.top = "80%"; });
+    ghosts.forEach((g, i) => g.style.left = (wl + ol[i]) + "px");
     mc.font = `500 ${fs}px "Bodoni Moda"`;
-    const base = wordEl.querySelector(".bl0").getBoundingClientRect().bottom - br.top;
     const v = { base: 0, xh: mc.measureText("x").actualBoundingBoxAscent, cap: mc.measureText("H").actualBoundingBoxAscent };
     lines.forEach(([d, k]) => d.style.top = (base - v[k]) + "px");
   }
@@ -1665,14 +1665,15 @@ let stars = 0; $("#star").onclick = () => { if (++stars % 7 === 0) caseClosed();
   if (!matchMedia("(hover: hover) and (pointer: fine)").matches || reduce) { $("#ring").remove(); $("#pdot").remove(); return; }
   document.documentElement.classList.add("pcursor");
   const ring = $("#ring"), dot = $("#pdot"), label = $("#ringLabel");
-  let x = -100, y = -100, rx = -100, ry = -100, rot = 0, running = false;
+  let x = -100, y = -100, rx = -100, ry = -100, rot = 0, running = false, seen = false;
+  ring.style.opacity = 0; dot.style.opacity = 0;   // hidden until the mouse first moves, so it never parks in the corner
   function step() {
     const dx = x - rx, dy = y - ry; rx += dx * .2; ry += dy * .2;
     rot += Math.hypot(dx, dy) * .35;                         // the pentagon turns as it travels, like a wheel
     ring.style.transform = `translate(${rx}px, ${ry}px)`; ring.style.setProperty("--rot", rot.toFixed(1) + "deg");
     if (Math.abs(dx) + Math.abs(dy) > .4) requestAnimationFrame(step); else running = false;
   }
-  addEventListener("pointermove", e => { x = e.clientX; y = e.clientY; dot.style.transform = `translate(${x}px, ${y}px)`; if (!running) { running = true; requestAnimationFrame(step); } });
+  addEventListener("pointermove", e => { x = e.clientX; y = e.clientY; if (!seen && e.pointerType === "mouse") { seen = true; rx = x; ry = y; ring.style.opacity = 1; dot.style.opacity = 1; } dot.style.transform = `translate(${x}px, ${y}px)`; if (!running) { running = true; requestAnimationFrame(step); } });
   addEventListener("pointerdown", () => ring.classList.add("press")); addEventListener("pointerup", () => ring.classList.remove("press"));
   document.addEventListener("pointerleave", () => { ring.style.opacity = 0; dot.style.opacity = 0; });
   document.addEventListener("pointerenter", () => { ring.style.opacity = 1; dot.style.opacity = 1; });
@@ -1921,10 +1922,10 @@ const PUBS = [
   // 1. each section has its own light; the accent colours and the silk wave drift toward it
   const THEMES = { top: ["#b9a3e3", "#e381a8"], work: ["#9fb4ee", "#b9a3e3"], novel: ["#e381a8", "#ff9a76"], pages: ["#f2b8a0", "#e381a8"], swan: ["#8ec9b5", "#9fb4ee"],
     reel: ["#e9a6c9", "#b9a3e3"], beyond: ["#f3c98b", "#e381a8"], album: ["#f3c98b", "#b9a3e3"], record: ["#9fb4ee", "#8ec9b5"], timeline: ["#b9a3e3", "#9fb4ee"], type: ["#c9b6ee", "#e381a8"], contact: ["#e381a8", "#b9a3e3"] };
-  const root = document.documentElement; let cur = "";
+  const root = document.documentElement; let cur = "", accentNow = "#e381a8";
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return; const id = e.target.id; if (!THEMES[id] || id === cur) return; cur = id;
-    root.style.setProperty("--ember", THEMES[id][0]); root.style.setProperty("--accent2", THEMES[id][1]);
+    root.style.setProperty("--ember", THEMES[id][0]); root.style.setProperty("--accent2", THEMES[id][1]); accentNow = THEMES[id][1];
     window.__silkTint && window.__silkTint(THEMES[id][0], THEMES[id][1]);
     window.__mascot && window.__mascot(id);
   }), { rootMargin: "-45% 0px -45% 0px" });
@@ -1945,7 +1946,7 @@ const PUBS = [
   (function frame() {
     requestAnimationFrame(frame); if (document.hidden) return; t += .016;
     cx.clearRect(0, 0, W, H);
-    const accent = getComputedStyle(root).getPropertyValue("--accent2").trim() || "#e381a8";
+    const accent = accentNow;
     for (const st of stars) { const a = Math.max(0, Math.sin(t * st.sp + st.ph)) ** 3; if (a > .02) sparkle(st.x * W, st.y * H, st.s * (.6 + a), a * .75, "#fff5fb"); }
     for (let i = dust.length - 1; i >= 0; i--) { const d = dust[i]; d.x += d.vx; d.y += d.vy; d.life -= .022; if (d.life <= 0) { dust.splice(i, 1); continue; } sparkle(d.x, d.y, d.s * d.life, d.life * .9, i % 3 ? "#fff" : accent); }
     cx.globalAlpha = 1;
@@ -2106,7 +2107,7 @@ import * as THREE from "three";
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const DPR = Math.min(devicePixelRatio || 1, 1.5);
 function makeRenderer(canvas) {
-  try { const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "low-power" }); r.setPixelRatio(DPR); r.setClearColor(0, 0); return r; }
+  try { const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "low-power" }); r.setPixelRatio(DPR); r.setClearColor(0, 0); r.debug.checkShaderErrors = /[?&]debug\b/.test(location.search); return r; }
   catch (e) { return null; }
 }
 function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEach(e => { on = e.isIntersecting; if (on) fn(); })).observe(el); return () => on; }
@@ -2175,6 +2176,7 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
   // Scroll-driven dolly zoom (the "Vertigo" contra-zoom): the camera travels toward the silk while the
   // field of view widens to keep the cloth's centre the same size, so the space around it stretches.
   const K = 7 * Math.tan(16 * Math.PI / 180); let sp = 0;
+  let SH = document.documentElement.scrollHeight; new ResizeObserver(() => { SH = document.documentElement.scrollHeight; }).observe(document.body);
   const visible = () => !document.hidden;
   document.addEventListener("visibilitychange", () => loop());
   addEventListener("scroll", () => loop(), { passive: true });
@@ -2184,7 +2186,7 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
     const dt = Math.min(.05, (now - last) / 1000); last = now;
     if (!RM) U.uT.value += dt;
     U.uM.value.lerp(target, .05); U.uC1.value.lerp(tint1, .03); U.uC2.value.lerp(tint2, .03);
-    const P = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight); sp += (P - sp) * (RM ? 1 : .08);
+    const P = scrollY / Math.max(1, SH - innerHeight); sp += (P - sp) * (RM ? 1 : .08);
     const tilt = Math.min(1, sp * 7), d = 7 - 4.4 * Math.sin(Math.PI * sp);
     mesh.rotation.set(-1.0 + .62 * tilt, 0, .22 + sp * 1.8); mesh.position.set(.4 - .4 * tilt, -1.25 + 1.2 * tilt, 0);
     cam.position.z = d; cam.fov = 2 * Math.atan(K / d) * 180 / Math.PI; cam.updateProjectionMatrix();
@@ -2199,17 +2201,21 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
 
 /* ---------- 2. The type: a 3D letterform with its metric guides ---------- */
 async function glyph() {
-  const [{ FontLoader }, { TextGeometry }, { RoomEnvironment }] = await Promise.all([
-    import("three/addons/loaders/FontLoader.js"), import("three/addons/geometries/TextGeometry.js"), import("three/addons/environments/RoomEnvironment.js")]);
+  const [{ FontLoader }, { TextGeometry }] = await Promise.all([
+    import("three/addons/loaders/FontLoader.js"), import("three/addons/geometries/TextGeometry.js")]);
   const canvas = document.getElementById("glyph3d"), stage = document.getElementById("glyphStage");
   const renderer = makeRenderer(canvas); if (!renderer) return;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.outputColorSpace = THREE.SRGBColorSpace;
   const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(30, 1, .1, 100); cam.position.set(0, .2, 9);
-  const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), .04).texture;
+  // lit by a soft sky + a key light instead of a pre-blurred room: the room cost ~750ms of frozen main thread to build
+  scene.add(new THREE.HemisphereLight(0xe6e0ff, 0x1a1428, 1.3));
+  const keyL = new THREE.DirectionalLight(0xffffff, 2.6); keyL.position.set(2.5, 4, 5); scene.add(keyL);
+  const topL = new THREE.DirectionalLight(0xe9dcff, 1.2); topL.position.set(-1, 5, 2); scene.add(topL);
+  const glint = new THREE.PointLight(0xdde6ff, 55, 14); glint.position.set(1.6, 1.2, 4); scene.add(glint);
   const rim = new THREE.DirectionalLight(0xff7a45, 2.2); rim.position.set(-4, 2, -3); scene.add(rim);
   const fill = new THREE.PointLight(0x7d9be6, 30, 20); fill.position.set(3, -1, 4); scene.add(fill);
-  const group = new THREE.Group(); scene.add(group);
-  const mat = new THREE.MeshPhysicalMaterial({ color: 0xb9a3e3, metalness: .35, roughness: .16, clearcoat: 1, clearcoatRoughness: .08, iridescence: .9, iridescenceIOR: 1.35, sheen: .4, sheenColor: new THREE.Color(0x8ec9b5) });
+  const group = new THREE.Group(); scene.add(group); let gReady = false;
+  const mat = new THREE.MeshPhysicalMaterial({ color: 0xb9a3e3, metalness: .12, roughness: .2, clearcoat: 1, clearcoatRoughness: .05, iridescence: 1, iridescenceIOR: 1.4, specularIntensity: 1 });
   function guide(y, w, color, dashed) {
     const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-w / 2, y, 0), new THREE.Vector3(w / 2, y, 0)]);
     const m = dashed ? new THREE.LineDashedMaterial({ color, dashSize: .12, gapSize: .1, transparent: true, opacity: .8 }) : new THREE.LineBasicMaterial({ color, transparent: true, opacity: .9 });
@@ -2219,7 +2225,7 @@ async function glyph() {
   size(); addEventListener("resize", size);
 
   new FontLoader().load("https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/gentilis_bold.typeface.json", font => {
-    const opts = { font, size: 1.9, height: .5, depth: .5, curveSegments: 10, bevelEnabled: true, bevelThickness: .05, bevelSize: .03, bevelSegments: 4 };
+    const opts = { font, size: 1.9, height: .5, depth: .5, curveSegments: 7, bevelEnabled: true, bevelThickness: .05, bevelSize: .03, bevelSegments: 3 };
     const geo = new TextGeometry("As", opts); geo.computeBoundingBox();
     const bb = geo.boundingBox, cx = (bb.max.x + bb.min.x) / 2, cz = (bb.max.z + bb.min.z) / 2;
     const capH = bb.max.y; // "A" is the tallest glyph: its top is the cap height
@@ -2231,9 +2237,9 @@ async function glyph() {
     // side bearings as thin vertical ticks
     [bb.min.x - cx, bb.max.x - cx].forEach(x => { const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x, -.5, 0), new THREE.Vector3(x, capH + .4, 0)]); group.add(new THREE.Line(g, new THREE.LineBasicMaterial({ color: 0x8ec9b5, transparent: true, opacity: .45 }))); });
     group.position.y = -capH / 2;
-    loop();
+    (renderer.compileAsync ? renderer.compileAsync(scene, cam) : Promise.resolve()).catch(() => {}).then(() => { gReady = true; loop(); });
   }, undefined, () => { // font failed: fall back to a woven torus knot
-    group.add(new THREE.Mesh(new THREE.TorusKnotGeometry(1.2, .38, 180, 24, 2, 3), mat)); loop();
+    group.add(new THREE.Mesh(new THREE.TorusKnotGeometry(1.2, .38, 180, 24, 2, 3), mat)); gReady = true; loop();
   });
 
   // drag to turn; it drifts back to a slow sway
@@ -2243,7 +2249,7 @@ async function glyph() {
   const up = () => dragging = false; stage.addEventListener("pointerup", up); stage.addEventListener("pointercancel", up);
   const visible = watch(stage, () => loop());
   let running = false;
-  function loop() { if (running) return; running = true; requestAnimationFrame(frame); }
+  function loop() { if (running || !gReady) return; running = true; requestAnimationFrame(frame); }
   function frame() {
     if (!RM) t += .016;
     if (!dragging) { vel *= .94; rotY += vel + (RM ? 0 : Math.sin(t * .6) * .004); rotX += (.1 - rotX) * .03; }
@@ -2254,7 +2260,7 @@ async function glyph() {
   }
 }
 // Only fetch the 3D letter's extra code and font when its section is close to the screen.
-{ const st = document.getElementById("glyphStage"), io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); glyph(); } }, { rootMargin: "600px" }); io.observe(st); }
+{ const st = document.getElementById("glyphStage"), io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); glyph(); } }, { rootMargin: "1400px" }); io.observe(st); }
 
 /* ---------- 3. Film & fashion: a 3D ballerina with real spin physics ---------- */
 async function ballet3d() {
@@ -2303,7 +2309,10 @@ async function ballet3d() {
   spot.rotation.x = -Math.PI / 2; spot.position.y = -.398; scene.add(spot);
 
   // ---- the dancer: modelled in Blender (skin modifier + subdivision surfaces), loaded as glTF ----
-  const TLm = new THREE.TextureLoader(), mk = (u, srgb, r) => { const x = TLm.load(u, () => { try { kick(); } catch (e) {} }); x.wrapS = x.wrapT = THREE.RepeatWrapping; x.repeat.set(r, r); if (srgb) x.colorSpace = THREE.SRGBColorSpace; return x; };
+  const TLm = new THREE.TextureLoader(), oldSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && !/Version\/(1[7-9]|[2-9]\d)/.test(navigator.userAgent);
+  const IBL = typeof createImageBitmap === "function" && !oldSafari ? new THREE.ImageBitmapLoader().setOptions({ imageOrientation: "flipY", premultiplyAlpha: "none" }) : null;
+  const loadTex = (u, done) => { if (!IBL) return TLm.load(u, done); const x = new THREE.Texture(); x.flipY = false; IBL.load(u, bmp => { x.image = bmp; x.needsUpdate = true; done(); }, undefined, () => { TLm.load(u, t => { x.image = t.image; x.flipY = true; x.needsUpdate = true; done(); }); }); return x; };
+  const mk = (u, srgb, r) => { const x = loadTex(u, () => { try { kick(); } catch (e) {} }); x.wrapS = x.wrapT = THREE.RepeatWrapping; x.repeat.set(r, r); if (srgb) x.colorSpace = THREE.SRGBColorSpace; return x; };
   // Carrara marble, like a neoclassical figure: veined colour, a carved normal map, waxy clearcoat
   const skin = new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: mk("assets/fabric/marble.jpg", true, 2), normalMap: mk("assets/fabric/marble-n.jpg", false, 2), normalScale: new THREE.Vector2(.35, .35), roughness: .3, clearcoat: .55, clearcoatRoughness: .25, sheen: .25, sheenColor: new THREE.Color(0xd9c6e8) });
   const stone = skin.clone(); stone.map = mk("assets/fabric/marble.jpg", true, 1.2); stone.roughness = .42;
@@ -2409,9 +2418,9 @@ async function ballet3d() {
   armsBtn.onclick = () => { armsIn = !armsIn; armsBtn.textContent = armsIn ? "Open arms out" : "Pull arms in"; kick(); };
   document.getElementById("unravelBtn").onclick = () => { unTarget = unTarget ? 0 : 1; document.getElementById("unravelBtn").textContent = unTarget ? "Re-weave" : "Unravel"; if (unTarget && window.found) found(3, "She unravelled. Every thread was code all along."); kick(); };
 
-  let running = false, last = performance.now(), t = 0, firstSpin = false;
+  let running = false, last = performance.now(), t = 0, firstSpin = false, ready = false;
   const visible = watch(stage, () => { if (!firstSpin && !RM) { firstSpin = true; L = 4.5; } kick(); });
-  function kick() { if (running) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
+  function kick() { if (running || !ready) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
   function frame(now) {
     const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
     // arms: change I, keep L (so ω jumps when the arms come in)
@@ -2429,8 +2438,11 @@ async function ballet3d() {
     if (visible() && busy) requestAnimationFrame(frame); else { running = false; renderer.render(scene, cam); }
   }
   setFabric(FABRICS[0]);
+  // every shader the stage needs compiles in the background before the first frame
+  try { await renderer.compileAsync(scene, cam); } catch (e) {}
+  ready = true; kick();
 }
-{ const st = document.getElementById("balletStage"), io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); ballet3d(); } }, { rootMargin: "500px" }); io.observe(st); }
+{ const st = document.getElementById("balletStage"), io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); ballet3d(); } }, { rootMargin: "1600px" }); io.observe(st); }
 
 </script>
 
