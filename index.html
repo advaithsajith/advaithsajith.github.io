@@ -704,7 +704,27 @@
   .cgrid.solved .tok:nth-child(5n+2) { animation-delay: .08s; } .cgrid.solved .tok:nth-child(5n+3) { animation-delay: .16s; } .cgrid.solved .tok:nth-child(5n+4) { animation-delay: .24s; } .cgrid.solved .tok:nth-child(5n) { animation-delay: .32s; }
   @keyframes plateGlow { 0% { box-shadow: 0 0 0 rgba(255,200,120,0); } 40% { box-shadow: 0 0 26px rgba(255,200,120,.95); } 100% { box-shadow: 0 0 6px rgba(255,200,120,.4); } }
   .grid-wrap .clue { color: #e7c39a !important; text-align: center; }
-  @media (max-width: 760px) { .kheader { grid-template-columns: repeat(var(--cols, 5), 40px); } .kheader span { width: 36px; } .grid-wrap { padding: 16px 12px; } }
+  @media (max-width: 760px) { .grid-wrap .cgrid { height: calc(var(--rows, 5) * 40px); max-width: calc(var(--cols, 5) * 40px); } .kheader { grid-template-columns: repeat(var(--cols, 5), 40px); } .kheader span { width: 36px; } .grid-wrap { padding: 16px 12px; } }
+
+
+
+  /* tablet pass: keep the envelope inside the page, and give small controls a 24px+ target */
+  .skip { padding: 8px 4px; } footer .star { padding: 6px 8px; } .m-x { width: 28px; height: 28px; top: 3px; right: 3px; }
+  @media (max-width: 1100px) { .envelope { right: 0; } }
+  /* ================= PHONE PASS 2 ================= */
+  @media (max-width: 600px) {
+    .catalogue { columns: 2; column-gap: 10px; }
+    .item { margin-bottom: 10px; }
+    .item img { aspect-ratio: 4 / 5; object-fit: cover; object-position: top; }
+    .item .meta { padding: 9px 10px 11px; }
+    .item .meta small { font-size: 11px; letter-spacing: .06em; }
+    .item .meta b { font-size: 16px; }
+    .item .meta span { font-size: 12px; }
+    .item.text .meta { padding: 14px 10px; }
+    .px.sm, .px.xs, .crt-base b { font-size: max(9px, .8em) !important; }
+    .m-bubble { pointer-events: none; max-width: min(210px, 56vw); }
+    .m-bubble .m-x { pointer-events: auto; }
+  }
 
   /* ================= TIMELINE ================= */
   .timeline { position: relative; margin-top: 40px; }
@@ -1039,7 +1059,7 @@
     <div class="wrap beyond">
       <div class="polaroids reveal">
         <figure class="polaroid"><img src="assets/portrait.jpg" alt="Advaith in a suit" loading="lazy"><figcaption>the subject</figcaption></figure>
-        <figure class="polaroid"><img src="assets/onam.jpg" alt="Advaith at home during Onam, beside a flower pookalam" loading="lazy"><figcaption>Onam at home</figcaption></figure>
+        <figure class="polaroid"><img src="assets/t/onam.jpg" alt="Advaith at home during Onam, beside a flower pookalam" loading="lazy"><figcaption>Onam at home</figcaption></figure>
         <figure class="polaroid"><img src="assets/cover.jpg" alt="Cover of What Lies Buried in Birchdale?" loading="lazy" style="object-position:50% 20%"><figcaption>the debut</figcaption></figure>
       </div>
       <div class="reveal">
@@ -1573,7 +1593,7 @@ function confettiBurst() {
 }
 function found(id, msg) {
   if (FOUND.has(id)) { toast(msg); return; }
-  FOUND.add(id); try { localStorage.setItem("as-evidence", JSON.stringify([...FOUND])); } catch (e) {}
+  FOUND.add(id); try { JSON.parse(localStorage.getItem("as-evidence") || "[]").forEach(x => FOUND.add(x)); localStorage.setItem("as-evidence", JSON.stringify([...FOUND].sort((a, b) => a - b))); } catch (e) {}
   renderBoard(); const b = $("#eviBtn"); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");
   toast(`${msg}  Clue ${FOUND.size} of ${EGGS.length} found: ${EGGS[id - 1].name}.`, 3800);
   if (FOUND.size === EGGS.length - 1 && !FOUND.has(8)) spawnThread();
@@ -1583,6 +1603,13 @@ $("#eviBtn").onclick = () => { renderBoard(); $("#board").showModal(); };
 $("#boardClose").onclick = () => $("#board").close();
 $("#board").addEventListener("click", e => { if (e.target.id === "board") $("#board").close(); const h = e.target.dataset && e.target.dataset.hint; if (h != null) { hintLevel[+h]++; renderBoard(); } });
 renderBoard();
+// another tab of this site found a clue: take it in, so tabs never undo each other
+addEventListener("storage", e => {
+  if (e.key !== "as-evidence") return; let other = []; try { other = JSON.parse(e.newValue || "[]"); } catch (er) {}
+  const before = FOUND.size; other.forEach(x => FOUND.add(x)); if (FOUND.size === before) return;
+  renderBoard(); toast(`Clue picked up from your other tab. ${FOUND.size} of ${EGGS.length} found.`, 3200);
+  if (FOUND.has(8)) document.querySelector(".gthread")?.remove();
+});
 
 // The golden thread: a rare find, in a random section.
 function spawnThread() {
@@ -1793,7 +1820,7 @@ const PUBS = [
 ];
 (function () {
   const cat = $("#catalogue"), dlg = $("#reader");
-  cat.innerHTML = PUBS.map((p, i) => `<button class="item${p.img.length ? "" : " text"}" data-i="${i}" data-w="${p.w}">${p.img.length ? `<img src="assets/${p.img[0]}" alt="${p.t}, ${p.w}" loading="lazy" decoding="async">` : ""}<div class="meta"><small>${p.w} · ${p.d}</small><b>${p.t}</b><span>${p.k}</span></div></button>`).join("");
+  cat.innerHTML = PUBS.map((p, i) => `<button class="item${p.img.length ? "" : " text"}" data-i="${i}" data-w="${p.w}">${p.img.length ? `<img src="assets/t/${p.img[0]}" alt="${p.t}, ${p.w}" loading="lazy" decoding="async">` : ""}<div class="meta"><small>${p.w} · ${p.d}</small><b>${p.t}</b><span>${p.k}</span></div></button>`).join("");
   cat.addEventListener("click", e => {
     const b = e.target.closest(".item"); if (!b) return; const p = PUBS[+b.dataset.i];
     $("#rRef").textContent = `${p.w.toUpperCase()} · ${p.d.toUpperCase()} · ${p.k.toUpperCase()}`; $("#rTitle").textContent = p.t;
@@ -1813,7 +1840,7 @@ const PUBS = [
     ["me-arabic.jpg", "Mahrajan", "Arabic Culture Week · 2022"], ["me-reader.jpg", "strategic reader", "Achieve3000 · 2022"], ["me-reading.jpg", "Roald Dahl", "World Book Day · 2022"], ["me-george.jpg", "George's medicine", "Roald Dahl Day · 2023"],
     ["me-attainment.jpg", "top of the grade", "Attainment Award · 2023"], ["me-wsc.jpg", "Dubai Round", "World Scholar's Cup · 2023"], ["me-medals.jpg", "12 medals", "WSC · 1st overall · 2023"]];
   const T = $("#photoTable"); let z = 10;
-  T.innerHTML = SNAPS.map(([f, c, sm], i) => `<figure class="snap" data-i="${i}"><img src="assets/${f}" alt="${c}, ${sm}" loading="lazy" decoding="async"><figcaption>${c}<small>${sm}</small></figcaption></figure>`).join("");
+  T.innerHTML = SNAPS.map(([f, c, sm], i) => `<figure class="snap" data-i="${i}"><img src="assets/t/${f}" alt="${c}, ${sm}" loading="lazy" decoding="async"><figcaption>${c}<small>${sm}</small></figcaption></figure>`).join("");
   const els = [...T.children];
   function scatter() {
     const W = T.clientWidth, H = T.clientHeight, w = els[0].offsetWidth || 170, h = els[0].offsetHeight || 250;
@@ -1928,7 +1955,7 @@ const PUBS = [
   if (reduce) return;
   const wing = (cls, d) => `<path class="w ${cls}" d="${d}" fill="url(#bfg)" stroke="rgba(255,255,255,.7)" stroke-width=".6"/>`;
   const svg = `<svg viewBox="0 0 26 22"><defs><linearGradient id="bfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe3f0"/><stop offset=".5" stop-color="#e381a8"/><stop offset="1" stop-color="#b9a3e3"/></linearGradient></defs>${wing("l", "M13 11 C 6 0, -2 4, 4 11 C -1 17, 7 21, 13 12")}${wing("r", "M13 11 C 20 0, 28 4, 22 11 C 27 17, 19 21, 13 12")}<rect x="12.3" y="7" width="1.4" height="9" rx=".7" fill="#3d2a5c"/></svg>`;
-  const flies = [0, 1, 2].map(i => { const b = document.createElement("div"); b.className = "butterfly"; b.innerHTML = svg; b.setAttribute("aria-hidden", "true"); document.body.appendChild(b);
+  const flies = (innerWidth < 600 ? [0] : [0, 1, 2]).map(i => { const b = document.createElement("div"); b.className = "butterfly"; b.innerHTML = svg; b.setAttribute("aria-hidden", "true"); document.body.appendChild(b);
     const f = { el: b, x: Math.random() * innerWidth, y: Math.random() * innerHeight, a: Math.random() * 6.28, sp: .7 + Math.random() * .6, seed: Math.random() * 100 };
     b.addEventListener("click", () => { toast("You caught a butterfly. It flew off with a secret: try the Konami code."); f.a += Math.PI; f.sp = 3.5; setTimeout(() => f.sp = .9, 1200); }); return f; });
   (function fly() {
@@ -1959,7 +1986,7 @@ const PUBS = [
   let cur = "", n = 0, hideT = 0, dismissed = false;
   try { dismissed = sessionStorage.getItem("origami-off") === "1"; } catch (e) {}
   if (dismissed) m.classList.add("gone");
-  function say(text, ms = 5200) { if (dismissed) return; txt.textContent = text; bub.classList.add("show"); clearTimeout(hideT); hideT = setTimeout(() => bub.classList.remove("show"), ms); }
+  function say(text, ms = 5200) { if (dismissed) return; if (innerWidth < 600) ms = Math.min(ms, 3400); txt.textContent = text; bub.classList.add("show"); clearTimeout(hideT); hideT = setTimeout(() => bub.classList.remove("show"), ms); }
   window.__mascot = id => {
     if (!LINES[id] || id === cur) return; cur = id; n = 0;
     m.querySelectorAll(".acc").forEach(a => a.classList.toggle("on", a.dataset.for.split(" ").includes(id)));
