@@ -671,7 +671,9 @@
     background: linear-gradient(135deg, #fff, color-mix(in srgb, var(--ember) 35%, #fff)); box-shadow: 0 12px 30px -10px rgba(8,5,16,.6), 0 0 0 1px rgba(255,255,255,.6) inset;
     opacity: 0; transform: translateY(8px) scale(.92); transform-origin: 0 100%; transition: opacity .3s, transform .4s cubic-bezier(.2,1.4,.4,1); pointer-events: none; }
   .m-bubble.show { opacity: 1; transform: none; pointer-events: auto; }
-  .m-x { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: rgba(27,20,40,.08); color: #1b1428; font-size: 11px; cursor: pointer; }
+  .m-hit { position: absolute; inset: 0; z-index: 2; background: none; border: 0; border-radius: 50%; cursor: pointer; }
+  .m-hit:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+  .m-x { position: absolute; z-index: 3; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: rgba(27,20,40,.08); color: #1b1428; font-size: 11px; cursor: pointer; }
   @keyframes mBob { 50% { transform: translateY(-4px) rotate(-1.5deg); } }
   @keyframes mFlap { 50% { transform: rotate(-18deg) translateY(-3px); } }
   @keyframes mHop { 0% { transform: none; } 35% { transform: translateY(-22px) rotateY(180deg); } 70% { transform: translateY(0) rotateY(360deg) scale(1.05, .92); } 100% { transform: none; } }
@@ -1162,8 +1164,9 @@
   <div class="file-body" id="fBody"></div>
 </dialog>
 <div class="toast" id="toast"></div>
-<div class="mascot" id="mascot" role="button" tabindex="0" aria-label="Origami, Advaith's paper swan. Click for a hint.">
-  <div class="m-bubble" id="mBubble"><span id="mText"></span><button class="m-x" id="mX" aria-label="Hide the swan">✕</button></div>
+<div class="mascot" id="mascot">
+  <button class="m-hit" aria-label="Origami the paper swan: show a hint"></button>
+  <div class="m-bubble" id="mBubble" role="status" aria-live="polite"><span id="mText"></span><button class="m-x" id="mX" aria-label="Hide the swan">✕</button></div>
   <svg class="m-swan" viewBox="0 0 120 120" aria-hidden="true">
     <defs>
       <linearGradient id="mf1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="var(--ember)"/></linearGradient>
@@ -1965,7 +1968,6 @@ const PUBS = [
   };
   const next = () => { const l = LINES[cur] || LINES.top; n = (n + 1) % l.length; say(l[n]); m.classList.remove("wave"); void m.offsetWidth; m.classList.add("wave"); };
   m.addEventListener("click", e => { if (e.target.closest("#mX")) return; if (dismissed) { dismissed = false; m.classList.remove("gone"); try { sessionStorage.removeItem("origami-off"); } catch (er) {} } next(); });
-  m.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); next(); } });
   $("#mX").addEventListener("click", e => { e.stopPropagation(); bub.classList.remove("show"); dismissed = true; m.classList.add("gone"); try { sessionStorage.setItem("origami-off", "1"); } catch (er) {} toast("Origami is napping. Reload to wake the swan."); });
   window.__mascot("top"); setTimeout(() => say(LINES.top[0] + " " + LINES.top[1], 6500), 3800);
 })();
