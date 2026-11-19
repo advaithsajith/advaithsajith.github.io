@@ -446,14 +446,14 @@
 
   /* ================= CONTRA-ZOOM BANDS (paper cutouts) ================= */
   .dz { height: 150vh; padding: 0; }
-  .dz-frame { position: sticky; top: 0; height: 100vh; display: grid; place-items: center; overflow: hidden; }
-  .dz-win { position: absolute; left: 0; top: 0; width: 100%; height: 100%; clip-path: inset(8% round 18px); }
+  .dz-frame { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-items: center; overflow: hidden; container-type: size; }
+  .dz-win { position: absolute; left: 0; top: 0; width: 100%; height: 100%; clip-path: inset(8% round 18px); clip-path: inset(16cqmin round 18px); }
   .dz-win img { width: 100%; height: 100%; object-fit: cover; }
   .dz.dzlive .dz-win { clip-path: none; }
   .dz.dzlive .dz-win img { opacity: 0; }
   .dz-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .dz.dzlive .dz-win::after { display: none; }
-  .dz-win::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,10,20,.25), rgba(13,10,20,.05) 40%, rgba(13,10,20,.55)); }
+  .dz-win::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 72% 72% at 50% 50%, transparent 62%, rgba(0,0,0,.3)), linear-gradient(180deg, rgba(13,10,20,.25), rgba(13,10,20,.05) 40%, rgba(13,10,20,.55)); }
   .dz-cap { position: relative; z-index: 2; text-align: center; transform: scale(var(--c, 1)); opacity: var(--o, 1); padding: 0 16px; }
   .dz-cap .eyebrow { justify-content: center; color: var(--cream); }
   .dz-cap b { display: block; font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(40px, 8vw, 120px); line-height: .95; color: var(--cream); text-shadow: 0 6px 40px rgba(13,10,20,.7); }
@@ -815,7 +815,7 @@
     .kern .gap { display: none; } .kern.reveal-nat .gap { display: block; font-size: var(--t-xs); }
     .kern .mline b { display: none; }
     section { padding: 72px 0; }
-    .dz { height: 120vh; }
+    .dz { height: 150vh; }
     .stage .hud { top: 6px; }
   }
 </style>
@@ -1028,8 +1028,8 @@
           <button class="btn-a ghost" id="unravelBtn">Unravel</button>
         </div>
         <p class="ctl-hint">Drag sideways to spin her. She slows down on her own, because the floor pushes back.</p>
-        <div class="fabrics" id="fabrics" role="radiogroup" aria-label="Choose the fabric of the skirt"></div>
-        <p class="fabric-note" id="fabricNote"></p>
+        <div class="fabrics" id="fabrics" role="radiogroup" aria-label="Choose the fabric of the skirt"><button role="radio" data-n="Tulle" aria-checked="true" class="on"><i style="background:#f3eef9 url(assets/fabric/tulle-sw.jpg) center/cover"></i>Tulle</button><button role="radio" data-n="Silk" aria-checked="false"><i style="background:#b9a3e3 url(assets/fabric/silk-sw.jpg) center/cover"></i>Silk</button><button role="radio" data-n="Chiffon" aria-checked="false"><i style="background:#9fc0f0 url(assets/fabric/chiffon-sw.jpg) center/cover"></i>Chiffon</button><button role="radio" data-n="Velvet" aria-checked="false"><i style="background:#4a2a5e url(assets/fabric/velvet-sw.jpg) center/cover"></i>Velvet</button><button role="radio" data-n="Kasavu" aria-checked="false"><i style="background:#f3ead3 url(assets/fabric/kasavu-sw.jpg) center/cover"></i>Kasavu</button><button role="radio" data-n="Jacquard" aria-checked="false"><i style="background:#7d9be6 url(assets/fabric/jacquard-sw.jpg) center/cover"></i>Jacquard</button></div>
+        <p class="fabric-note" id="fabricNote"><b>Tulle</b> is a fine hexagonal net of nylon or silk. Stacked in stiff layers it makes the classical pancake tutu, which hardly flares at all: that is the point, the legs stay visible.</p>
       </div>
       <div class="reveal">
         <p class="eyebrow">V &middot; Film &amp; fashion</p>
@@ -1761,12 +1761,15 @@ let stars = 0; $("#star").onclick = () => { if (++stars % 7 === 0) caseClosed();
       // depth: the ground (bottom) is near, the sky (top) is far
       float d = smoothstep(.15, .95, iuv.y);
       // dolly zoom: the camera pushes in while the lens widens, so the near ground holds still and the far plane rushes toward you
+      // x uses one zoom for the whole picture so vertical edges stay straight (a depth-varying x zoom bent every tower);
+      // only y varies with depth, which keeps the near ground steady while the far plane stretches away
       vec2 c = vec2(.5, .38);
-      float zoom = mix(1. + .06 * e, 1. + .9 * e, d);
-      vec2 w = c + (iuv - c) / zoom;
-      w.x += (w.x - .5) * d * e * .12;                          // a little lateral stretch at the horizon
+      float zx = 1. + .18 * e, zy = mix(1. + .06 * e, 1. + .62 * e, d);
+      vec2 w = vec2(c.x + (iuv.x - c.x) / zx, c.y + (iuv.y - c.y) / zy);
       vec3 col = texture2D(T, clamp(w, 0., 1.)).rgb;
       col *= 1. - .35 * smoothstep(.45, .9, length(uv - .5));   // vignette
+      float ty = 1. - uv.y, sh = ty < .4 ? mix(.25, .05, ty / .4) : mix(.05, .55, (ty - .4) / .6);
+      col = mix(col, vec3(.051, .039, .078), sh);                // the caption shade, same as the CSS overlay
       // the window opens from an inset rounded card to the full frame
       vec2 hb = R * .5 - ins; float m = 1. - smoothstep(-1., 1., rbox(f - R * .5, hb, rad));
       gl_FragColor = vec4(col, m);
@@ -1775,21 +1778,30 @@ let stars = 0; $("#star").onclick = () => { if (++stars % 7 === 0) caseClosed();
   const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const U = n => gl.getUniformLocation(prog, n), uR = U("R"), uI = U("I"), uE = U("e"), uIns = U("ins"), uRad = U("rad");
-  const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
-  [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach(k => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE));
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
   let cur = null, raf = 0;
+  const texOf = new Map();   // one texture per band, uploaded once, so switching bands is just a bind
   bands.forEach(b => { const im = b.querySelector("img"); im.loading = "eager"; im.addEventListener("load", () => { if (!raf) raf = requestAnimationFrame(upd); }); });
+  function upload(b, im) {
+    const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+    [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach(k => gl.texParameteri(gl.TEXTURE_2D, k, gl.CLAMP_TO_EDGE));
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im); texOf.set(b, t); return t;
+  }
   function upd() {
     raf = 0;
-    let best = null;
-    for (const b of bands) { const r = b.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) { best = { b, r }; break; } }
+    // read every rectangle first, then write: no layout thrash
+    const vh = innerHeight, rows = bands.map(b => { const r = b.getBoundingClientRect(), f = b.firstElementChild.getBoundingClientRect(); return { b, r, fh: f.height, vis: Math.max(0, Math.min(f.bottom, vh) - Math.max(f.top, 0)) }; });
+    let best = null, near = null;
+    for (const x of rows) {
+      if (x.r.top < vh && x.r.bottom > 0) { const p = Math.max(0, Math.min(1, -x.r.top / Math.max(1, x.r.height - x.fh))); x.e = p * p * (3 - 2 * p); caps(x.b.style)(p, x.e); if (!best || x.vis > best.vis) best = x; }
+      if (!near && !texOf.has(x.b) && x.r.top < vh * 2.5 && x.r.bottom > -vh) near = x;   // warm the next band's texture before it arrives
+    }
+    if (near) { const im = near.b.querySelector("img"); if (im.complete && im.naturalWidth && (!best || near.b !== best.b)) upload(near.b, im); }
     if (!best) return;
-    const { b, r } = best, im = b.querySelector("img");
-    const p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight))), e = p * p * (3 - 2 * p);
-    caps(b.style)(p, e);
+    const { b, e } = best, im = b.querySelector("img");
     if (!im.complete || !im.naturalWidth) return;
-    if (cur !== b) { if (cur) cur.classList.remove("dzlive"); b.classList.add("dzlive"); b.querySelector(".dz-win").appendChild(cv); gl.bindTexture(gl.TEXTURE_2D, tex); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im); cur = b; }
+    if (cur !== b) { if (cur) cur.classList.remove("dzlive"); b.classList.add("dzlive"); b.querySelector(".dz-win").appendChild(cv); cur = b; }
+    gl.bindTexture(gl.TEXTURE_2D, texOf.get(b) || upload(b, im));
     const dpr = Math.min(devicePixelRatio || 1, 1.5), W = cv.clientWidth * dpr | 0, H = cv.clientHeight * dpr | 0;
     if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
     gl.viewport(0, 0, W, H); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
@@ -2369,7 +2381,7 @@ async function ballet3d() {
     kick();
   }
   const fb = document.getElementById("fabrics");
-  fb.innerHTML = FABRICS.map(f => `<button role="radio" data-n="${f.n}"><i style="background:${f.c} url(assets/fabric/${f.tex.replace(/\.(png|jpg)$/, "-sw.jpg")}) center/cover"></i>${f.n}</button>`).join("");
+  if (!fb.children.length) fb.innerHTML = FABRICS.map(f => `<button role="radio" data-n="${f.n}"><i style="background:${f.c} url(assets/fabric/${f.tex.replace(/\.(png|jpg)$/, "-sw.jpg")}) center/cover"></i>${f.n}</button>`).join("");
   fb.addEventListener("click", e => { const b = e.target.closest("button"); if (b) setFabric(FABRICS.find(f => f.n === b.dataset.n)); });
 
   // ---- physics state ----
