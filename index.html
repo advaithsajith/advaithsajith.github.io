@@ -89,6 +89,24 @@
 
   footer { position: relative; z-index: 1; text-align: center; padding: 0 20px 40px; font: 12px var(--mono); color: var(--muted); letter-spacing: .06em; }
   footer a { color: var(--cream-dim); }
+
+  /* ---- every name hides another: Scrabble tiles ---- */
+  .namebox { position: relative; }
+  h1#name { cursor: pointer; transition: opacity .35s; }
+  .namebox.playing h1#name { opacity: 0; }
+  .tiles { position: absolute; inset: 0; pointer-events: none; }
+  .tile { position: absolute; left: 0; top: 0; display: grid; place-items: center; border-radius: 7px; opacity: 0;
+    font: 700 calc(var(--ts) * .58) / 1 var(--serif); color: #2a1c12; font-variation-settings: "opsz" 28;
+    background: radial-gradient(120% 90% at 30% 20%, #fbf1dc, #ecd7ae 60%, #dcc08f), repeating-linear-gradient(95deg, rgba(120,80,40,.06) 0 2px, transparent 2px 7px);
+    box-shadow: inset 0 -3px 0 rgba(120,80,40,.35), inset 0 1px 0 rgba(255,255,255,.7), 0 8px 18px -8px rgba(0,0,0,.7);
+    transition: transform .85s cubic-bezier(.3,1.25,.4,1), opacity .4s; will-change: transform; transform-origin: 0 0; }
+  .tile sub { position: absolute; right: 12%; bottom: 9%; font: 600 calc(var(--ts) * .2) / 1 var(--mono); color: #6b4a2c; }
+  .tile.spare { filter: saturate(.7) brightness(.85); }
+  .anagram { position: absolute; left: 0; right: 0; top: 100%; margin: 0; font: 600 12px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--sage); opacity: 0; transition: opacity .5s; pointer-events: none; }
+  .anagram.show { opacity: 1; }
+  header > .tag, header > .mono-label { transition: opacity .6s; }
+  header.tiles-on > .tag, header.tiles-on > .mono-label { opacity: .07; }
+  .shuffle { font: inherit; color: var(--ember); background: none; border: 0; padding: 6px 2px; min-height: 24px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 480px) { .mono-label { letter-spacing: .14em; font-size: 11px; } }
   @media (prefers-reduced-motion: reduce) { .enter, .enter span { transition: none; } }
 </style>
@@ -98,10 +116,10 @@
   <header>
     <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><polygon points="50,6 92,36.5 76,86 24,86 8,36.5"/><circle class="c2" cx="50" cy="50" r="12"/><circle cx="50" cy="50" r="24"/><circle class="dot" cx="50" cy="50" r="3.5"/></svg>
     <p class="mono-label">Novelist &amp; engineer · Grade 11 · Dubai</p>
-    <h1 id="name" aria-label="Advaith Sajith"><span class="w">Advaith</span> <span class="w">Sajith</span></h1>
+    <div class="namebox"><h1 id="name" aria-label="Advaith Sajith" title="Click to shuffle the letters"><span class="w">Advaith</span> <span class="w">Sajith</span></h1><div class="tiles" id="tiles" aria-hidden="true"></div><p class="anagram" id="anagram" aria-live="polite"></p></div>
     <p class="tag">I build things and write things that let people into ideas <em>that usually keep them out.</em></p>
     <a class="enter" href="experience.html">Enter the full case file <span aria-hidden="true">→</span></a>
-    <div class="note">3D scenes, eight hidden clues, sound if you want it</div>
+    <div class="note">3D scenes, eight hidden clues, sound if you want it · <button type="button" class="shuffle" id="shuffleBtn">shuffle my name</button></div>
   </header>
 
   <section aria-labelledby="contents-h">
@@ -179,6 +197,62 @@ document.getElementById("telBtn").onclick = () => { location.href = "tel:+971" +
   }
   t0 = performance.now() + 120 + L.length * 55 + 1100; measure(); requestAnimationFrame(frame);
   });
+})();
+
+// Every name hides another: the letters become Scrabble tiles, search, and find THAT JAVA DISH (one I left over).
+(function () {
+  const box = document.querySelector(".namebox"), h = document.getElementById("name"), layer = document.getElementById("tiles"), cap = document.getElementById("anagram");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const NAME = ["ADVAITH", "SAJITH"], FOUND = ["THAT JAVA", "DISH"], VAL = { A: 1, D: 2, V: 4, I: 1, T: 1, H: 4, S: 1, J: 8 };
+  const letters = NAME.join("").split("");
+  let tiles = [], busy = false;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  function sizeFor(rows) {   // tiles fill the name's own box, so nothing around it moves
+    const W = box.clientWidth, H = Math.max(h.offsetHeight, 90), most = Math.max(...rows.map(r => r.length));
+    return Math.floor(Math.min((W - 8) / (most * 1.12), (H - 8) / (rows.length * 1.15), 76));
+  }
+  function layoutRows(rows, ts, spare) {   // centred rows (a space is an empty slot), scaled to fit; a spare tile is pushed aside, tilted
+    const W = box.clientWidth, most = Math.max(...rows.map(r => r.length)), k = Math.min(1, (W - 8) / (most * ts * 1.12)), e = ts * k, gap = e * .12, pos = [];
+    const top0 = (h.offsetHeight - rows.length * e - (rows.length - 1) * gap) / 2;
+    rows.forEach((row, r) => { const w = row.length * e + (row.length - 1) * gap, x0 = (W - w) / 2;
+      [...row].forEach((ch, i) => { if (ch !== " ") pos.push({ ch, k, x: x0 + i * (e + gap), y: top0 + r * (e + gap), rot: 0 }); }); });
+    pos.bottom = top0 + rows.length * (e + gap);
+    (spare || []).forEach((ch, j) => pos.push({ ch, k, x: Math.min(W - e * 1.2, W / 2 + (rows[rows.length - 1].length / 2 + .8 + j * 1.1) * (e + gap)), y: top0 + (rows.length - 1) * (e + gap) + e * .25, rot: 16, spare: true }));
+    return pos;
+  }
+  function assign(targets) {   // each tile goes to a free spot that wants its letter
+    const free = targets.slice(); return tiles.map(t => { const i = free.findIndex(p => p.ch === t.ch); return free.splice(i, 1)[0]; });
+  }
+  function place(t, p, extraRot = 0) { t.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${(p.rot || 0) + extraRot}deg) scale(${p.k || 1})`; t.el.classList.toggle("spare", !!p.spare); }
+  function build() {
+    layer.innerHTML = ""; const ts = sizeFor(NAME); layer.style.setProperty("--ts", ts + "px");
+    tiles = letters.map(ch => { const el = document.createElement("div"); el.className = "tile"; el.style.width = el.style.height = ts + "px"; el.innerHTML = ch + "<sub>" + VAL[ch] + "</sub>"; layer.appendChild(el); return { ch, el }; });
+    return ts;
+  }
+  async function play() {
+    if (busy) return; busy = true; cap.classList.remove("show");
+    const ts = build(), home = layoutRows(NAME, ts);
+    if (reduce) { cap.textContent = "hidden in my name: that java dish (+ an I)"; cap.classList.add("show"); busy = false; return; }
+    tiles.forEach((t, i) => { t.el.style.transition = "none"; place(t, home[i]); });
+    void layer.offsetWidth; tiles.forEach(t => t.el.style.transition = "");
+    box.classList.add("playing"); box.parentElement.classList.add("tiles-on"); tiles.forEach((t, i) => setTimeout(() => t.el.style.opacity = 1, i * 35));
+    await wait(700);
+    for (let round = 0; round < 2; round++) {   // working it out: the tiles get shuffled around
+      const spots = home.slice().sort(() => Math.random() - .5);
+      tiles.forEach((t, i) => place(t, spots[i], (Math.random() - .5) * 16)); await wait(950);
+    }
+    const fl = layoutRows(FOUND, ts, ["I"]), found = assign(fl); cap.style.top = (fl.bottom + 4) + "px";
+    tiles.forEach((t, i) => setTimeout(() => place(t, found[i], found[i].spare ? 0 : (Math.random() - .5) * 3), i * 60));
+    await wait(1100); cap.textContent = "hidden in my name"; cap.classList.add("show");
+    if (window.__tilesHold) return;   // testing hook: hold on the reveal
+    await wait(2600); cap.classList.remove("show"); box.parentElement.classList.remove("tiles-on");
+    tiles.forEach((t, i) => setTimeout(() => place(t, home[i]), i * 45)); await wait(1300);
+    box.classList.remove("playing"); tiles.forEach((t, i) => setTimeout(() => t.el.style.opacity = 0, i * 25)); await wait(700);
+    layer.innerHTML = ""; busy = false;
+  }
+  h.addEventListener("click", play); document.getElementById("shuffleBtn").addEventListener("click", play);
+  let seen = false; try { seen = sessionStorage.getItem("tiles") === "1"; } catch (e) {}
+  if (!seen && !reduce) (window.__fontsReady || Promise.resolve()).then(() => setTimeout(() => { try { sessionStorage.setItem("tiles", "1"); } catch (e) {} play(); }, 3800));
 })();
 </script>
 </body>
