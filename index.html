@@ -832,8 +832,8 @@
   .edition { font-family: var(--mono); }
   /* U02 rail */
   .rail { position: fixed; right: 10px; top: 50%; transform: translateY(-50%); z-index: 58; display: grid; justify-items: end; gap: 10px; }
-  .rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; justify-items: end; }
-  .rail a { display: flex; align-items: center; justify-content: flex-end; gap: 10px; height: 14px; text-decoration: none; }
+  .rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; justify-items: end; }
+  .rail a { display: flex; align-items: center; justify-content: flex-end; gap: 10px; height: 24px; min-width: 24px; text-decoration: none; }
   .rail a i { display: block; width: 10px; height: 1.5px; background: rgba(241,235,226,.45); transition: width .35s cubic-bezier(.2,.8,.2,1), background .3s; }
   .rail a span { font: 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cream); opacity: 0; transform: translateX(6px); transition: opacity .25s, transform .25s; white-space: nowrap; background: rgba(13,10,20,.7); padding: 1px 6px; border-radius: 4px; }
   .rail a:hover i, .rail a:focus-visible i { width: 22px; background: var(--cream); } .rail a:hover span, .rail a:focus-visible span { opacity: 1; transform: none; }
@@ -2160,7 +2160,7 @@ const PUBS = [
 (function () {
   const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
   const SECTIONS = [...document.querySelectorAll("header#top, main > section[id]")].filter(s => s.id);
-  const name = s => { const e = s.querySelector(".eyebrow"); return s.id === "top" ? "Start" : e ? e.textContent.replace(/^[IVX]+\s*·\s*/, "").replace(/^Exhibit [A-Z]\s*·\s*/, "").trim() : s.id; };
+  const name = s => { const e = s.querySelector(".eyebrow"); return s.id === "top" ? "Start" : s.id === "manifesto" ? "Manifesto" : e ? e.textContent.replace(/^[IVX]+\s*·\s*/, "").replace(/^Exhibit [A-Z]\s*·\s*/, "").trim() : s.id; };
 
   // U01 scroll-spy + U02 rail
   const navLinks = [...document.querySelectorAll("nav a.n")];
