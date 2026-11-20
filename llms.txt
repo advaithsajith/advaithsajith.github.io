@@ -2,7 +2,7 @@
 
 > Portfolio of Advaith Sajith, a Grade 11 student at GEMS New Millennium School, Al Khail (Dubai): novelist, programming-language designer and solar AI researcher.
 
-The site is a single page with interactive sections and hidden easter eggs. Key facts:
+The site has two doors: a minimal page at https://advaithsajith.github.io/ (name, contents, selected work, contact) and the full interactive case file at https://advaithsajith.github.io/experience.html (3D scenes, sections and hidden easter eggs). Key facts:
 
 - Debut mystery novel: *What Lies Buried in Birchdale?* (Expressions, DC Books Group, ISBN 978-9370989887), launched at the 45th Sharjah International Book Fair, 2026.
 - Research: SunSmart AI (reinforcement learning for bifacial solar trackers, submitted to *Energies*) and *The Advaithian Operator* (preprint, https://doi.org/10.5281/zenodo.23863175).
