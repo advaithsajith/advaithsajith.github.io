@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Instrument+Serif:ital@0;1&family=Caveat:wght@500&family=Press+Start+2P&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Caveat:wght@500&family=Press+Start+2P&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #0d0a14;
@@ -46,7 +46,7 @@
     --ok: #2f8f73;
     /* modular type scale, ratio 1.25 (major third) from 16px; 11px is the floor for any text */
     --t-xs: 11px; --t-sm: 13px; --t-base: 16px; --t-md: 20px; --t-lg: 25px; --t-xl: 31px;
-    --black: "Instrument Serif", "Bodoni Moda", serif;
+    --black: "Bodoni Moda", Didot, serif;
     --hand: "Caveat", cursive;
     --display: "Bodoni Moda", Didot, serif;
     --serif: "Bodoni Moda", Didot, serif;
@@ -151,7 +151,7 @@
   .filters button:hover { color: var(--cream); border-color: var(--cream-dim); }
   .filters button.on { background: var(--ember); color: var(--ink); border-color: var(--ember); }
   .cases { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
-  .case { position: relative; background: linear-gradient(160deg, var(--ink-3), var(--ink-2)); border: 1px solid var(--line); border-radius: 4px; padding: 30px 24px 24px; cursor: pointer; overflow: hidden;
+  .case { position: relative; background: linear-gradient(160deg, var(--ink-3), var(--ink-2)); border: 1px solid var(--line); border-radius: var(--r-xs); padding: 30px 24px 24px; cursor: pointer; overflow: hidden;
     transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s; }
   .case::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
     background: radial-gradient(380px circle at var(--cx,50%) var(--cy,50%), rgba(185,163,227,.16), transparent 60%); }
@@ -164,9 +164,9 @@
   .case h3 { font-family: var(--serif); font-size: 30px; font-weight: 600; margin: 8px 0 8px; line-height: 1.05; }
   .case p { color: var(--cream-dim); font-size: 15px; margin: 0 0 18px; }
   .case .open { font-family: var(--mono); font-size: 12px; color: var(--gold-2); }
-  .case .stamp { position: absolute; right: 16px; bottom: 16px; transform: rotate(-12deg); font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .14em; color: var(--crimson); border: 2px solid var(--crimson); padding: 2px 8px; border-radius: 3px; opacity: .85; }
+  .case .stamp { position: absolute; right: 16px; bottom: 16px; transform: rotate(-12deg); font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .14em; color: var(--crimson); border: 2px solid var(--crimson); padding: 2px 8px; border-radius: var(--r-xs); opacity: .85; }
 
-  dialog.file { width: min(720px, 100% - 32px); max-height: 86vh; overflow: auto; background: var(--cream); color: var(--ink-paper); border: 0; border-radius: 3px; padding: 0; box-shadow: 0 30px 80px rgba(0,0,0,.65);
+  dialog.file { width: min(720px, 100% - 32px); max-height: 86vh; overflow: auto; background: var(--cream); color: var(--ink-paper); border: 0; border-radius: var(--r-xs); padding: 0; box-shadow: 0 30px 80px rgba(0,0,0,.65);
     background-image: radial-gradient(rgba(90,70,130,.08) 1px, transparent 1px); background-size: 4px 4px; }
   dialog.file::backdrop { background: rgba(8,4,12,.78); backdrop-filter: blur(4px); }
   dialog.file[open] { animation: drop .35s cubic-bezier(.2,.8,.2,1); }
@@ -174,12 +174,12 @@
   .file-head { padding: 26px 32px 18px; border-bottom: 2px dashed #b7a6cf; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
   .file-head .ref { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--muted-paper); }
   .file-head h3 { font-family: var(--serif); font-size: 36px; margin: 4px 0 0; line-height: 1.05; }
-  .file-head button { font: 600 12px var(--mono); background: var(--ink-paper); color: var(--cream); border: 0; border-radius: 3px; padding: 7px 12px; cursor: pointer; }
+  .file-head button { font: 600 12px var(--mono); background: var(--ink-paper); color: var(--cream); border: 0; border-radius: var(--r-xs); padding: 7px 12px; cursor: pointer; }
   .file-body { padding: 22px 32px 30px; }
   .file-body .meta { font-family: var(--mono); font-size: 12px; color: var(--muted-paper); }
   .file-body ul { padding-left: 20px; }
   .file-body li { margin: 6px 0; }
-  .file-body a.btn { display: inline-block; margin: 6px 8px 0 0; font: 600 13px var(--mono); color: var(--ink-paper); border: 1.5px solid var(--ink-paper); border-radius: 3px; padding: 7px 12px; text-decoration: none; }
+  .file-body a.btn { display: inline-block; margin: 6px 8px 0 0; font: 600 13px var(--mono); color: var(--ink-paper); border: 1.5px solid var(--ink-paper); border-radius: var(--r-xs); padding: 7px 12px; text-decoration: none; }
   .file-body a.btn:hover { background: var(--ink-paper); color: var(--cream); }
   .redact { background: var(--ink-paper); color: transparent; border-radius: 2px; cursor: pointer; transition: all .3s; }
   .redact.shown { background: rgba(255,106,43,.3); color: var(--ink-paper); }
@@ -211,7 +211,7 @@
   .broadcast { margin-top: clamp(70px, 10vw, 120px); }
   .bc-head h3 { font-family: var(--display); font-weight: 600; font-size: clamp(34px, 4.6vw, 58px); line-height: 1; margin: 0 0 14px; }
   .bc-head h3 em { font-weight: 400; color: var(--sage); }
-  .bc-stage { position: relative; aspect-ratio: 16 / 9; margin-top: 30px; border-radius: 6px; overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #241c3a, #0b0812 75%); border: 1px solid var(--line); }
+  .bc-stage { position: relative; aspect-ratio: 16 / 9; margin-top: 30px; border-radius: var(--r-sm); overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #241c3a, #0b0812 75%); border: 1px solid var(--line); }
   .bc-room { position: absolute; inset: auto 0 0 0; height: 26%; background: linear-gradient(#15101f, #0b0812); border-top: 1px solid rgba(185,163,227,.15); transition: opacity 1s; }
   /* CRT */
   .crt { position: absolute; left: 50%; top: 9%; width: 46%; transform: translateX(-50%); transition: transform .7s cubic-bezier(.7,0,.3,1), opacity .7s; z-index: 3; }
@@ -276,8 +276,8 @@
 
   /* ================= PAGES (publications) ================= */
   .pages-row { display: flex; gap: 22px; overflow-x: auto; padding: 10px 2px 26px; scroll-snap-type: x mandatory; }
-  .pages-row::-webkit-scrollbar { height: 6px; } .pages-row::-webkit-scrollbar-thumb { background: var(--plum); border-radius: 3px; }
-  .page { flex: 0 0 min(520px, 82vw); scroll-snap-align: start; background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; transition: transform .4s; }
+  .pages-row::-webkit-scrollbar { height: 6px; } .pages-row::-webkit-scrollbar-thumb { background: var(--plum); border-radius: var(--r-xs); }
+  .page { flex: 0 0 min(520px, 82vw); scroll-snap-align: start; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--r-xs); overflow: hidden; transition: transform .4s; }
   .page:hover { transform: translateY(-6px) rotate(-.4deg); }
   .page img { width: 100%; aspect-ratio: 3/2; object-fit: cover; }
   .page .cap { padding: 16px 18px 18px; }
@@ -287,7 +287,7 @@
   .page.text b { font-family: var(--serif); font-size: 30px; line-height: 1.1; }
 
   /* ================= SWAN TERMINAL ================= */
-  .terminal { margin-top: 36px; background: #07040a; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; font-family: var(--mono); font-size: 14px; }
+  .terminal { margin-top: 36px; background: #07040a; border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; font-family: var(--mono); font-size: 14px; }
   .terminal .bar { display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid var(--line); align-items: center; }
   .terminal .bar i { width: 11px; height: 11px; border-radius: 50%; background: #2c2335; }
   .terminal .bar span { margin-left: 10px; font-size: 12px; color: var(--muted); }
@@ -303,11 +303,11 @@
   .reel { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(20px, 5vw, 70px); align-items: center; }
   .stage { position: relative; aspect-ratio: 1 / 1.05; max-width: 560px; width: 100%; margin: 0 auto; }
   .stage canvas { width: 100%; height: 100%; display: block; cursor: pointer; }
-  .stage .curtain { position: absolute; top: 0; bottom: 0; width: 18%; background: repeating-linear-gradient(90deg, #5a0f1c 0 14px, #7a1626 14px 26px); box-shadow: inset -10px 0 20px rgba(0,0,0,.5); }
+  .stage .curtain { position: absolute; top: 0; bottom: 0; width: 18%; z-index: 1; background: linear-gradient(180deg, rgba(13,10,20,.35), transparent 30%, rgba(13,10,20,.55)), repeating-linear-gradient(90deg, #24152e 0, #4a2346 6px, color-mix(in srgb, var(--accent2) 45%, #3a1d3c) 13px, #4a2346 20px, #24152e 26px); box-shadow: inset -10px 0 24px rgba(0,0,0,.55), 4px 0 18px color-mix(in srgb, var(--accent2) 18%, transparent); }
   .stage .curtain.l { left: 0; border-radius: 0 0 60% 0; } .stage .curtain.r { right: 0; transform: scaleX(-1); border-radius: 0 0 60% 0; }
   .stage .hint { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .film-strip { display: flex; gap: 6px; margin-top: 26px; }
-  .film-strip span { flex: 1; height: 52px; border: 2px solid #2b2033; border-radius: 3px; background: linear-gradient(135deg, var(--plum), var(--ink-3)); position: relative; overflow: hidden; }
+  .film-strip span { flex: 1; height: 52px; border: 2px solid #2b2033; border-radius: var(--r-xs); background: linear-gradient(135deg, var(--plum), var(--ink-3)); position: relative; overflow: hidden; }
   .film-strip span::after { content: attr(data-l); position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--mono); font-size: var(--t-xs); color: var(--cream-dim); }
   .loom { font-family: var(--mono); font-size: 13px; color: var(--cream-dim); margin-top: 22px; padding: 14px 16px; border-left: 2px solid var(--gold); background: rgba(201,162,74,.06); }
 
@@ -331,7 +331,7 @@
 
   /* ================= FULL RECORD ================= */
   .record { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 34px; align-items: start; }
-  .record details { background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; }
+  .record details { background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--r-xs); }
   .record summary { list-style: none; cursor: pointer; padding: 20px 22px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
   .record summary::-webkit-details-marker { display: none; }
   .record summary b { font-family: var(--serif); font-size: 24px; font-weight: 600; }
@@ -409,13 +409,13 @@
   .evi-btn .dots { display: flex; gap: 4px; } .evi-btn .dots i { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--ember); }
   .evi-btn .dots i.f { background: var(--ember); box-shadow: 0 0 8px var(--ember); }
   .evi-btn.pop { animation: pop .6s; } @keyframes pop { 40% { transform: scale(1.15); } }
-  dialog.board { width: min(860px, 100% - 24px); max-height: 88vh; overflow: auto; border: 0; padding: 0; border-radius: 4px; color: var(--ink-paper);
+  dialog.board { width: min(860px, 100% - 24px); max-height: 88vh; overflow: auto; border: 0; padding: 0; border-radius: var(--r-xs); color: var(--ink-paper);
     background: #b98f62 radial-gradient(rgba(0,0,0,.12) 1px, transparent 1.5px) 0 0 / 6px 6px; box-shadow: 0 30px 80px rgba(0,0,0,.65); }
   dialog.board::backdrop { background: rgba(8,4,12,.78); backdrop-filter: blur(4px); }
   dialog.board[open] { animation: drop .35s cubic-bezier(.2,.8,.2,1); }
   .board-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 22px 26px 6px; }
   .board-head h3 { font-family: var(--display); font-style: italic; font-size: 34px; margin: 0; color: var(--ink-paper); }
-  .board-head button { font: 600 12px var(--mono); background: var(--ink-paper); color: var(--cream); border: 0; border-radius: 3px; padding: 7px 12px; cursor: pointer; }
+  .board-head button { font: 600 12px var(--mono); background: var(--ink-paper); color: var(--cream); border: 0; border-radius: var(--r-xs); padding: 7px 12px; cursor: pointer; }
   .board-sub { padding: 0 26px; font: 12px var(--mono); color: var(--ink-paper); }
   .notes { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 18px; padding: 22px 26px 28px; }
   .note { position: relative; background: #f6efd9; padding: 18px 14px 14px; min-height: 150px; box-shadow: 0 8px 16px rgba(0,0,0,.3); font-size: 14px; line-height: 1.4; }
@@ -424,17 +424,17 @@
   .note .n { font: 11px var(--mono); letter-spacing: .14em; color: var(--muted-paper); }
   .note b { display: block; font-family: var(--display); font-size: 20px; margin: 4px 0 6px; }
   .note .h { font-family: var(--hand); font-size: 19px; color: var(--ink-paper); }
-  .note button { margin-top: 8px; font: 11px var(--mono); background: none; border: 1px dashed var(--muted-paper); border-radius: 3px; padding: 4px 8px; cursor: pointer; color: var(--ink-paper); }
+  .note button { margin-top: 8px; font: 11px var(--mono); background: none; border: 1px dashed var(--muted-paper); border-radius: var(--r-xs); padding: 4px 8px; cursor: pointer; color: var(--ink-paper); }
   .note.f { padding-bottom: 38px; }
-  .note.f::after { content: "FOUND"; position: absolute; right: 8px; bottom: 10px; transform: rotate(-12deg); font: 700 11px var(--mono); letter-spacing: .14em; color: var(--ok); border: 2px solid var(--ok); padding: 1px 6px; border-radius: 3px; }
+  .note.f::after { content: "FOUND"; position: absolute; right: 8px; bottom: 10px; transform: rotate(-12deg); font: 700 11px var(--mono); letter-spacing: .14em; color: var(--ok); border: 2px solid var(--ok); padding: 1px 6px; border-radius: var(--r-xs); }
 
   /* ================= COMMAND PALETTE ================= */
-  nav .kbd { font: 12px var(--mono); color: #fff; background: none; border: 1px solid rgba(255,255,255,.6); border-radius: 4px; padding: 1px 7px; cursor: pointer; }
-  dialog.pal { width: min(560px, 100% - 24px); border: 1px solid rgba(185,163,227,.35); border-radius: 10px; padding: 0; background: rgba(21,16,31,.96); color: var(--cream); margin-top: 14vh; box-shadow: 0 30px 80px rgba(0,0,0,.7); }
+  nav .kbd { font: 12px var(--mono); color: #fff; background: none; border: 1px solid rgba(255,255,255,.6); border-radius: var(--r-xs); padding: 1px 7px; cursor: pointer; }
+  dialog.pal { width: min(560px, 100% - 24px); border: 1px solid rgba(185,163,227,.35); border-radius: var(--r-card); padding: 0; background: rgba(21,16,31,.96); color: var(--cream); margin-top: 14vh; box-shadow: 0 30px 80px rgba(0,0,0,.7); }
   dialog.pal::backdrop { background: rgba(8,4,12,.6); backdrop-filter: blur(3px); }
   .pal input { width: 100%; font: 18px var(--sans); background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--cream); padding: 18px 20px; outline: none; }
   .pal ul { list-style: none; margin: 0; padding: 8px; max-height: 50vh; overflow: auto; }
-  .pal li { display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 15px; }
+  .pal li { display: flex; justify-content: space-between; padding: 10px 12px; border-radius: var(--r-sm); cursor: pointer; font-size: 15px; }
   .pal li span { font: 11px var(--mono); color: var(--muted); }
   .pal li.on { background: var(--ink-3); color: var(--ember); }
   footer .star { background: none; border: 0; color: var(--ember); cursor: pointer; font-size: 14px; padding: 0 4px; }
@@ -466,7 +466,7 @@
   .cat-bar button { font: 500 13px var(--sans); color: var(--cream-dim); background: transparent; border: 1px solid var(--line); padding: 8px 15px; border-radius: 999px; cursor: pointer; }
   .cat-bar button.on { background: var(--ember); color: var(--ink); border-color: var(--ember); }
   .catalogue { columns: 4 240px; column-gap: 18px; }
-  .item { break-inside: avoid; margin: 0 0 18px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; cursor: pointer; transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .3s; display: block; width: 100%; text-align: left; color: inherit; padding: 0; font: inherit; }
+  .item { break-inside: avoid; margin: 0 0 18px; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--r-xs); overflow: hidden; cursor: pointer; transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .3s; display: block; width: 100%; text-align: left; color: inherit; padding: 0; font: inherit; }
   .item:hover { transform: translateY(-4px) rotate(-.4deg); border-color: rgba(185,163,227,.55); }
   .item img { width: 100%; display: block; filter: saturate(.9); }
   .item .meta { padding: 12px 14px 14px; }
@@ -475,18 +475,18 @@
   .item .meta span { font-size: 13px; color: var(--cream-dim); }
   .item.text { padding: 22px 16px; background: linear-gradient(160deg, var(--plum), var(--ink-2)); }
   .item.hide { display: none; }
-  dialog.reader { width: min(1100px, 100% - 24px); max-height: 92vh; overflow: auto; border: 0; padding: 0; border-radius: 4px; background: #0b0812; color: var(--cream); box-shadow: 0 30px 80px rgba(0,0,0,.7); }
+  dialog.reader { width: min(1100px, 100% - 24px); max-height: 92vh; overflow: auto; border: 0; padding: 0; border-radius: var(--r-xs); background: #0b0812; color: var(--cream); box-shadow: 0 30px 80px rgba(0,0,0,.7); }
   dialog.reader::backdrop { background: rgba(8,4,12,.85); backdrop-filter: blur(4px); }
   .reader-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; padding: 20px 24px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #0b0812; z-index: 2; }
   .reader-head .ref { font: 11px var(--mono); letter-spacing: .14em; color: var(--sage); }
   .reader-head h3 { font-family: var(--display); font-style: italic; font-size: 32px; margin: 4px 0 0; }
-  .reader-head button { font: 600 12px var(--mono); background: var(--cream); color: var(--ink); border: 0; border-radius: 3px; padding: 7px 12px; cursor: pointer; }
+  .reader-head button { font: 600 12px var(--mono); background: var(--cream); color: var(--ink); border: 0; border-radius: var(--r-xs); padding: 7px 12px; cursor: pointer; }
   .reader-pages { padding: 18px 24px 26px; display: grid; gap: 16px; }
   .reader-pages img { width: 100%; border-radius: 2px; }
   .reader-pages p { color: var(--cream-dim); margin: 0; }
 
   /* ================= PHOTO TABLE ================= */
-  .table { position: relative; height: clamp(560px, 70vw, 760px); margin-top: 30px; border-radius: 6px; background: radial-gradient(ellipse at 50% 40%, rgba(45,33,66,.55), rgba(13,10,20,.2) 75%); border: 1px solid var(--line); overflow: hidden; touch-action: none; }
+  .table { position: relative; height: clamp(560px, 70vw, 760px); margin-top: 30px; border-radius: var(--r-sm); background: radial-gradient(ellipse at 50% 40%, rgba(45,33,66,.55), rgba(13,10,20,.2) 75%); border: 1px solid var(--line); overflow: hidden; touch-action: none; }
   .snap { position: absolute; width: clamp(130px, 15vw, 200px); background: #f6f1e7; padding: 9px 9px 36px; box-shadow: 0 16px 30px rgba(0,0,0,.5); cursor: grab; user-select: none; transition: box-shadow .2s; margin: 0; }
   .snap.drag { cursor: grabbing; box-shadow: 0 30px 50px rgba(0,0,0,.6); z-index: 50; }
   .snap img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; pointer-events: none; display: block; }
@@ -500,18 +500,18 @@
   .ballet-ctl { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; justify-content: center; }
   .ctl-hint { text-align: center; font: 11px var(--mono); color: var(--muted); margin: 10px 0 0; }
   .fabrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
-  .fabrics button { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-2); color: var(--cream); font: 500 13px var(--sans); cursor: pointer; text-align: left; }
+  .fabrics button { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--ink-2); color: var(--cream); font: 500 13px var(--sans); cursor: pointer; text-align: left; }
   .fabrics button.on { border-color: var(--ember); box-shadow: 0 0 0 1px var(--ember) inset; }
   .fabrics i { width: 26px; height: 26px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
   .fabric-note { font-size: 14px; color: var(--cream-dim); margin: 12px 0 0; min-height: 3em; }
   .fabric-note b { color: var(--cream); }
-  .physics { margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(142,201,181,.35); border-radius: 6px; background: rgba(142,201,181,.05); }
+  .physics { margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(142,201,181,.35); border-radius: var(--r-sm); background: rgba(142,201,181,.05); }
   .physics > b { font-family: var(--display); font-size: 22px; display: block; margin-bottom: 6px; }
   .physics p { font-size: 15px; color: var(--cream-dim); margin: 8px 0 0; }
-  .physics code { font: 13px var(--mono); color: var(--sage); background: rgba(13,10,20,.6); padding: 1px 6px; border-radius: 3px; }
+  .physics code { font: 13px var(--mono); color: var(--sage); background: rgba(13,10,20,.6); padding: 1px 6px; border-radius: var(--r-xs); }
   .watch-h { font: 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ember); margin: 26px 0 10px; }
   .films { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .films a { display: block; text-decoration: none; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: linear-gradient(160deg, rgba(45,33,66,.6), rgba(21,16,31,.6)); transition: border-color .3s, transform .3s; }
+  .films a { display: block; text-decoration: none; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r-sm); background: linear-gradient(160deg, rgba(45,33,66,.6), rgba(21,16,31,.6)); transition: border-color .3s, transform .3s; }
   .films a:hover { border-color: var(--ember); transform: translateY(-2px); }
   .films b { font-family: var(--display); font-size: 20px; display: block; } .films small { font: 11px var(--mono); color: var(--sage); letter-spacing: .1em; }
   .films span { display: block; font-size: 13px; color: var(--cream-dim); margin-top: 6px; line-height: 1.4; }
@@ -580,8 +580,8 @@
     box-shadow: inset 0 0 0 6px rgba(255,255,255,.08), inset 0 0 0 7px rgba(0,0,0,.25); }
   .dw-doors .dl { transform-origin: 0 50%; border-top-left-radius: 100% calc(var(--aw) / 2); }
   .dw-doors .dr { transform-origin: 100% 50%; border-top-right-radius: 100% calc(var(--aw) / 2); }
-  .dw-doors i::before { content: ""; position: absolute; left: 14%; right: 14%; top: 34%; height: 24%; border: 2px solid rgba(201,169,106,.55); border-radius: 3px; box-shadow: inset 0 0 12px rgba(0,0,0,.35); }
-  .dw-doors i::after { content: ""; position: absolute; left: 14%; right: 14%; top: 64%; height: 26%; border: 2px solid rgba(201,169,106,.55); border-radius: 3px; box-shadow: inset 0 0 12px rgba(0,0,0,.35); }
+  .dw-doors i::before { content: ""; position: absolute; left: 14%; right: 14%; top: 34%; height: 24%; border: 2px solid rgba(201,169,106,.55); border-radius: var(--r-xs); box-shadow: inset 0 0 12px rgba(0,0,0,.35); }
+  .dw-doors i::after { content: ""; position: absolute; left: 14%; right: 14%; top: 64%; height: 26%; border: 2px solid rgba(201,169,106,.55); border-radius: var(--r-xs); box-shadow: inset 0 0 12px rgba(0,0,0,.35); }
   .dw-doors em { position: absolute; top: 56%; width: 16px; height: 16px; border-radius: 50%; border: 3px solid #c9a96a; box-shadow: 0 0 8px rgba(201,169,106,.6); }
   .dw-doors .dl em { right: 10%; } .dw-doors .dr em { left: 10%; }
   .dw-dust { position: absolute; left: 50%; top: calc(var(--ay) + var(--ah) / 2); width: 0; height: 0; }
@@ -682,7 +682,7 @@
 
 
   /* ================= KRYPTOS PLATE ================= */
-  .grid-wrap { position: relative; padding: 22px 22px 18px; border-radius: 10px; color: #f6e2c4;
+  .grid-wrap { position: relative; padding: 22px 22px 18px; border-radius: var(--r-card); color: #f6e2c4;
     background:
       radial-gradient(circle at 18% 28%, rgba(79,156,138,.55) 0 3%, transparent 9%), radial-gradient(circle at 74% 70%, rgba(79,156,138,.45) 0 2%, transparent 8%),
       radial-gradient(circle at 60% 18%, rgba(79,156,138,.35) 0 1.5%, transparent 6%),
@@ -692,12 +692,12 @@
   .grid-wrap .layer { color: #f3cf9f !important; letter-spacing: .2em; text-align: center; }
   .grid-wrap .cgrid { margin: 0 auto; }
   .kheader { display: grid; grid-template-columns: repeat(var(--cols, 5), 48px); justify-content: center; gap: 0; margin: 4px auto 10px; min-height: 46px; align-items: end; }
-  .kheader span { display: grid; justify-items: center; width: 42px; padding: 4px 0; border-radius: 6px; transition: background .35s, box-shadow .35s; }
+  .kheader span { display: grid; justify-items: center; width: 42px; padding: 4px 0; border-radius: var(--r-sm); transition: background .35s, box-shadow .35s; }
   .kheader b { font: 700 18px var(--mono); color: #ffe3b8; } .kheader i { font: 500 11px var(--mono); color: #d9a877; font-style: normal; }
   .kheader span.lit { background: rgba(255,214,150,.18); box-shadow: 0 0 18px rgba(255,190,110,.55); }
   .kheader em { grid-column: 1 / -1; text-align: center; white-space: nowrap; font: 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #d9a877; font-style: normal; margin-top: 4px; }
   .kheader em.ok { color: #9fe0c8; }
-  .cgrid .tok { background: rgba(20,10,5,.55) !important; border: 1px solid rgba(255,214,170,.18) !important; color: #ffd9a0 !important; text-shadow: 0 0 10px rgba(255,170,90,.75), 0 0 2px #ffe8c8; border-radius: 4px; }
+  .cgrid .tok { background: rgba(20,10,5,.55) !important; border: 1px solid rgba(255,214,170,.18) !important; color: #ffd9a0 !important; text-shadow: 0 0 10px rgba(255,170,90,.75), 0 0 2px #ffe8c8; border-radius: var(--r-xs); }
   .cgrid .tok.sp { color: rgba(255,214,170,.35) !important; text-shadow: none; }
   .cgrid .tok.flick { color: #9fe0c8 !important; text-shadow: 0 0 12px rgba(120,230,200,.9); }
   .cgrid.solved .tok { background: rgba(255,236,200,.92) !important; color: #2a160d !important; text-shadow: none; animation: plateGlow 1.4s ease both; }
@@ -746,13 +746,13 @@
   @keyframes eq { 0%, 100% { height: 4px; } 50% { height: 14px; } }
   @media (pointer: coarse) { .snd { height: 44px; padding: 0 14px; } }
   /* U18 ID card */
-  .idcard { position: fixed; top: 64px; left: clamp(16px, 3vw, 40px); width: 264px; padding: 12px 14px 10px; border-radius: 12px; z-index: 70; color: #1b1428; pointer-events: none;
+  .idcard { position: fixed; top: 64px; left: clamp(16px, 3vw, 40px); width: 264px; padding: 12px 14px 10px; border-radius: var(--r-card); z-index: 70; color: #1b1428; pointer-events: none;
     background: linear-gradient(135deg, #fbf7ff, color-mix(in srgb, var(--ember) 30%, #fff)); box-shadow: 0 24px 50px -16px rgba(8,5,16,.7), inset 0 0 0 1px rgba(255,255,255,.7);
     transform-origin: top left; transform: perspective(700px) rotateX(-70deg) translateY(-8px); opacity: 0; transition: transform .55s cubic-bezier(.2,1.3,.4,1), opacity .3s; }
   nav:has(.logo:hover) .idcard, nav:has(.logo:focus-visible) .idcard { transform: none; opacity: 1; }
   .id-top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(27,20,40,.15); padding-bottom: 6px; }
   .id-top b { font: 700 13px var(--mono); letter-spacing: .08em; } .id-top span { font: 10.5px var(--mono); opacity: .7; }
-  .id-mid { display: flex; gap: 10px; padding: 8px 0; } .id-mid img { width: 56px; height: 70px; object-fit: cover; border-radius: 6px; }
+  .id-mid { display: flex; gap: 10px; padding: 8px 0; } .id-mid img { width: 56px; height: 70px; object-fit: cover; border-radius: var(--r-sm); }
   .id-mid dl { display: grid; grid-template-columns: auto 1fr; gap: 1px 8px; margin: 0; font: 11px/1.45 var(--sans); } .id-mid dt { opacity: .6; } .id-mid dd { margin: 0; font-weight: 600; }
   .id-bar { height: 18px; background: repeating-linear-gradient(90deg, #1b1428 0 2px, transparent 2px 4px, #1b1428 4px 5px, transparent 5px 8px, #1b1428 8px 11px, transparent 11px 12px); opacity: .75; border-radius: 2px; }
   @media (hover: none) { .idcard { display: none; } }
@@ -835,7 +835,7 @@
   .rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; justify-items: end; }
   .rail a { display: flex; align-items: center; justify-content: flex-end; gap: 10px; height: 24px; min-width: 24px; text-decoration: none; }
   .rail a i { display: block; width: 10px; height: 1.5px; background: rgba(241,235,226,.45); transition: width .35s cubic-bezier(.2,.8,.2,1), background .3s; }
-  .rail a span { font: 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cream); opacity: 0; transform: translateX(6px); transition: opacity .25s, transform .25s; white-space: nowrap; background: rgba(13,10,20,.7); padding: 1px 6px; border-radius: 4px; }
+  .rail a span { font: 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cream); opacity: 0; transform: translateX(6px); transition: opacity .25s, transform .25s; white-space: nowrap; background: rgba(13,10,20,.7); padding: 1px 6px; border-radius: var(--r-xs); }
   .rail a:hover i, .rail a:focus-visible i { width: 22px; background: var(--cream); } .rail a:hover span, .rail a:focus-visible span { opacity: 1; transform: none; }
   .rail a.on i { width: 28px; background: var(--ember); box-shadow: 0 0 8px var(--ember); }
   .rail-pct { font: 11px var(--mono); color: var(--cream-dim); font-variant-numeric: tabular-nums; }
@@ -845,9 +845,24 @@
   .keys::backdrop { background: rgba(8,5,16,.6); backdrop-filter: blur(4px); }
   .keys h2 { margin: 0 0 14px; font: italic 600 30px var(--display); color: var(--ember); }
   .keys dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; margin: 0 0 16px; align-items: center; } .keys dd { margin: 0; color: var(--cream-dim); }
-  kbd { font: 12px var(--mono); padding: 2px 7px; border-radius: 5px; border: 1px solid rgba(241,235,226,.35); border-bottom-width: 3px; background: rgba(255,255,255,.05); }
+  kbd { font: 12px var(--mono); padding: 2px 7px; border-radius: var(--r-xs); border: 1px solid rgba(241,235,226,.35); border-bottom-width: 3px; background: rgba(255,255,255,.05); }
   .keys p { font-size: 13px; color: var(--cream-dim); }
   @media (prefers-reduced-motion: reduce) { h2 .sw { opacity: 1; transform: none; filter: none; } .cue i::after, .globe .spin, .crt-eyes i, .snd i { animation: none !important; } }
+
+
+  /* ================= ROUND 2: one theme ================= */
+  :root { --r-xs: 4px; --r-sm: 8px; --r-pill: 999px;
+    --grade: saturate(.78) sepia(.14) hue-rotate(-16deg) contrast(1.04) brightness(.97); }
+  button, input, select, textarea { font-family: inherit; }
+  :where(a, button, summary, [tabindex], input, select):focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; border-radius: var(--r-xs); }
+  ::selection { background: color-mix(in srgb, var(--ember) 55%, transparent); color: #fff; }
+  html { accent-color: var(--ember); scrollbar-color: color-mix(in srgb, var(--ember) 45%, #2d2142) #0d0a14; }
+  /* every photo sits in the same dream grade; hover shows the true colours */
+  .snap img, .polaroid img, .item img, .tlpeek img, .id-mid img, .chip img { filter: var(--grade); transition: filter .6s; }
+  .snap:hover img, .polaroid:hover img, .item:hover img { filter: none; }
+  .pdot { background: var(--accent2) !important; box-shadow: 0 0 10px var(--accent2) !important; }
+  .toast { border-radius: var(--r-pill); }
+  .id-top span { font-size: 11px; }
 
   /* ================= TIMELINE ================= */
   .timeline { position: relative; margin-top: 40px; }
@@ -861,7 +876,7 @@
   .t-row .ev span { color: var(--cream-dim); }
 
   /* ================= CIPHER ================= */
-  .cipher { position: relative; background: var(--cream); color: var(--ink-paper); border-radius: 3px; padding: clamp(30px, 6vw, 70px); text-align: center;
+  .cipher { position: relative; background: var(--cream); color: var(--ink-paper); border-radius: var(--r-xs); padding: clamp(30px, 6vw, 70px); text-align: center;
     background-image: radial-gradient(rgba(90,70,130,.08) 1px, transparent 1px); background-size: 4px 4px; }
   .cipher::before { content: ""; position: absolute; inset: 12px; border: 1px solid rgba(90,70,130,.35); pointer-events: none; }
   .cipher h2 { color: var(--ink-paper); } .cipher h2 em { color: var(--crimson); }
@@ -875,11 +890,11 @@
   .safe.shake { animation: shake .4s; } @keyframes shake { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
   .readout { font-family: var(--mono); font-size: 14px; } .readout b { font-size: 26px; color: var(--crimson); }
   .btn-a.set { background: var(--ink-paper); color: var(--cream); }
-  .slots { display: flex; gap: 8px; } .slots span { font-family: var(--mono); font-size: 16px; width: 46px; text-align: center; padding: 6px 0; border: 1.5px solid var(--ink-paper); border-radius: 3px; }
+  .slots { display: flex; gap: 8px; } .slots span { font-family: var(--mono); font-size: 16px; width: 46px; text-align: center; padding: 6px 0; border: 1.5px solid var(--ink-paper); border-radius: var(--r-xs); }
   .slots span.ok { background: var(--ok); color: #fff; border-color: var(--ok); }
   .grid-wrap .layer { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: var(--muted-paper); margin-bottom: 12px; }
   .cgrid { position: relative; height: calc(var(--rows, 5) * 48px); max-width: calc(var(--cols, 7) * 48px); }
-  .cgrid .tok { position: absolute; width: 42px; height: 42px; display: grid; place-items: center; font-family: var(--mono); font-weight: 600; font-size: 20px; background: rgba(42,31,61,.06); border: 1px solid rgba(42,31,61,.2); border-radius: 3px;
+  .cgrid .tok { position: absolute; width: 42px; height: 42px; display: grid; place-items: center; font-family: var(--mono); font-weight: 600; font-size: 20px; background: rgba(42,31,61,.06); border: 1px solid rgba(42,31,61,.2); border-radius: var(--r-xs);
     transition: transform .9s cubic-bezier(.65,0,.35,1), background .4s, color .4s; }
   .cgrid.solved .tok { background: var(--ok); color: #fff; border-color: var(--ok); }
   .cgrid .tok.sp { color: rgba(42,31,61,.35); }
@@ -894,7 +909,7 @@
   footer .big { font-family: var(--display); font-style: italic; font-size: clamp(60px, 14vw, 180px); line-height: 1.05; padding-bottom: .12em; color: transparent; -webkit-text-stroke: 1px rgba(242,232,213,.25); width: 100%; margin-bottom: 30px; white-space: nowrap; overflow: hidden; }
 
   /* ================= EASTER EGGS ================= */
-  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(120px); background: var(--cream); color: var(--ink-paper); font-family: var(--mono); font-size: 13px; padding: 12px 18px; border-radius: 3px; z-index: 90; transition: transform .45s cubic-bezier(.2,.8,.2,1); box-shadow: 0 10px 30px rgba(0,0,0,.5); max-width: 90vw; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(120px); background: var(--cream); color: var(--ink-paper); font-family: var(--mono); font-size: 13px; padding: 12px 18px; border-radius: var(--r-xs); z-index: 90; transition: transform .45s cubic-bezier(.2,.8,.2,1); box-shadow: 0 10px 30px rgba(0,0,0,.5); max-width: 90vw; }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .glider { position: fixed; z-index: 80; font-size: 46px; pointer-events: none; left: -80px; top: 60%; animation: glide 6s linear forwards; }
   @keyframes glide { to { left: 110vw; top: 40%; } }
@@ -965,7 +980,7 @@
 <canvas id="dreamFx" aria-hidden="true"></canvas>
 
 <nav>
-  <div class="idcard" aria-hidden="true"><div class="id-top"><b>ADVAITH SAJITH</b><span>CASE FILE AS-11</span></div><div class="id-mid"><img src="assets/portrait.jpg" alt=""><dl><dt>Based</dt><dd>Dubai · UTC+4</dd><dt>Grade</dt><dd>11 · GEMS NMS</dd><dt>Class</dt><dd>Novelist / Engineer</dd></dl></div><div class="id-bar"></div></div>
+  <div class="idcard" aria-hidden="true"><div class="id-top"><b>ADVAITH SAJITH</b><span>CASE FILE AS-11</span></div><div class="id-mid"><img src="assets/portrait.webp" alt=""><dl><dt>Based</dt><dd>Dubai · UTC+4</dd><dt>Grade</dt><dd>11 · GEMS NMS</dd><dt>Class</dt><dd>Novelist / Engineer</dd></dl></div><div class="id-bar"></div></div>
   <a class="logo" href="#top" title="Back to the top" aria-label="Advaith Sajith monogram, back to the top"><svg class="mono" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" class="o"/><polygon points="50.00,4.00 93.75,35.79 77.04,87.21 22.96,87.21 6.25,35.79" class="pg"/><circle cx="50" cy="50" r="2.6" class="dot"/><circle class="r r0" cx="50" cy="50" r="6"/><circle class="r r1" cx="50" cy="50" r="12"/><circle class="r r2" cx="50" cy="50" r="18"/><circle class="r r3" cx="50" cy="50" r="24"/><circle class="r r4" cx="50" cy="50" r="30"/></svg></a>
   <ul>
     <li><a class="n" href="#work"><span class="roll"><i>case files</i><i aria-hidden="true">case files</i></span><sup>(11)</sup></a></li>
@@ -997,7 +1012,7 @@
         <div class="here" id="here"><span class="globe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><ellipse class="spin" cx="12" cy="12" rx="4.5" ry="10"/><path d="M2 12h20M4.5 6.5h15M4.5 17.5h15"/></svg></span><span>Currently in Dubai<br><b id="dxbTime">--:--</b> GST <em id="dxbDiff"></em></span></div>
       </div>
       <figure class="cameo" id="cameo"><i class="vf" aria-hidden="true"></i>
-        <div class="oval"><img src="assets/portrait.jpg" alt="Portrait of Advaith Sajith"></div>
+        <div class="oval"><img src="assets/portrait.webp" alt="Portrait of Advaith Sajith"></div>
         <svg viewBox="0 0 300 400" aria-hidden="true">
           <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d48a"/><stop offset=".5" stop-color="#c9a24a"/><stop offset="1" stop-color="#7a5a1e"/></linearGradient></defs>
           <ellipse cx="150" cy="200" rx="128" ry="174" fill="none" stroke="url(#g)" stroke-width="9"/>
@@ -1019,11 +1034,11 @@
   <div class="ticker" aria-label="Highlights"><div class="track" id="ticker"></div></div>
 
   <section class="manifesto" id="manifesto">
-    <div class="wrap"><p class="lit" id="lit">I write mysteries <span class="chip" aria-hidden="true"><img src="assets/cover.jpg" alt=""></span> that play fair, build languages <span class="chip code" aria-hidden="true" data-t="say &quot;hi&quot;"></span> that forgive beginners, and teach ciphers <span class="chip wheel" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/><circle cx="20" cy="20" r="11"/><text x="20" y="9" text-anchor="middle">A</text><text x="20" y="38" text-anchor="middle">N</text><text x="20" y="24" text-anchor="middle">K</text></svg></span> to ten-year-olds. Everything I make is a puzzle with the answer hidden in plain sight. <em>This page is one too.</em></p></div>
+    <div class="wrap"><p class="lit" id="lit">I write mysteries <span class="chip" aria-hidden="true"><img src="assets/cover.webp" alt=""></span> that play fair, build languages <span class="chip code" aria-hidden="true" data-t="say &quot;hi&quot;"></span> that forgive beginners, and teach ciphers <span class="chip wheel" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/><circle cx="20" cy="20" r="11"/><text x="20" y="9" text-anchor="middle">A</text><text x="20" y="38" text-anchor="middle">N</text><text x="20" y="24" text-anchor="middle">K</text></svg></span> to ten-year-olds. Everything I make is a puzzle with the answer hidden in plain sight. <em>This page is one too.</em></p></div>
   </section>
 
   <section class="dz" aria-label="Paper-cut city skyline at night">
-    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-dubai.jpg" alt="Paper-cut city skyline at night" loading="lazy" decoding="async"></div>
+    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-dubai.webp" alt="Paper-cut city skyline at night" loading="lazy" decoding="async"></div>
       <div class="dz-cap"><p class="eyebrow">The city &middot; where it starts</p><b>Every case starts somewhere.</b><small>paper cutout &middot; scroll to zoom</small></div></div>
   </section>
 
@@ -1047,7 +1062,7 @@
       <div class="book-stage reveal">
         <div class="book" id="book" data-cursor="read" title="Click the envelope">
           <div class="spine"></div>
-          <div class="front"><img src="assets/cover.jpg" alt="Cover of What Lies Buried in Birchdale? by Advaith Sajith"></div>
+          <div class="front"><img src="assets/cover.webp" alt="Cover of What Lies Buried in Birchdale? by Advaith Sajith"></div>
         </div>
         <svg class="envelope" id="envelope" viewBox="0 0 120 80" aria-label="Open the Secret Santa letter" role="button" tabindex="0">
           <rect x="2" y="2" width="116" height="76" rx="4" fill="#ff7a3d"/>
@@ -1109,7 +1124,7 @@
   </section>
 
   <section class="dz" aria-label="Paper-cut village of Birchdale at night with a red envelope on the path">
-    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-birchdale.jpg" alt="Paper-cut village of Birchdale at night with a red envelope on the path" loading="lazy" decoding="async"></div>
+    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-birchdale.webp" alt="Paper-cut village of Birchdale at night with a red envelope on the path" loading="lazy" decoding="async"></div>
       <div class="dz-cap"><p class="eyebrow">Birchdale &middot; 9:41 p.m.</p><b>Something is buried here.</b><small>the town from the novel</small></div></div>
   </section>
 
@@ -1136,7 +1151,7 @@
   </section>
 
   <section class="dz" aria-label="Paper-cut ballerina whose skirt unravels into loom cards">
-    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-ballet.jpg" alt="Paper-cut ballerina whose skirt unravels into loom cards" loading="lazy" decoding="async"></div>
+    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-ballet.webp" alt="Paper-cut ballerina whose skirt unravels into loom cards" loading="lazy" decoding="async"></div>
       <div class="dz-cap"><p class="eyebrow">Act V</p><b>Every thread is a line of code.</b><small>film &middot; fashion &middot; the Jacquard loom</small></div></div>
   </section>
 
@@ -1155,7 +1170,7 @@
           <button class="btn-a ghost" id="unravelBtn">Unravel</button>
         </div>
         <p class="ctl-hint">Drag sideways to spin her. She slows down on her own, because the floor pushes back.</p>
-        <div class="fabrics" id="fabrics" role="radiogroup" aria-label="Choose the fabric of the skirt"><button role="radio" data-n="Tulle" aria-checked="true" class="on"><i style="background:#f3eef9 url(assets/fabric/tulle-sw.jpg) center/cover"></i>Tulle</button><button role="radio" data-n="Silk" aria-checked="false"><i style="background:#b9a3e3 url(assets/fabric/silk-sw.jpg) center/cover"></i>Silk</button><button role="radio" data-n="Chiffon" aria-checked="false"><i style="background:#9fc0f0 url(assets/fabric/chiffon-sw.jpg) center/cover"></i>Chiffon</button><button role="radio" data-n="Velvet" aria-checked="false"><i style="background:#4a2a5e url(assets/fabric/velvet-sw.jpg) center/cover"></i>Velvet</button><button role="radio" data-n="Kasavu" aria-checked="false"><i style="background:#f3ead3 url(assets/fabric/kasavu-sw.jpg) center/cover"></i>Kasavu</button><button role="radio" data-n="Jacquard" aria-checked="false"><i style="background:#7d9be6 url(assets/fabric/jacquard-sw.jpg) center/cover"></i>Jacquard</button></div>
+        <div class="fabrics" id="fabrics" role="radiogroup" aria-label="Choose the fabric of the skirt"><button role="radio" data-n="Tulle" aria-checked="true" class="on"><i style="background:#f3eef9 url(assets/fabric/tulle-sw.webp) center/cover"></i>Tulle</button><button role="radio" data-n="Silk" aria-checked="false"><i style="background:#b9a3e3 url(assets/fabric/silk-sw.webp) center/cover"></i>Silk</button><button role="radio" data-n="Chiffon" aria-checked="false"><i style="background:#9fc0f0 url(assets/fabric/chiffon-sw.webp) center/cover"></i>Chiffon</button><button role="radio" data-n="Velvet" aria-checked="false"><i style="background:#4a2a5e url(assets/fabric/velvet-sw.webp) center/cover"></i>Velvet</button><button role="radio" data-n="Kasavu" aria-checked="false"><i style="background:#f3ead3 url(assets/fabric/kasavu-sw.webp) center/cover"></i>Kasavu</button><button role="radio" data-n="Jacquard" aria-checked="false"><i style="background:#7d9be6 url(assets/fabric/jacquard-sw.webp) center/cover"></i>Jacquard</button></div>
         <p class="fabric-note" id="fabricNote"><b>Tulle</b> is a fine hexagonal net of nylon or silk. Stacked in stiff layers it makes the classical pancake tutu, which hardly flares at all: that is the point, the legs stay visible.</p>
       </div>
       <div class="reveal">
@@ -1185,9 +1200,9 @@
   <section id="beyond">
     <div class="wrap beyond">
       <div class="polaroids reveal">
-        <figure class="polaroid"><img src="assets/portrait.jpg" alt="Advaith in a suit" loading="lazy"><figcaption>the subject</figcaption></figure>
-        <figure class="polaroid"><img src="assets/t/onam.jpg" alt="Advaith at home during Onam, beside a flower pookalam" loading="lazy"><figcaption>Onam at home</figcaption></figure>
-        <figure class="polaroid"><img src="assets/cover.jpg" alt="Cover of What Lies Buried in Birchdale?" loading="lazy" style="object-position:50% 20%"><figcaption>the debut</figcaption></figure>
+        <figure class="polaroid"><img src="assets/portrait.webp" alt="Advaith in a suit" loading="lazy"><figcaption>the subject</figcaption></figure>
+        <figure class="polaroid"><img src="assets/t/onam.webp" alt="Advaith at home during Onam, beside a flower pookalam" loading="lazy"><figcaption>Onam at home</figcaption></figure>
+        <figure class="polaroid"><img src="assets/cover.webp" alt="Cover of What Lies Buried in Birchdale?" loading="lazy" style="object-position:50% 20%"><figcaption>the debut</figcaption></figure>
       </div>
       <div class="reveal">
         <p class="eyebrow">VI &middot; Beyond the pages</p>
@@ -1199,7 +1214,7 @@
   </section>
 
   <section class="dz" aria-label="Paper-cut hills with rows of solar panels facing a low sun">
-    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-desert.jpg" alt="Paper-cut hills with rows of solar panels facing a low sun" loading="lazy" decoding="async"></div>
+    <div class="dz-frame"><div class="dz-win"><img src="assets/pc-desert.webp" alt="Paper-cut hills with rows of solar panels facing a low sun" loading="lazy" decoding="async"></div>
       <div class="dz-cap"><p class="eyebrow">The sun &middot; SunSmart</p><b>Chasing the sun.</b><small>research &middot; the full record</small></div></div>
   </section>
 
@@ -1363,6 +1378,8 @@
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 try { history.scrollRestoration = "manual"; } catch (e) {} if (!location.hash) { document.documentElement.style.scrollBehavior = "auto"; scrollTo(0, 0); document.documentElement.style.scrollBehavior = ""; }
 const $ = s => document.querySelector(s);
+const LITE = (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || innerWidth < 600;
+if (LITE) document.documentElement.classList.add("lite");
 function toast(msg, ms = 3200) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), ms); }
 
 /* ================= BOOT ================= */
@@ -1495,7 +1512,7 @@ $("#noirBtn").onclick = () => { document.body.classList.toggle("noir"); if (docu
 
 /* ================= TIMELINE ================= */
 const TL = [["2018", "First stories in print", "Young Times and The Youngest publish my STEM stories for young readers."], ["2018+", "World Scholar's Cup", "Eight-plus rounds, 56+ medals, two Tournament of Champions qualifications at Yale."], ["2023", "NMS LitMUN", "Hosted the conference and chaired a committee."], ["2024", "Smart wheelchair", "A semi-autonomous Arduino wheelchair for safer indoor mobility."], ["2025", "QNode", "Randomness from light; Pitch Perfect Award at the IEEE Tech Fair."], ["2025", "\"One Must Imagine Sisyphus Happy\"", "Published in Young Times."], ["2025–26", "Grade 10", "99.8% in the CBSE boards, School Rank 1, topper in five subjects."], ["Jul 2026", "Lab of Future", "Summer internship."], ["Oct 2026", "SunSmart AI paper", "Submitted to Energies (MDPI)."], ["Nov 2026", "The busiest month", "Novel launched at Sharjah, preprint published, Circuit Riot and TerraFab run, ARSSDC runner-up."], ["Next", "University", "Computer science, with writing, film and fabric never far away."]];
-const TLPIC = { "World Scholar's Cup": ["assets/t/me-medals.jpg", "12 medals · Dubai Round, 2023"], "\"One Must Imagine Sisyphus Happy\"": ["assets/t/sisyphus.jpg", "Young Times, Sep 2025"], "The busiest month": ["assets/cover.jpg", "What Lies Buried in Birchdale?"], "First stories in print": ["assets/t/pub-youngest.jpg", "The Youngest"] };
+const TLPIC = { "World Scholar's Cup": ["assets/t/me-medals.webp", "12 medals · Dubai Round, 2023"], "\"One Must Imagine Sisyphus Happy\"": ["assets/t/sisyphus.webp", "Young Times, Sep 2025"], "The busiest month": ["assets/cover.webp", "What Lies Buried in Birchdale?"], "First stories in print": ["assets/t/pub-youngest.webp", "The Youngest"] };
 $("#tl").innerHTML = TL.map(([y, h, d]) => `<div class="t-row${TLPIC[h] ? " pic" : ""}"${TLPIC[h] ? ` data-pic="${TLPIC[h][0]}" data-cap="${TLPIC[h][1]}"` : ""}><div class="yr">${y}</div><div class="ev"><b>${h}.</b> <span>${d}</span></div></div>`).join("");
 
 /* ================= LINKS (fill in LinkedIn when you have the URL) ================= */
@@ -1561,7 +1578,7 @@ $("#recordGrid").innerHTML = RECORD.map(([t, sub, items], i) => `<details${i < 2
   function size() { W = hero.clientWidth; H = hero.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
   W = innerWidth; H = innerHeight; requestAnimationFrame(size); addEventListener("resize", size);
   const C = ["185,163,227", "125,155,230", "142,201,181", "241,235,226", "255,122,69"];
-  const motes = Array.from({ length: Math.min(90, Math.floor(innerWidth / 16)) }, () => ({ x: Math.random(), y: Math.random(), r: .6 + Math.random() * 2.2, v: .0002 + Math.random() * .0006, ph: Math.random() * 6.28, c: C[Math.random() < .08 ? 4 : Math.floor(Math.random() * 4)] }));
+  const motes = Array.from({ length: Math.min(LITE ? 40 : 90, Math.floor(innerWidth / 16)) }, () => ({ x: Math.random(), y: Math.random(), r: .6 + Math.random() * 2.2, v: .0002 + Math.random() * .0006, ph: Math.random() * 6.28, c: C[Math.random() < .08 ? 4 : Math.floor(Math.random() * 4)] }));
   let mx = .5, my = .5; addEventListener("pointermove", e => { mx = e.clientX / innerWidth; my = e.clientY / innerHeight; });
   new IntersectionObserver(es => es.forEach(e => visible = e.isIntersecting)).observe(hero);
   let t = 0;
@@ -1960,17 +1977,17 @@ let stars = 0; $("#star").onclick = () => { if (++stars % 7 === 0) caseClosed();
 
 /* ================= CATALOGUE of published work (from the X archive) ================= */
 const PUBS = [
-  { d: "Sep 2025", t: "One Must Imagine Sisyphus Happy", w: "Young Times", k: "Story / essay", img: ["sisyphus.jpg", "spread-story.jpg"], note: "Camus, a boulder, and why the climb is the point." },
-  { d: "Aug 2024", t: "Whistles and Spills", w: "Young Times", k: "Short story", img: ["pub-whistles.jpg", "spread-dolphin.jpg"], note: "A pod of dolphins and an oil spill, told from the water." },
-  { d: "Jun 2023", t: "An Echo of Time", w: "Young Times", k: "Short story", img: ["pub-echo.jpg"], note: "A musical tale with Beethoven at its heart." },
-  { d: "May 2023", t: "Eight Astronauts Remain", w: "Young Times", k: "Short story", img: ["pub-astronauts.jpg"], note: "A space mystery in the spirit of And Then There Were None." },
-  { d: "Mar 2023", t: "The One of Light", w: "Young Times", k: "Short story", img: ["pub-light.jpg"], note: "A door of light, and what waits behind it." },
+  { d: "Sep 2025", t: "One Must Imagine Sisyphus Happy", w: "Young Times", k: "Story / essay", img: ["sisyphus.webp", "spread-story.webp"], note: "Camus, a boulder, and why the climb is the point." },
+  { d: "Aug 2024", t: "Whistles and Spills", w: "Young Times", k: "Short story", img: ["pub-whistles.webp", "spread-dolphin.webp"], note: "A pod of dolphins and an oil spill, told from the water." },
+  { d: "Jun 2023", t: "An Echo of Time", w: "Young Times", k: "Short story", img: ["pub-echo.webp"], note: "A musical tale with Beethoven at its heart." },
+  { d: "May 2023", t: "Eight Astronauts Remain", w: "Young Times", k: "Short story", img: ["pub-astronauts.webp"], note: "A space mystery in the spirit of And Then There Were None." },
+  { d: "Mar 2023", t: "The One of Light", w: "Young Times", k: "Short story", img: ["pub-light.webp"], note: "A door of light, and what waits behind it." },
   { d: "Nov 2022", t: "The Tragic Fate of the Slice of Bread", w: "Young Times", k: "Short story", img: [], note: "A comedy of breakfast, told by the toast." },
-  { d: "May 2022", t: "A Mountain of Gratitude", w: "Young Times", k: "Short story", img: ["pub-mountain.jpg"], note: "A climb, a fall and a thank-you." },
-  { d: "Apr 2022", t: "A Mountain of Gratitude (reprint)", w: "The Youngest", k: "Short story", img: ["pub-youngest.jpg"], note: "Reprinted in The Youngest's April issue." },
-  { d: "Jan 2022", t: "Thank You, Dear Teacher", w: "The Youngest", k: "Poem", img: ["pub-teacher.jpg"], note: "A poem for the teachers who kept school going online." },
-  { d: "May 2021", t: "The Lockdown Tranquility", w: "The Youngest", k: "Article", img: ["pub-lockdown.jpg"], note: "What a silent city sounds like." },
-  { d: "Apr 2021", t: "Our Home, Our Earth", w: "School", k: "Poem", img: ["pub-earth.jpg"], note: "An Earth Day poem, Grade 4." },
+  { d: "May 2022", t: "A Mountain of Gratitude", w: "Young Times", k: "Short story", img: ["pub-mountain.webp"], note: "A climb, a fall and a thank-you." },
+  { d: "Apr 2022", t: "A Mountain of Gratitude (reprint)", w: "The Youngest", k: "Short story", img: ["pub-youngest.webp"], note: "Reprinted in The Youngest's April issue." },
+  { d: "Jan 2022", t: "Thank You, Dear Teacher", w: "The Youngest", k: "Poem", img: ["pub-teacher.webp"], note: "A poem for the teachers who kept school going online." },
+  { d: "May 2021", t: "The Lockdown Tranquility", w: "The Youngest", k: "Article", img: ["pub-lockdown.webp"], note: "What a silent city sounds like." },
+  { d: "Apr 2021", t: "Our Home, Our Earth", w: "School", k: "Poem", img: ["pub-earth.webp"], note: "An Earth Day poem, Grade 4." },
   { d: "2024", t: "Ring Around the Roses", w: "School", k: "NMS Gazette · Hall of Fame", img: [], note: "Best piece on its theme; restricted to the school." },
   { d: "2023–", t: "Syggrafeas", w: "School", k: "Club & magazine · co-founder", img: [], note: "The writing club and magazine I co-founded. It still runs without me." },
 ];
@@ -1992,9 +2009,9 @@ const PUBS = [
 
 /* ================= PHOTO TABLE: draggable snapshots ================= */
 (function () {
-  const SNAPS = [["me-2011.jpg", "then & now", "2011 / 2021"], ["me-oliver.jpg", "\"more, please\"", "Oliver Twist · 2020"], ["me-earth.jpg", "Earth Day", "2021"], ["me-itachi.jpg", "Itachi", "Book Character Day · 2021"],
-    ["me-arabic.jpg", "Mahrajan", "Arabic Culture Week · 2022"], ["me-reader.jpg", "strategic reader", "Achieve3000 · 2022"], ["me-reading.jpg", "Roald Dahl", "World Book Day · 2022"], ["me-george.jpg", "George's medicine", "Roald Dahl Day · 2023"],
-    ["me-attainment.jpg", "top of the grade", "Attainment Award · 2023"], ["me-wsc.jpg", "Dubai Round", "World Scholar's Cup · 2023"], ["me-medals.jpg", "12 medals", "WSC · 1st overall · 2023"]];
+  const SNAPS = [["me-2011.webp", "then & now", "2011 / 2021"], ["me-oliver.webp", "\"more, please\"", "Oliver Twist · 2020"], ["me-earth.webp", "Earth Day", "2021"], ["me-itachi.webp", "Itachi", "Book Character Day · 2021"],
+    ["me-arabic.webp", "Mahrajan", "Arabic Culture Week · 2022"], ["me-reader.webp", "strategic reader", "Achieve3000 · 2022"], ["me-reading.webp", "Roald Dahl", "World Book Day · 2022"], ["me-george.webp", "George's medicine", "Roald Dahl Day · 2023"],
+    ["me-attainment.webp", "top of the grade", "Attainment Award · 2023"], ["me-wsc.webp", "Dubai Round", "World Scholar's Cup · 2023"], ["me-medals.webp", "12 medals", "WSC · 1st overall · 2023"]];
   const T = $("#photoTable"); let z = 10;
   T.innerHTML = SNAPS.map(([f, c, sm], i) => `<figure class="snap" data-i="${i}"><img src="assets/t/${f}" alt="${c}, ${sm}" loading="lazy" decoding="async"><figcaption>${c}<small>${sm}</small></figcaption></figure>`).join("");
   const els = [...T.children];
@@ -2090,7 +2107,7 @@ const PUBS = [
   const cv = $("#dreamFx"), cx = cv.getContext("2d"); let W, H; const dpr = Math.min(devicePixelRatio || 1, 1.5);
   function size() { W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0); }
   size(); addEventListener("resize", size);
-  const stars = Array.from({ length: Math.min(46, Math.floor(innerWidth / 30)) }, () => ({ x: Math.random(), y: Math.random(), s: 2 + Math.random() * 5, ph: Math.random() * 6.28, sp: .6 + Math.random() * 1.4 }));
+  const stars = Array.from({ length: Math.min(LITE ? 18 : 46, Math.floor(innerWidth / 30)) }, () => ({ x: Math.random(), y: Math.random(), s: 2 + Math.random() * 5, ph: Math.random() * 6.28, sp: .6 + Math.random() * 1.4 }));
   const dust = [];
   addEventListener("pointermove", e => { if (reduce || e.pointerType !== "mouse") return; for (let i = 0; i < 2; i++) dust.push({ x: e.clientX + (Math.random() - .5) * 10, y: e.clientY + (Math.random() - .5) * 10, vx: (Math.random() - .5) * .6, vy: .2 + Math.random() * .6, life: 1, s: 2 + Math.random() * 4 }); if (dust.length > 160) dust.splice(0, dust.length - 160); });
   function sparkle(x, y, r, a, col) {
@@ -2382,6 +2399,13 @@ console.log("%cAdvaith Sajith · case file AS-11\n%cClues: the prime you need fo
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
 <script type="module">
 import * as THREE from "three";
+THREE.Cache.enabled = true;   // one download per texture/model, shared by every loader
+let DRACO = null;
+async function gltfLoader() {
+  const [{ GLTFLoader }, { DRACOLoader }] = await Promise.all([import("three/addons/loaders/GLTFLoader.js"), import("three/addons/loaders/DRACOLoader.js")]);
+  if (!DRACO) { DRACO = new DRACOLoader(); DRACO.setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/"); }
+  const l = new GLTFLoader(); l.setDRACOLoader(DRACO); return l;
+}
 
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const DPR = Math.min(devicePixelRatio || 1, 1.5);
@@ -2437,10 +2461,9 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
   const sKey = new THREE.DirectionalLight(0xfff0e6, 1.6); sKey.position.set(2, 4, 5); scene.add(sKey);
   const sRim = new THREE.DirectionalLight(0x7d9be6, 1.2); sRim.position.set(-4, 2, -3); scene.add(sRim);
   setTimeout(async () => {
-    const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
-    const tl = new THREE.TextureLoader(), mt = tl.load("assets/fabric/marble.jpg"); mt.colorSpace = THREE.SRGBColorSpace; mt.wrapS = mt.wrapT = THREE.RepeatWrapping; mt.repeat.set(3, 3);
+    const tl = new THREE.TextureLoader(), mt = tl.load("assets/fabric/marble.webp"); mt.colorSpace = THREE.SRGBColorSpace; mt.wrapS = mt.wrapT = THREE.RepeatWrapping; mt.repeat.set(3, 3);
     const stone = new THREE.MeshStandardMaterial({ color: 0xf6f0f8, map: mt, roughness: .55, metalness: 0, transparent: true });
-    const gl = new GLTFLoader();
+    const gl = await gltfLoader();
     [["apollo", -2.55, 1.2, .55], ["athena", 2.55, 1.2, -.5]].forEach(([n, x, z, ry]) => gl.load(`assets/statues/${n}.glb`, g => {
       g.scene.traverse(o => { if (o.isMesh) o.material = stone; });
       g.scene.scale.setScalar(2.7); g.scene.position.set(x, -1.95, z); g.scene.rotation.y = ry; scene.add(g.scene); statues.push(g.scene); loop();
@@ -2593,19 +2616,19 @@ async function ballet3d() {
   const loadTex = (u, done) => { if (!IBL) return TLm.load(u, done); const x = new THREE.Texture(); x.flipY = false; IBL.load(u, bmp => { x.image = bmp; x.needsUpdate = true; done(); }, undefined, () => { TLm.load(u, t => { x.image = t.image; x.flipY = true; x.needsUpdate = true; done(); }); }); return x; };
   const mk = (u, srgb, r) => { const x = loadTex(u, () => { try { kick(); } catch (e) {} }); x.wrapS = x.wrapT = THREE.RepeatWrapping; x.repeat.set(r, r); if (srgb) x.colorSpace = THREE.SRGBColorSpace; return x; };
   // Carrara marble, like a neoclassical figure: veined colour, a carved normal map, waxy clearcoat
-  const skin = new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: mk("assets/fabric/marble.jpg", true, 2), normalMap: mk("assets/fabric/marble-n.jpg", false, 2), normalScale: new THREE.Vector2(.35, .35), roughness: .3, clearcoat: .55, clearcoatRoughness: .25, sheen: .25, sheenColor: new THREE.Color(0xd9c6e8) });
-  const stone = skin.clone(); stone.map = mk("assets/fabric/marble.jpg", true, 1.2); stone.roughness = .42;
+  const skin = new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: mk("assets/fabric/marble.webp", true, 2), normalMap: mk("assets/fabric/marble-n.webp", false, 2), normalScale: new THREE.Vector2(.35, .35), roughness: .3, clearcoat: .55, clearcoatRoughness: .25, sheen: .25, sheenColor: new THREE.Color(0xd9c6e8) });
+  const stone = skin.clone(); stone.map = mk("assets/fabric/marble.webp", true, 1.2); stone.roughness = .42;
   const bodice = new THREE.MeshPhysicalMaterial({ color: 0xb9a3e3, roughness: .5, sheen: 1, sheenColor: new THREE.Color(0xffffff), sheenRoughness: .4 });
   const shoe = new THREE.MeshPhysicalMaterial({ color: 0xf0c4c8, roughness: .25, sheen: 1, sheenColor: new THREE.Color(0xffd8dc), sheenRoughness: .3 });
   const hairM = skin;
   const body = new THREE.Group(); scene.add(body);
   const parts = {};
-  const { GLTFLoader } = await import("three/addons/loaders/GLTFLoader.js");
-  await new Promise(res => new GLTFLoader().load("assets/ballerina.glb", g => {
+  const GL = await gltfLoader();
+  await new Promise(res => GL.load("assets/ballerina.glb", g => {
     g.scene.traverse(o => { if (o.isMesh) { const n = (o.material && o.material.name) || ""; o.material = n.startsWith("Bodice") ? bodice : n.startsWith("Shoe") ? shoe : n.startsWith("Hair") ? hairM : n.startsWith("Marble") ? stone : skin; } });
     ["Body", "ArmL", "ArmR", "LegW"].forEach(n => { const o = g.scene.getObjectByName(n); if (o) { parts[n] = o; o.rotation.order = "YZX"; } });
     body.add(g.scene); const pl = g.scene.getObjectByName("Plinth"); if (pl) { pl.removeFromParent(); scene.add(pl); }
-    [["hebe", -.78, -1.7, .35], ["discobolus", .82, -1.75, -.5]].forEach(([n, x, z, ry]) => new GLTFLoader().load(`assets/statues/${n}.glb`, h => {
+    [["hebe", -.78, -1.7, .35], ["discobolus", .82, -1.75, -.5]].forEach(([n, x, z, ry]) => GL.load(`assets/statues/${n}.glb`, h => {
       h.scene.traverse(o => { if (o.isMesh) o.material = stone; }); h.scene.scale.setScalar(1.6); h.scene.position.set(x, -.4, z); h.scene.rotation.y = ry; scene.add(h.scene); try { kick(); } catch (e) {}
     }));
     res();
@@ -2625,17 +2648,17 @@ async function ballet3d() {
   const TL = new THREE.TextureLoader(), cache = {};
   function fabricTex(f) {
     if (cache[f.n]) return cache[f.n];
-    const base = "assets/fabric/" + f.tex, nrm = "assets/fabric/" + f.tex.replace(/\.(png|jpg)$/, "-n.jpg"), rep = f.n === "Tulle" ? [3, 3] : f.n === "Kasavu" ? [2, 1] : [1.6, 1.6];
+    const base = "assets/fabric/" + f.tex, nrm = "assets/fabric/" + f.tex.replace(/\.(png|jpg|webp)$/, "-n.webp"), rep = f.n === "Tulle" ? [3, 3] : f.n === "Kasavu" ? [2, 1] : [1.6, 1.6];
     const mk = (url, srgb) => { const t = TL.load(url, () => kick()); t.wrapS = THREE.RepeatWrapping; t.wrapT = f.n === "Kasavu" ? THREE.ClampToEdgeWrapping : THREE.RepeatWrapping; t.repeat.set(...rep); t.anisotropy = 4; if (srgb) t.colorSpace = THREE.SRGBColorSpace; return t; };
     return cache[f.n] = { map: mk(base, true), normal: mk(nrm, false) };
   }
   const FABRICS = [
-    { n: "Tulle", tex: "tulle.png", c: "#f3eef9", stiff: .92, w: .35, op: .92, rough: .7, ruff: .03, shape: "pancake", note: "<b>Tulle</b> is a fine hexagonal net of nylon or silk. Stacked in stiff layers it makes the classical pancake tutu, which hardly flares at all: that is the point, the legs stay visible." },
-    { n: "Silk", tex: "silk.jpg", c: "#b9a3e3", stiff: .15, w: .5, op: .92, rough: .25, ruff: .012, shape: "bell", note: "<b>Silk</b> is woven from long, smooth protein fibres, so it is slippery and catches light like liquid. A romantic silk skirt hangs soft at rest and swings out wide when she turns." },
-    { n: "Chiffon", tex: "chiffon.png", c: "#9fc0f0", stiff: .06, w: .14, op: .78, rough: .5, ruff: .02, shape: "bell", note: "<b>Chiffon</b> uses tightly twisted crepe yarns in an open plain weave. It is so light that the smallest turn lifts it: watch the skirt flare first and settle last." },
-    { n: "Velvet", tex: "velvet.jpg", c: "#4a2a5e", stiff: .3, w: 1.5, op: 1, rough: .95, ruff: .006, shape: "bell", note: "<b>Velvet</b> has a cut pile of upright fibres that swallows light. It is heavy, so gravity wins: she has to spin very fast before it lifts." },
-    { n: "Kasavu", tex: "kasavu.jpg", c: "#f3ead3", stiff: .45, w: .6, op: 1, rough: .8, ruff: .01, shape: "bell", note: "<b>Kasavu</b> is Kerala handloom cotton with a gold <i>zari</i> border, the fabric of the Onam sarees at home. Crisp cotton holds its shape, so it flares halfway." },
-    { n: "Jacquard", tex: "jacquard.jpg", c: "#7d9be6", stiff: .55, w: .85, op: 1, rough: .6, ruff: .008, shape: "bell", note: "<b>Jacquard</b> is woven on a Jacquard loom, where punched cards lift each warp thread. The pattern on this skirt is, quite literally, a program." },
+    { n: "Tulle", tex: "tulle.webp", c: "#f3eef9", stiff: .92, w: .35, op: .92, rough: .7, ruff: .03, shape: "pancake", note: "<b>Tulle</b> is a fine hexagonal net of nylon or silk. Stacked in stiff layers it makes the classical pancake tutu, which hardly flares at all: that is the point, the legs stay visible." },
+    { n: "Silk", tex: "silk.webp", c: "#b9a3e3", stiff: .15, w: .5, op: .92, rough: .25, ruff: .012, shape: "bell", note: "<b>Silk</b> is woven from long, smooth protein fibres, so it is slippery and catches light like liquid. A romantic silk skirt hangs soft at rest and swings out wide when she turns." },
+    { n: "Chiffon", tex: "chiffon.webp", c: "#9fc0f0", stiff: .06, w: .14, op: .78, rough: .5, ruff: .02, shape: "bell", note: "<b>Chiffon</b> uses tightly twisted crepe yarns in an open plain weave. It is so light that the smallest turn lifts it: watch the skirt flare first and settle last." },
+    { n: "Velvet", tex: "velvet.webp", c: "#4a2a5e", stiff: .3, w: 1.5, op: 1, rough: .95, ruff: .006, shape: "bell", note: "<b>Velvet</b> has a cut pile of upright fibres that swallows light. It is heavy, so gravity wins: she has to spin very fast before it lifts." },
+    { n: "Kasavu", tex: "kasavu.webp", c: "#f3ead3", stiff: .45, w: .6, op: 1, rough: .8, ruff: .01, shape: "bell", note: "<b>Kasavu</b> is Kerala handloom cotton with a gold <i>zari</i> border, the fabric of the Onam sarees at home. Crisp cotton holds its shape, so it flares halfway." },
+    { n: "Jacquard", tex: "jacquard.webp", c: "#7d9be6", stiff: .55, w: .85, op: 1, rough: .6, ruff: .008, shape: "bell", note: "<b>Jacquard</b> is woven on a Jacquard loom, where punched cards lift each warp thread. The pattern on this skirt is, quite literally, a program." },
   ];
   let fab = FABRICS[0];
   function setFabric(f) {
@@ -2648,7 +2671,7 @@ async function ballet3d() {
     kick();
   }
   const fb = document.getElementById("fabrics");
-  if (!fb.children.length) fb.innerHTML = FABRICS.map(f => `<button role="radio" data-n="${f.n}"><i style="background:${f.c} url(assets/fabric/${f.tex.replace(/\.(png|jpg)$/, "-sw.jpg")}) center/cover"></i>${f.n}</button>`).join("");
+  if (!fb.children.length) fb.innerHTML = FABRICS.map(f => `<button role="radio" data-n="${f.n}"><i style="background:${f.c} url(assets/fabric/${f.tex.replace(/\.(png|jpg|webp)$/, "-sw.webp")}) center/cover"></i>${f.n}</button>`).join("");
   fb.addEventListener("click", e => { const b = e.target.closest("button"); if (b) setFabric(FABRICS.find(f => f.n === b.dataset.n)); });
 
   // ---- physics state ----
