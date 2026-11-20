@@ -852,6 +852,13 @@
 
 
 
+
+  /* ================= ROUND 4: one name, one line, one image ================= */
+  .hero #motes { opacity: .45; }
+  .hero { padding-top: 88px; } .hero p.tag { margin-bottom: 14px; }
+  .hero .metrics { opacity: .2; }
+  #contact .here { margin: 4px 0 18px; }
+
   /* ================= ROUND 3: a calmer first screen ================= */
   .role { margin: 0 0 6px; font: 600 12px var(--mono); letter-spacing: .26em; text-transform: uppercase; color: var(--ember); position: relative; z-index: 4; }
   /* the type guides settle into a faint watermark after their intro and return when you hover the name */
@@ -1023,13 +1030,10 @@
       <div>
         <p class="tag">I build things and write things that let people into ideas <i>that usually keep them out.</i></p>
         <div class="meta-line">
-          <span class="live"></span>Grade 11 · GEMS New Millennium School, Dubai<br>
-          <b>Novelist</b> · programming-language designer · solar AI researcher · cryptography teacher<br>
-          <span style="opacity:.7">Eight clues are hidden on this page. Start scrolling to look for them.</span>
+          <span class="live"></span><b>Novelist</b> · programming-language designer · solar AI researcher · cryptography teacher
         </div>
-        <div class="here" id="here"><span class="globe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><ellipse class="spin" cx="12" cy="12" rx="4.5" ry="10"/><path d="M2 12h20M4.5 6.5h15M4.5 17.5h15"/></svg></span><span>Currently in Dubai<br><b id="dxbTime">--:--</b> GST <em id="dxbDiff"></em></span></div>
       </div>
-      <figure class="cameo" id="cameo"><i class="vf" aria-hidden="true"></i>
+      <figure class="cameo" id="cameo">
         <div class="oval"><img src="assets/portrait.webp" alt="Portrait of Advaith Sajith"></div>
         <svg viewBox="0 0 300 400" aria-hidden="true">
           <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d48a"/><stop offset=".5" stop-color="#c9a24a"/><stop offset="1" stop-color="#7a5a1e"/></linearGradient></defs>
@@ -1295,6 +1299,7 @@
       <div class="cipher reveal">
         <p class="eyebrow">X · Contact</p>
         <h2>Crack the safe to <em>reach me.</em></h2>
+        <div class="here" id="here"><span class="globe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><ellipse class="spin" cx="12" cy="12" rx="4.5" ry="10"/><path d="M2 12h20M4.5 6.5h15M4.5 17.5h15"/></svg></span><span>Currently in Dubai<br><b id="dxbTime">--:--</b> GST <em id="dxbDiff"></em></span></div>
         <p class="lede">My message is locked under a double transposition cipher: the letters were shuffled by column twice, with two different keys. Each number of the combination undoes one layer. It is the same trick as the third passage of Kryptos, the copper sculpture outside the CIA that took eight years to crack.</p>
         <div class="vault">
           <div class="safe">
@@ -2142,7 +2147,8 @@ const PUBS = [
     requestAnimationFrame(frame); if (document.hidden) return; t += .016;
     cx.clearRect(0, 0, W, H);
     const accent = accentNow;
-    for (const st of stars) { const a = Math.max(0, Math.sin(t * st.sp + st.ph)) ** 3; if (a > .02) sparkle(st.x * W, st.y * H, st.s * (.6 + a), a * .75, "#fff5fb"); }
+    const calm = scrollY < innerHeight * .6;
+    if (!calm) for (const st of stars) { const a = Math.max(0, Math.sin(t * st.sp + st.ph)) ** 3; if (a > .02) sparkle(st.x * W, st.y * H, st.s * (.6 + a), a * .75, "#fff5fb"); }
     for (let i = dust.length - 1; i >= 0; i--) { const d = dust[i]; d.x += d.vx; d.y += d.vy; d.life -= .022; if (d.life <= 0) { dust.splice(i, 1); continue; } sparkle(d.x, d.y, d.s * d.life, d.life * .9, i % 3 ? "#fff" : accent); }
     cx.globalAlpha = 1;
   })();
@@ -2486,7 +2492,7 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
   scene.add(new THREE.HemisphereLight(0xf3eef9, 0x2d2142, 1.1));
   const sKey = new THREE.DirectionalLight(0xfff0e6, 1.6); sKey.position.set(2, 4, 5); scene.add(sKey);
   const sRim = new THREE.DirectionalLight(0x7d9be6, 1.2); sRim.position.set(-4, 2, -3); scene.add(sRim);
-  setTimeout(async () => {
+  const loadStatues = async () => {
     const tl = new THREE.TextureLoader(), mt = tl.load("assets/fabric/marble.webp"); mt.colorSpace = THREE.SRGBColorSpace; mt.wrapS = mt.wrapT = THREE.RepeatWrapping; mt.repeat.set(3, 3);
     const stone = new THREE.MeshStandardMaterial({ color: 0xf6f0f8, map: mt, roughness: .55, metalness: 0, transparent: true });
     const gl = await gltfLoader();
@@ -2495,7 +2501,9 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
       g.scene.scale.setScalar(2.7); g.scene.position.set(x, -1.95, z); g.scene.rotation.y = ry; const add = () => { scene.add(g.scene); statues.push(g.scene); loop(); }; (renderer.compileAsync ? renderer.compileAsync(g.scene, cam, scene) : Promise.resolve()).then(add, add);
     }));
     window.__statueMat = stone;
-  }, 1200);
+  };
+  const firstScroll = () => { if (scrollY < 40) return; removeEventListener("scroll", firstScroll); loadStatues(); };
+  addEventListener("scroll", firstScroll, { passive: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1));
   function size() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
   size(); addEventListener("resize", size);
@@ -2520,7 +2528,7 @@ function watch(el, fn) { let on = false; new IntersectionObserver(es => es.forEa
     mesh.rotation.set(-1.0 + .62 * tilt, 0, .22 + sp * 1.8); mesh.position.set(.4 - .4 * tilt, -1.25 + 1.2 * tilt, 0);
     cam.position.z = d; cam.fov = 2 * Math.atan(K / d) * 180 / Math.PI; cam.updateProjectionMatrix();
     U.uA.value = .78 - .3 * tilt;
-    if (window.__statueMat) window.__statueMat.opacity = Math.max(0, .78 - tilt * 1.1);
+    if (window.__statueMat) { const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }; window.__statueMat.opacity = .8 * ss(.08, .3, tilt) * (1 - ss(.55, .95, tilt)); }
     statues.forEach((st, i) => st.rotation.y += (((i ? -.5 : .55) + U.uM.value.x * .25) - st.rotation.y) * .05);
     renderer.render(scene, cam);
     if (visible() && (!RM || Math.abs(P - sp) > .001)) requestAnimationFrame(frame); else running = false;
