@@ -869,7 +869,7 @@
   .metrics .base { stroke: color-mix(in srgb, var(--accent2) 65%, transparent); }
   /* swan, clue tracker and butterflies wait for the first scroll */
   .mascot, .evi-btn, .butterfly { transition: opacity .6s, visibility .6s; }
-  body:not(.scrolled-1) .mascot, body:not(.scrolled-1) .evi-btn, body:not(.scrolled-1) .butterfly { opacity: 0; visibility: hidden; }
+  body:not(.deep) .mascot, body:not(.deep) .evi-btn, body:not(.deep) .butterfly { opacity: 0; visibility: hidden; }
   @media (prefers-reduced-motion: reduce) { .metrics { opacity: .6; } }
 
   /* ================= ROUND 3: speed ================= */
@@ -2199,7 +2199,7 @@ const PUBS = [
   m.addEventListener("click", e => { if (e.target.closest("#mX")) return; if (dismissed) { dismissed = false; m.classList.remove("gone"); try { sessionStorage.removeItem("origami-off"); } catch (er) {} } next(); });
   $("#mX").addEventListener("click", e => { e.stopPropagation(); bub.classList.remove("show"); dismissed = true; m.classList.add("gone"); try { sessionStorage.setItem("origami-off", "1"); } catch (er) {} toast("Origami is napping. Reload to wake the swan."); });
   window.__mascot("top");
-  const hello = () => { if (scrollY < 80) return; removeEventListener("scroll", hello); setTimeout(() => say(LINES.top[0] + " " + LINES.top[1], 6500), 600); };
+  const hello = () => { if (!document.body.classList.contains("deep")) return; removeEventListener("scroll", hello); setTimeout(() => say(LINES.top[0] + " " + LINES.top[1], 6500), 600); };
   addEventListener("scroll", hello, { passive: true });
 })();
 
@@ -2225,7 +2225,7 @@ const PUBS = [
   SECTIONS.forEach(s => spy.observe(s));
   let SH = 0; new ResizeObserver(() => SH = document.documentElement.scrollHeight).observe(document.body);
   const pctEl = $("#railPct"); let pr = 0;
-  addEventListener("scroll", () => { if (pr) return; pr = requestAnimationFrame(() => { pr = 0; const y = scrollY; pctEl.textContent = Math.round(100 * y / Math.max(1, SH - innerHeight)) + "%"; if (y > SH - innerHeight * 1.6) setActive(SECTIONS[SECTIONS.length - 1].id); document.body.classList.toggle("scrolled-1", y > 80); }); }, { passive: true });
+  addEventListener("scroll", () => { if (pr) return; pr = requestAnimationFrame(() => { pr = 0; const y = scrollY; pctEl.textContent = Math.round(100 * y / Math.max(1, SH - innerHeight)) + "%"; if (y > SH - innerHeight * 1.6) setActive(SECTIONS[SECTIONS.length - 1].id); document.body.classList.toggle("scrolled-1", y > 80); const wk = document.getElementById("work"); if (wk) { let t = 0; for (let x = wk; x; x = x.offsetParent) t += x.offsetTop; document.body.classList.toggle("deep", y > t - innerHeight * .5); } }); }, { passive: true });
 
   // U03 live Dubai time, and how far the visitor is from it
   const tf = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Dubai", hour: "2-digit", minute: "2-digit" });
