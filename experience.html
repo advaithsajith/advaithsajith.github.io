@@ -130,10 +130,10 @@
 
   /* Baroque cameo portrait */
   .cameo { width: clamp(150px, 18vw, 230px); aspect-ratio: 3/4; position: relative; transform-style: preserve-3d; transition: transform .4s; }
-  .cameo .oval { position: absolute; inset: 9%; border-radius: 50%; overflow: hidden; background: var(--plum); box-shadow: 0 20px 50px rgba(0,0,0,.6); }
-  .cameo .oval img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: sepia(.25) contrast(1.05); }
+  .cameo .oval { position: absolute; inset: 9%; border-radius: 50%; overflow: hidden; background: var(--plum); box-shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 46px rgba(185,163,227,.35); }
+  .cameo .oval img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: var(--grade); }
   .cameo svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .cameo figcaption { position: absolute; left: 0; right: 0; bottom: -26px; text-align: center; font-family: var(--serif); font-style: italic; color: var(--gold-2); font-size: 15px; }
+  .cameo figcaption { position: absolute; left: 0; right: 0; bottom: -26px; text-align: center; font-family: var(--serif); font-style: italic; color: var(--ember); font-size: 15px; }
 
   /* ================= STATS MARQUEE ================= */
   .ticker { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; padding: 26px 0; background: var(--ink-2);
@@ -1041,14 +1041,10 @@
       <figure class="cameo" id="cameo">
         <div class="oval"><img src="assets/portrait.webp" alt="Portrait of Advaith Sajith"></div>
         <svg viewBox="0 0 300 400" aria-hidden="true">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d48a"/><stop offset=".5" stop-color="#c9a24a"/><stop offset="1" stop-color="#7a5a1e"/></linearGradient></defs>
-          <ellipse cx="150" cy="200" rx="128" ry="174" fill="none" stroke="url(#g)" stroke-width="9"/>
-          <ellipse cx="150" cy="200" rx="138" ry="185" fill="none" stroke="url(#g)" stroke-width="2" stroke-dasharray="2 6"/>
-          <path d="M150 6 c-20 10 -34 2 -40 14 c16 -4 26 6 40 -2 c14 8 24 -2 40 2 c-6 -12 -20 -4 -40 -14z" fill="url(#g)"/>
-          <circle cx="150" cy="14" r="7" fill="url(#g)"/>
-          <path d="M150 394 c-26 -8 -46 4 -56 -10 c22 2 36 -8 56 0 c20 -8 34 2 56 0 c-10 14 -30 2 -56 10z" fill="url(#g)"/>
-          <path d="M14 200 c10 -18 2 -32 14 -40 c-2 16 8 26 0 40 c8 14 -2 24 0 40 c-12 -8 -4 -22 -14 -40z" fill="url(#g)"/>
-          <path d="M286 200 c-10 -18 -2 -32 -14 -40 c2 16 -8 26 0 40 c-8 14 2 24 0 40 c12 -8 4 -22 14 -40z" fill="url(#g)"/>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3eef9"/><stop offset=".55" stop-color="#b9a3e3"/><stop offset="1" stop-color="#e381a8"/></linearGradient></defs>
+          <ellipse cx="150" cy="200" rx="128" ry="174" fill="none" stroke="url(#g)" stroke-width="3"/>
+          <ellipse cx="150" cy="200" rx="139" ry="186" fill="none" stroke="url(#g)" stroke-width="1" stroke-opacity=".5"/>
+          <circle cx="150" cy="14" r="4.5" fill="#e381a8"/>
         </svg>
         <figcaption>the subject, c. 2026</figcaption>
       </figure>
