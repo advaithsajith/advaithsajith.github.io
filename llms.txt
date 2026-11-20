@@ -16,3 +16,6 @@ The site has two doors: a minimal page at https://advaithsajith.github.io/ (name
 - [GitHub](https://github.com/advaithsajith)
 - [X](https://x.com/advaith_sajith)
 - [Letterboxd](https://letterboxd.com/advxth/)
+- [The Silent Witness Archive](https://advaithsajith.github.io/archive/): an alternate-history fiction (ARG); every person and institution in it is invented
+- [YouTube: Temproof](https://www.youtube.com/@temproof)
+- [itch.io: browser games](https://tsunamichess.itch.io)

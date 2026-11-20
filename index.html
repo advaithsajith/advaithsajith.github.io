@@ -106,6 +106,8 @@
   .anagram.show { opacity: 1; }
   header > .tag, header > .mono-label { transition: opacity .6s; }
   @media (max-width: 640px) { header.tiles-on > .tag, header.tiles-on > .mono-label { opacity: .12; } }   /* phones only, where the tiles spill over them */
+  .note .after { color: var(--muted); text-decoration: none; padding: 6px 0; white-space: nowrap; }
+  .note .after:hover, .note .after:focus-visible { color: var(--ember); }
   .shuffle { font: inherit; color: var(--ember); background: none; border: 0; padding: 6px 2px; min-height: 24px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 480px) { .mono-label { letter-spacing: .14em; font-size: 11px; } }
   @media (prefers-reduced-motion: reduce) { .enter, .enter span { transition: none; } }
@@ -119,7 +121,7 @@
     <div class="namebox"><h1 id="name" aria-label="Advaith Sajith" title="Click to shuffle the letters"><span class="w">Advaith</span> <span class="w">Sajith</span></h1><div class="tiles" id="tiles" aria-hidden="true"></div><p class="anagram" id="anagram" aria-live="polite"></p></div>
     <p class="tag">I build things and write things that let people into ideas <em>that usually keep them out.</em></p>
     <a class="enter" href="experience.html">Enter the full case file <span aria-hidden="true">→</span></a>
-    <div class="note">3D scenes, eight hidden clues, sound if you want it · <button type="button" class="shuffle" id="shuffleBtn">shuffle my name</button></div>
+    <div class="note">3D scenes, eight hidden clues, sound if you want it · <button type="button" class="shuffle" id="shuffleBtn">shuffle my name</button> <a class="after" href="https://www.youtube.com/watch?v=gR1RjWHmZRU" rel="noopener" title="The Scrabble scene from Rosemary's Baby (1968)">(after <i>Rosemary's Baby</i>)</a></div>
   </header>
 
   <section aria-labelledby="contents-h">
@@ -145,9 +147,11 @@
       <li><b>SunSmart AI</b><i>Research</i><span>Reinforcement learning that aims bifacial solar trackers through desert wind, dust and heat. Submitted to <em>Energies</em>.</span></li>
       <li><b><a href="https://github.com/advaithsajith/swan" rel="noopener">Swan</a></b><i>Language design</i><span>A beginner-friendly programming language with kind error messages and its own browser editor.</span></li>
       <li><b><a href="https://doi.org/10.5281/zenodo.23863175" rel="noopener">The Advaithian Operator</a></b><i>Logic · preprint</i><span>When two people race to fall asleep, who wins? Nobody can ever know. I proved it.</span></li>
+      <li><b><a href="archive/">The Silent Witness Archive</a></b><i>Alternate history · ARG</i><span>A fictional archive of a tradition that counts what nobody saw. Clippings, tapes, letters and a test you can take.</span></li>
+      <li><b><a href="https://tsunamichess.itch.io" rel="noopener">Nine browser games</a></b><i>Games · itch.io</i><span>Zombie survival on the Kannur coast, a god sim, an Illuminati satire and a Masonic lodge, all free to play in the browser.</span></li>
       <li><b>QNode</b><i>Hardware</i><span>A random number generator that pulls unpredictability out of light.</span></li>
     </ul>
-    <div class="facts"><span><b>99.8%</b> CBSE Grade 10</span><span><b>13</b> pieces in print</span><span><b>56+</b> World Scholar's Cup medals</span><span><b>11</b> case files</span></div>
+    <div class="facts"><span><b>99.8%</b> CBSE Grade 10</span><span><b>13</b> pieces in print</span><span><b>56+</b> World Scholar's Cup medals</span><span><b>12</b> case files</span></div>
   </section>
 
   <section class="contact" aria-labelledby="contact-h">
@@ -158,6 +162,8 @@
       <button type="button" id="telBtn">Phone</button>
       <a href="https://github.com/advaithsajith" rel="noopener">GitHub</a>
       <a href="https://x.com/advaith_sajith" rel="noopener">X</a>
+      <a href="https://www.youtube.com/@temproof" rel="noopener">YouTube</a>
+      <a href="https://tsunamichess.itch.io" rel="noopener">itch.io</a>
     </div>
   </section>
 </main>
