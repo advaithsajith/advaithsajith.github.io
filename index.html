@@ -105,7 +105,7 @@
   .anagram { position: absolute; left: 0; right: 0; top: 100%; margin: 0; font: 600 12px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--sage); opacity: 0; transition: opacity .5s; pointer-events: none; }
   .anagram.show { opacity: 1; }
   header > .tag, header > .mono-label { transition: opacity .6s; }
-  header.tiles-on > .tag, header.tiles-on > .mono-label { opacity: .07; }
+  @media (max-width: 640px) { header.tiles-on > .tag, header.tiles-on > .mono-label { opacity: .12; } }   /* phones only, where the tiles spill over them */
   .shuffle { font: inherit; color: var(--ember); background: none; border: 0; padding: 6px 2px; min-height: 24px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 480px) { .mono-label { letter-spacing: .14em; font-size: 11px; } }
   @media (prefers-reduced-motion: reduce) { .enter, .enter span { transition: none; } }
