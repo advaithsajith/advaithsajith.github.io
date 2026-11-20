@@ -854,6 +854,9 @@
 
 
   /* ================= ROUND 4: one name, one line, one image ================= */
+  .mascot.hint::after { content: ""; position: absolute; right: 16px; top: 14px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 10px var(--accent2); animation: hintPulse 1.8s ease-in-out infinite; pointer-events: none; }
+  @keyframes hintPulse { 50% { transform: scale(1.5); opacity: .55; } }
+  @media (prefers-reduced-motion: reduce) { .mascot.hint::after { animation: none; } }
   .hero #motes { opacity: .45; }
   .hero { padding-top: 88px; } .hero p.tag { margin-bottom: 14px; }
   .hero .metrics { opacity: .2; }
@@ -2193,14 +2196,13 @@ const PUBS = [
     if (!LINES[id] || id === cur) return; cur = id; n = 0;
     m.querySelectorAll(".acc").forEach(a => a.classList.toggle("on", a.dataset.for.split(" ").includes(id)));
     m.classList.remove("hop"); void m.offsetWidth; m.classList.add("hop");
-    if (id !== "top") say(LINES[id][0]);
+    n = -1; m.classList.add("hint");
   };
-  const next = () => { const l = LINES[cur] || LINES.top; n = (n + 1) % l.length; say(l[n]); m.classList.remove("wave"); void m.offsetWidth; m.classList.add("wave"); };
+  const next = () => { const l = LINES[cur] || LINES.top; n = (n + 1) % l.length; say(l[n]); m.classList.remove("hint"); m.classList.remove("wave"); void m.offsetWidth; m.classList.add("wave"); };
   m.addEventListener("click", e => { if (e.target.closest("#mX")) return; if (dismissed) { dismissed = false; m.classList.remove("gone"); try { sessionStorage.removeItem("origami-off"); } catch (er) {} } next(); });
   $("#mX").addEventListener("click", e => { e.stopPropagation(); bub.classList.remove("show"); dismissed = true; m.classList.add("gone"); try { sessionStorage.setItem("origami-off", "1"); } catch (er) {} toast("Origami is napping. Reload to wake the swan."); });
   window.__mascot("top");
-  const hello = () => { if (!document.body.classList.contains("deep")) return; removeEventListener("scroll", hello); setTimeout(() => say(LINES.top[0] + " " + LINES.top[1], 6500), 600); };
-  addEventListener("scroll", hello, { passive: true });
+
 })();
 
 
