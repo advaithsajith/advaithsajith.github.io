@@ -682,29 +682,29 @@
   @media (prefers-reduced-motion: reduce) { .m-body, .mascot.hop .m-body { animation: none; } }
 
 
-  /* ================= KRYPTOS PLATE ================= */
-  .grid-wrap { position: relative; padding: 22px 22px 18px; border-radius: var(--r-card); color: #f6e2c4;
+  /* ================= KRYPTOS PLATE (plum enamel, sage patina: the site's own palette) ================= */
+  .grid-wrap { position: relative; padding: 22px 22px 18px; border-radius: var(--r-card); color: #efe6fb;
     background:
-      radial-gradient(circle at 18% 28%, rgba(79,156,138,.55) 0 3%, transparent 9%), radial-gradient(circle at 74% 70%, rgba(79,156,138,.45) 0 2%, transparent 8%),
-      radial-gradient(circle at 60% 18%, rgba(79,156,138,.35) 0 1.5%, transparent 6%),
-      repeating-linear-gradient(100deg, rgba(255,255,255,.04) 0 2px, rgba(0,0,0,.05) 2px 5px),
-      linear-gradient(135deg, #3a2014, #7a4a2a 30%, #b87333 55%, #6e3f22 80%, #2a160d);
-    box-shadow: inset 0 0 0 1px rgba(255,214,170,.25), inset 0 0 40px rgba(0,0,0,.55), 0 20px 40px -18px rgba(42,22,13,.8); }
-  .grid-wrap .layer { color: var(--gold-ink) !important; letter-spacing: .2em; text-align: center; }
+      radial-gradient(circle at 18% 28%, rgba(142,201,181,.32) 0 3%, transparent 9%), radial-gradient(circle at 74% 70%, rgba(142,201,181,.26) 0 2%, transparent 8%),
+      radial-gradient(circle at 60% 18%, rgba(227,129,168,.18) 0 1.5%, transparent 6%),
+      repeating-linear-gradient(100deg, rgba(255,255,255,.035) 0 2px, rgba(0,0,0,.05) 2px 5px),
+      linear-gradient(135deg, #1a1228, #33264d 30%, #4b3a6e 52%, #2d2142 78%, #140e1f);
+    box-shadow: inset 0 0 0 1px rgba(185,163,227,.32), inset 0 0 40px rgba(0,0,0,.5), 0 20px 40px -18px rgba(29,20,45,.85); }
+  .grid-wrap .layer { color: #d9cbf2 !important; letter-spacing: .2em; text-align: center; }
   .grid-wrap .cgrid { margin: 0 auto; }
   .kheader { display: grid; grid-template-columns: repeat(var(--cols, 5), 48px); justify-content: center; gap: 0; margin: 4px auto 10px; min-height: 46px; align-items: end; }
   .kheader span { display: grid; justify-items: center; width: 42px; padding: 4px 0; border-radius: var(--r-sm); transition: background .35s, box-shadow .35s; }
-  .kheader b { font: 700 18px var(--mono); color: var(--gold-ink); } .kheader i { font: 500 11px var(--mono); color: var(--gold-ink); font-style: normal; }
-  .kheader span.lit { background: rgba(255,214,150,.18); box-shadow: 0 0 18px rgba(255,190,110,.55); }
-  .kheader em { grid-column: 1 / -1; text-align: center; white-space: nowrap; font: 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); font-style: normal; margin-top: 4px; }
+  .kheader b { font: 700 18px var(--mono); color: #efe6fb; } .kheader i { font: 500 11px var(--mono); color: #b9a3e3; font-style: normal; }
+  .kheader span.lit { background: rgba(227,129,168,.18); box-shadow: 0 0 18px rgba(227,129,168,.5); }
+  .kheader em { grid-column: 1 / -1; text-align: center; white-space: nowrap; font: 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #b9a3e3; font-style: normal; margin-top: 4px; }
   .kheader em.ok { color: #9fe0c8; }
-  .cgrid .tok { background: rgba(20,10,5,.55) !important; border: 1px solid rgba(255,214,170,.18) !important; color: var(--gold-ink) !important; text-shadow: 0 0 10px rgba(255,170,90,.75), 0 0 2px #ffe8c8; border-radius: var(--r-xs); }
-  .cgrid .tok.sp { color: var(--gold-ink) !important; opacity: .35; text-shadow: none; }
+  .cgrid .tok { background: rgba(13,9,22,.55) !important; border: 1px solid rgba(185,163,227,.22) !important; color: #efe6fb !important; text-shadow: 0 0 10px rgba(185,163,227,.8), 0 0 2px #fff; border-radius: var(--r-xs); }
+  .cgrid .tok.sp { color: #b9a3e3 !important; opacity: .35; text-shadow: none; }
   .cgrid .tok.flick { color: #9fe0c8 !important; text-shadow: 0 0 12px rgba(120,230,200,.9); }
-  .cgrid.solved .tok { background: rgba(255,236,200,.92) !important; color: #2a160d !important; text-shadow: none; animation: plateGlow 1.4s ease both; }
+  .cgrid.solved .tok { background: rgba(243,238,249,.94) !important; color: var(--ink-paper) !important; text-shadow: none; animation: plateGlow 1.4s ease both; }
   .cgrid.solved .tok:nth-child(5n+2) { animation-delay: .08s; } .cgrid.solved .tok:nth-child(5n+3) { animation-delay: .16s; } .cgrid.solved .tok:nth-child(5n+4) { animation-delay: .24s; } .cgrid.solved .tok:nth-child(5n) { animation-delay: .32s; }
-  @keyframes plateGlow { 0% { box-shadow: 0 0 0 rgba(255,200,120,0); } 40% { box-shadow: 0 0 26px rgba(255,200,120,.95); } 100% { box-shadow: 0 0 6px rgba(255,200,120,.4); } }
-  .grid-wrap .clue { color: var(--gold-ink) !important; text-align: center; }
+  @keyframes plateGlow { 0% { box-shadow: 0 0 0 rgba(185,163,227,0); } 40% { box-shadow: 0 0 26px rgba(185,163,227,.95); } 100% { box-shadow: 0 0 6px rgba(185,163,227,.4); } }
+  .grid-wrap .clue { color: #d9cbf2 !important; text-align: center; }
   @media (max-width: 760px) { .grid-wrap .cgrid { height: calc(var(--rows, 5) * 40px); max-width: calc(var(--cols, 5) * 40px); } .kheader { grid-template-columns: repeat(var(--cols, 5), 40px); } .kheader span { width: 36px; } .grid-wrap { padding: 16px 12px; } }
 
 
@@ -1301,15 +1301,15 @@
         <p class="eyebrow">X · Contact</p>
         <h2>Crack the safe to <em>reach me.</em></h2>
         <div class="here" id="here"><span class="globe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><ellipse class="spin" cx="12" cy="12" rx="4.5" ry="10"/><path d="M2 12h20M4.5 6.5h15M4.5 17.5h15"/></svg></span><span>Currently in Dubai<br><b id="dxbTime">--:--</b> GST <em id="dxbDiff"></em></span></div>
-        <p class="lede">My message is locked under a double transposition cipher: the letters were shuffled by column twice, with two different keys. Each number of the combination undoes one layer. It is the same trick as the third passage of Kryptos, the copper sculpture outside the CIA that took eight years to crack.</p>
+        <p class="lede">My message is locked under a double transposition cipher: the letters were shuffled by column twice, with two different keys. The first number wakes the safe; each of the next two undoes one layer. It is the same trick as the third passage of Kryptos, the copper sculpture outside the CIA that took eight years to crack.</p>
         <div class="vault">
           <div class="safe">
             <svg id="dial" data-cursor="turn" viewBox="0 0 240 240" role="slider" tabindex="0" aria-label="Combination dial" aria-valuemin="0" aria-valuemax="39" aria-valuenow="0">
-              <defs><radialGradient id="dg" cx=".4" cy=".35"><stop offset="0" stop-color="#4a3a2a"/><stop offset="1" stop-color="#1a120b"/></radialGradient></defs>
-              <circle cx="120" cy="120" r="116" fill="#2a1d12" stroke="#c9a24a" stroke-width="3"/>
+              <defs><radialGradient id="dg" cx=".4" cy=".35"><stop offset="0" stop-color="#4b3a6e"/><stop offset="1" stop-color="#140e1f"/></radialGradient><linearGradient id="dr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3eef9"/><stop offset=".5" stop-color="#b9a3e3"/><stop offset="1" stop-color="#6b5a86"/></linearGradient><radialGradient id="dh" cx=".38" cy=".32"><stop offset="0" stop-color="#f3eef9"/><stop offset=".55" stop-color="#b9a3e3"/><stop offset="1" stop-color="#5b4a7a"/></radialGradient></defs>
+              <circle cx="120" cy="120" r="116" fill="#1a1228" stroke="url(#dr)" stroke-width="4"/>
               <g id="dialFace"></g>
-              <circle cx="120" cy="120" r="38" fill="#c9a24a"/><circle cx="120" cy="120" r="30" fill="#8a6a2a"/>
-              <path d="M120 2 l-7 -0 l7 14 l7 -14z" fill="#d7263d"/>
+              <circle cx="120" cy="120" r="38" fill="url(#dh)"/><circle cx="120" cy="120" r="30" fill="#2d2142" stroke="rgba(243,238,249,.35)"/><circle id="dialGem" cx="120" cy="120" r="7" fill="#e381a8"/>
+              <path d="M120 2 l-7 -0 l7 14 l7 -14z" fill="#e381a8"/>
             </svg>
             <div class="readout">dial <b id="dialVal">00</b></div>
             <button class="btn-a set" id="setBtn">Lock in number</button>
@@ -2397,25 +2397,25 @@ document.querySelectorAll(".reveal, .t-row").forEach(el => io.observe(el));
   // Dial
   const face = $("#dialFace"), dial = $("#dial"); let svg = "";
   for (let n = 0; n < 40; n++) { const a = n * 9 * Math.PI / 180, r1 = 104, r2 = n % 5 ? 96 : 90, x = 120 + Math.sin(a), y = 120 - Math.cos(a);
-    svg += `<line x1="${120 + Math.sin(a) * r1}" y1="${120 - Math.cos(a) * r1}" x2="${120 + Math.sin(a) * r2}" y2="${120 - Math.cos(a) * r2}" stroke="#f0d48a" stroke-width="${n % 5 ? 1.5 : 3}"/>`;
-    if (n % 5 === 0) svg += `<text x="${120 + Math.sin(a) * 76}" y="${124 - Math.cos(a) * 76}" fill="#f0d48a" font-family="JetBrains Mono" font-size="12" text-anchor="middle">${n}</text>`; }
+    svg += `<line x1="${120 + Math.sin(a) * r1}" y1="${120 - Math.cos(a) * r1}" x2="${120 + Math.sin(a) * r2}" y2="${120 - Math.cos(a) * r2}" stroke="${n % 5 ? "#b9a3e3" : "#f3eef9"}" stroke-width="${n % 5 ? 1.5 : 3}"/>`;
+    if (n % 5 === 0) svg += `<text x="${120 + Math.sin(a) * 76}" y="${124 - Math.cos(a) * 76}" fill="#f3eef9" font-family="JetBrains Mono" font-size="12" text-anchor="middle">${n}</text>`; }
   face.innerHTML = `<circle cx="120" cy="120" r="108" fill="url(#dg)"/>` + svg;
   let value = 0, entered = [];
-  function setValue(v) { value = ((Math.round(v) % 40) + 40) % 40; face.style.transform = `rotate(${-value * 9}deg)`; $("#dialVal").textContent = String(value).padStart(2, "0"); dial.setAttribute("aria-valuenow", value); }
+  function setValue(v) { const nv = ((Math.round(v) % 40) + 40) % 40; if (nv !== value) { window.__sfx && __sfx.blip(nv % 5 ? 1900 : 1300, .018, "square", .012); if (navigator.vibrate && matchMedia("(pointer: coarse)").matches) try { navigator.vibrate(3); } catch (e) {} } value = nv; face.style.transform = `rotate(${-value * 9}deg)`; $("#dialVal").textContent = String(value).padStart(2, "0"); dial.setAttribute("aria-valuenow", value); }
   setValue(0);
   let dragging = false, lastAng = 0, acc = 0;
   const angleOf = e => { const r = dial.getBoundingClientRect(); return Math.atan2(e.clientX - (r.left + r.width / 2), -(e.clientY - (r.top + r.height / 2))) * 180 / Math.PI; };
   dial.addEventListener("pointerdown", e => { dragging = true; lastAng = angleOf(e); acc = value; dial.setPointerCapture(e.pointerId); });
   dial.addEventListener("pointermove", e => { if (!dragging) return; let a = angleOf(e), d = a - lastAng; if (d > 180) d -= 360; if (d < -180) d += 360; lastAng = a; acc -= d / 9; setValue(acc); });
-  dial.addEventListener("pointerup", () => dragging = false);
+  dial.addEventListener("pointerup", () => dragging = false); dial.addEventListener("pointercancel", () => dragging = false);
   dial.addEventListener("wheel", e => { e.preventDefault(); setValue(value + (e.deltaY > 0 ? 1 : -1)); acc = value; }, { passive: false });
   dial.addEventListener("keydown", e => { if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); setValue(value + 1); } if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); setValue(value - 1); } if (e.key === "Enter") lockIn(); acc = value; });
   const slots = [...document.querySelectorAll("#slots span")];
   function lockIn() {
     if (stage >= 2) return;
     const i = entered.length; slots[i].textContent = String(value).padStart(2, "0");
-    if (value !== COMBO[i]) { const s = document.querySelector(".safe"); s.classList.remove("shake"); void s.offsetWidth; s.classList.add("shake"); setTimeout(() => { entered = []; slots.forEach(x => { x.textContent = "--"; x.classList.remove("ok"); }); }, 500); return; }
-    entered.push(value); slots[i].classList.add("ok");
+    if (value !== COMBO[i]) { window.__sfx && __sfx.blip(140, .22, "sawtooth", .035, 70); const s = document.querySelector(".safe"); s.classList.remove("shake"); void s.offsetWidth; s.classList.add("shake"); setTimeout(() => { entered = []; slots.forEach(x => { x.textContent = "--"; x.classList.remove("ok"); }); }, 500); return; }
+    entered.push(value); slots[i].classList.add("ok"); window.__sfx && __sfx.blip(180, .14, "triangle", .06, 120); const gem = $("#dialGem"); gem && gem.animate([{ fill: "#9fe0c8" }, { fill: "#e381a8" }], { duration: 700 });
     if (entered.length === 2) { sweep(KEY2); setTimeout(() => { stage = 1; layout(1, true); showKey(KEY1, "inner key · reading columns"); sweep(KEY1); }, reduce ? 0 : 900); $("#layerLabel").textContent = "LAYER 2 REMOVED · key RAVEN · 1 layer left"; }
     if (entered.length === 3) { sweep(KEY1); setTimeout(() => { stage = 2; layout(2, true); head.innerHTML = `<em class="ok">plaintext · read across the rows</em>`; }, reduce ? 0 : 900); $("#layerLabel").textContent = "LAYER 1 REMOVED · key BIRCH · DECRYPTED"; setTimeout(unlock, reduce ? 0 : 2300); }
   }
