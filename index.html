@@ -70,6 +70,9 @@
   @keyframes inkSheen { to { background-position: 0 100%; } }
   @media (prefers-reduced-motion: reduce) { h1 .l { animation: none; } .wis { animation: none; opacity: .62; } }
   h2 .f { color: var(--sage); }
+  .plain { margin: 14px auto 0; max-width: 62ch; text-wrap: balance; font: 600 clamp(13px, 1.6vw, 15px)/1.5 var(--mono); letter-spacing: .03em; color: var(--cream); text-shadow: 0 1px 12px rgba(13,10,20,.9); transition: opacity .6s; }
+  header.tiles-on > .plain { opacity: .08; }
+  .tag { text-shadow: 0 1px 14px rgba(13,10,20,.85); }
   .tag { margin: 18px auto 0; max-width: 30ch; font-size: clamp(20px, 3.2vw, 25px); line-height: 1.35; color: var(--cream); }
   .tag em { color: var(--sage); }
 
@@ -137,6 +140,7 @@
     <img class="mark" src="assets/brand/monogram.webp" width="64" height="64" alt="">
     <p class="mono-label">Novelist &amp; engineer · Grade 11 · Dubai</p>
     <div class="namebox"><h1 id="name" aria-label="Advaith Sajith" title="Click to shuffle the letters"><span class="w">Advaith</span> <span class="w">Sajith</span></h1><div class="tiles" id="tiles" aria-hidden="true"></div><p class="anagram" id="anagram" aria-live="polite"></p></div>
+    <p class="plain">I write mystery novels and build AI tools, apps and games.</p>
     <p class="tag">I build things and write things that let people into ideas <em>that usually keep them out.</em></p>
     <a class="enter" href="experience.html">Enter the full case file <span aria-hidden="true">→</span></a>
     <div class="note">3D scenes, eight hidden clues, sound if you want it · <button type="button" class="shuffle" id="shuffleBtn">shuffle my name</button> <a class="after" href="https://www.youtube.com/watch?v=gR1RjWHmZRU" rel="noopener" title="The Scrabble scene from Rosemary's Baby (1968)">(after <i>Rosemary's Baby</i>)</a></div>
