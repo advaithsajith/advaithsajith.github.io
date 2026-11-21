@@ -13,7 +13,8 @@
 <meta property="og:url" content="https://advaithsajith.github.io/">
 <meta property="og:image" content="https://advaithsajith.github.io/assets/cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%230d0a14'/%3E%3Cg%20fill='none'%20stroke='%23b9a3e3'%20stroke-width='4'%3E%3Ccircle%20cx='50'%20cy='50'%20r='42'/%3E%3Cpolygon%20points='50.0,8.0%2089.9,37.0%2074.7,84.0%2025.3,84.0%2010.1,37.0'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='10'%20stroke='%238ec9b5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='21'%20stroke='%237d9be6'/%3E%3C/g%3E%3Ccircle%20cx='50'%20cy='50'%20r='3'%20fill='%23e381a8'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/brand/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Advaith Sajith","url":"https://advaithsajith.github.io/","jobTitle":"Student, novelist and engineer","homeLocation":{"@type":"Place","name":"Dubai"},"sameAs":["https://github.com/advaithsajith","https://x.com/advaith_sajith","https://letterboxd.com/advxth/","https://doi.org/10.5281/zenodo.23863175"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,13 +47,29 @@
   .mono-label { font: 600 12px var(--mono); letter-spacing: .24em; text-transform: uppercase; color: var(--ember); }
 
   header { text-align: center; }
-  .mark { width: 44px; height: 44px; display: block; margin: 0 auto 22px; }
+  /* brand art (drawn in Canva): wisteria hanging over the top of the page */
+  .wis { position: absolute; z-index: 0; left: 0; right: 0; top: 0; height: min(78vh, 760px); pointer-events: none; background: url("assets/brand/wisteria-1600.webp") center top / cover no-repeat; opacity: 0; animation: wisIn 1.6s .2s ease forwards;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.75) 35%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.75) 35%, transparent 100%); }
+  .wis::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 55%, rgba(13,10,20,.78), rgba(13,10,20,.25) 70%, transparent); }
+  @keyframes wisIn { to { opacity: .62; } }
+  @media (max-width: 700px) { .wis { background-image: url("assets/brand/wisteria-900.webp"); height: 62vh; } }
+  .letter-art { display: flex; justify-content: center; align-items: flex-end; gap: 18px; margin: 0 0 18px; }
+  .letter-art img { display: block; height: auto; border-radius: 4px; box-shadow: 0 14px 30px -12px rgba(0,0,0,.7); }
+  .letter-art .env { width: 128px; transform: rotate(-4deg); }
+  .swan-key { display: inline-flex; align-items: center; gap: 12px; margin-top: 26px; font: 12px var(--mono); color: var(--cream-dim); text-decoration: none; }
+  .swan-key img { width: 64px; height: 64px; border-radius: 6px; transform: rotate(3deg); transition: transform .5s cubic-bezier(.3,1.3,.4,1); }
+  .swan-key:hover img, .swan-key:focus-visible img { transform: rotate(-6deg) translateY(-4px); }
+  .swan-key:hover span, .swan-key:focus-visible span { color: var(--ember); }
+  .mark { width: 64px; height: 64px; display: block; margin: 0 auto 20px; border-radius: 50%; box-shadow: 0 0 34px rgba(185,163,227,.28); }
   .mark circle, .mark polygon { fill: none; stroke: var(--ember); stroke-width: 3; }
   .mark .c2 { stroke: var(--sage); } .mark .dot { fill: var(--accent2); stroke: none; }
   h1 { margin: 14px 0 10px; font-weight: 700; font-size: clamp(54px, 13vw, 112px); line-height: .92; letter-spacing: -.035em; font-variation-settings: "opsz" 28;
     background: linear-gradient(175deg, var(--cream) 30%, var(--ember) 75%, var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   h1 .w { display: inline-block; white-space: nowrap; }
-  h1 .l { display: inline-block; background: linear-gradient(175deg, var(--cream) 25%, var(--ember) 72%, var(--accent2) 110%); -webkit-background-clip: text; background-clip: text; color: transparent; will-change: transform; }
+  h1 .l { display: inline-block; background: linear-gradient(175deg, var(--cream) 20%, var(--ember) 50%, var(--accent2) 68%, var(--ember) 84%, var(--cream) 100%) 0 0 / 100% 240%; -webkit-background-clip: text; background-clip: text; color: transparent; will-change: transform; animation: inkSheen 9s ease-in-out infinite alternate; }
+  @keyframes inkSheen { to { background-position: 0 100%; } }
+  @media (prefers-reduced-motion: reduce) { h1 .l { animation: none; } .wis { animation: none; opacity: .62; } }
+  h2 .f { color: var(--sage); }
   .tag { margin: 18px auto 0; max-width: 30ch; font-size: clamp(20px, 3.2vw, 25px); line-height: 1.35; color: var(--cream); }
   .tag em { color: var(--sage); }
 
@@ -114,9 +131,10 @@
 </style>
 </head>
 <body>
+<div class="wis" aria-hidden="true"></div>
 <main>
   <header>
-    <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><polygon points="50,6 92,36.5 76,86 24,86 8,36.5"/><circle class="c2" cx="50" cy="50" r="12"/><circle cx="50" cy="50" r="24"/><circle class="dot" cx="50" cy="50" r="3.5"/></svg>
+    <img class="mark" src="assets/brand/monogram.webp" width="64" height="64" alt="">
     <p class="mono-label">Novelist &amp; engineer · Grade 11 · Dubai</p>
     <div class="namebox"><h1 id="name" aria-label="Advaith Sajith" title="Click to shuffle the letters"><span class="w">Advaith</span> <span class="w">Sajith</span></h1><div class="tiles" id="tiles" aria-hidden="true"></div><p class="anagram" id="anagram" aria-live="polite"></p></div>
     <p class="tag">I build things and write things that let people into ideas <em>that usually keep them out.</em></p>
@@ -155,6 +173,7 @@
   </section>
 
   <section class="contact" aria-labelledby="contact-h">
+    <div class="letter-art" aria-hidden="true"><img class="env" src="assets/brand/envelope.webp" width="128" height="124" alt="" loading="lazy"></div>
     <h2 id="contact-h">Write to me</h2>
     <p>I answer every letter.</p>
     <div class="links">
@@ -165,6 +184,7 @@
       <a href="https://www.youtube.com/@temproof" rel="noopener">YouTube</a>
       <a href="https://tsunamichess.itch.io" rel="noopener">itch.io</a>
     </div>
+    <a class="swan-key" href="experience.html#contact"><img src="assets/brand/swan.webp" width="64" height="64" alt="" loading="lazy"><span>The swan has the key. Crack the safe on the full site →</span></a>
   </section>
 </main>
 <footer>Edition III · the short version · <a href="experience.html">the full case file</a> · © 2026 Advaith Sajith, Dubai</footer>
@@ -259,6 +279,15 @@ document.getElementById("telBtn").onclick = () => { location.href = "tel:+971" +
   h.addEventListener("click", play); document.getElementById("shuffleBtn").addEventListener("click", play);
   let seen = false; try { seen = sessionStorage.getItem("tiles") === "1"; } catch (e) {}
   if (!seen && !reduce) (window.__fontsReady || Promise.resolve()).then(() => setTimeout(() => { try { sessionStorage.setItem("tiles", "1"); } catch (e) {} play(); }, 3800));
+})();
+
+// Cipher flicker: section headings scramble through the alphabet and land when they scroll into view
+(function () {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const G = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); const h = e.target, t = h.textContent; h.setAttribute("aria-label", t); let n = 0;
+    const id = setInterval(() => { n++; h.innerHTML = [...t].map((c, i) => c === " " || n > i * 1.5 + 3 ? c : '<span class="f" aria-hidden="true">' + G[Math.random() * 26 | 0] + "</span>").join(""); if (n > t.length * 1.5 + 4) { clearInterval(id); h.textContent = t; } }, 55); }), { threshold: .6 });
+  document.querySelectorAll("main section h2").forEach(h => io.observe(h));
 })();
 </script>
 </body>

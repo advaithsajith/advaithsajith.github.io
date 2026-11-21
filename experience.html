@@ -7,7 +7,8 @@
 <meta name="description" content="Advaith Sajith: novelist, programming-language designer and solar AI researcher in Dubai.">
 <meta name="theme-color" content="#0d0a14">
 <link rel="canonical" href="https://advaithsajith.github.io/experience.html">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='#0d0a14'/%3E%3Cg%20fill='none'%20stroke='#b9a3e3'%20stroke-width='4'%3E%3Ccircle%20cx='50'%20cy='50'%20r='42'/%3E%3Cpolygon%20points='50.0,8.0%2089.9,37.0%2074.7,84.0%2025.3,84.0%2010.1,37.0'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='10'%20stroke='#8ec9b5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='21'%20stroke='#7d9be6'/%3E%3C/g%3E%3Ccircle%20cx='50'%20cy='50'%20r='3'%20fill='#ff7a45'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/brand/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Advaith Sajith · case file AS-11">
 <meta property="og:description" content="Novelist, programming-language designer and solar AI researcher in Dubai. Eight clues are hidden on the page.">
@@ -985,9 +986,21 @@
     .dz { height: 150vh; }
     .stage .hud { top: 6px; }
   }
+
+  /* ===== BRAND BOOK TYPE EFFECTS (Edition III) ===== */
+  /* letterpress: titles pressed into the cream case-file paper */
+  .cipher h2, #fTitle { text-shadow: 0 1px 0 rgba(255,255,255,.9), 0 -1px 0 rgba(42,31,61,.22); }
+  /* ink bleed: the novel's title soaks into the page and settles when you hover it */
+  .novel h2 { filter: url(#inkBleed); transition: filter .4s; }
+  .novel h2:hover { filter: none; }
+  /* margin note: handwritten evidence notes get a drawn rose underline */
+  .note .h { background: no-repeat left 100% / 100% 6px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C 50 2, 90 9, 130 4 S 190 6, 198 3' fill='none' stroke='%23e381a8' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E"); padding-bottom: 4px; }
+  @media (prefers-reduced-motion: reduce) { .novel h2 { filter: none; } }
 </style>
 </head>
 <body class="booting">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="inkBleed"><feTurbulence type="fractalNoise" baseFrequency=".018 .05" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.5"/></filter></svg>
+
 
 <!-- ================= BOOT ================= -->
 <div id="boot" aria-hidden="true">
